@@ -1,0 +1,7 @@
+--
+CREATE TABLE `` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+)
+COLLATE='utf8_unicode_ci'
+ENGINE=InnoDB
+;
