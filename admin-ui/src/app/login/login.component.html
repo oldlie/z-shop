@@ -1,0 +1,33 @@
+<div el-container direction="vertical" class="demo-box">
+  <div el-main>
+
+    <div el-row type="flex" class="row-bg" justify="center">
+
+      <div el-col [span]="12"><div class="grid-content bg-purple-light">
+
+        <el-form [formGroup]="validateForm" label-width="100px"
+                 [show-icon]="true" [show-message]="true" el-class="form-demo">
+
+          <el-form-item label="邮箱" [required]="true"
+                        [status]="statusCtrl('mail')" [error]="messageCtrl('mail')">
+            <el-input formControlName="mail"></el-input>
+          </el-form-item>
+
+          <el-form-item label="密码" [required]="true"
+                        [status]="statusCtrl('password')" [error]="messageCtrl('password')">
+            <el-input formControlName="password" native-type="password"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" (click)="submit()">提交</el-button>
+            <el-button (click)="reset()">重置</el-button>
+          </el-form-item>
+
+        </el-form>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
