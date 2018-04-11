@@ -11,6 +11,7 @@ CREATE TABLE `article` (
   `view_count` INT DEFAULT 0 COMMENT '文章被查看次数',
   `agree_count` INT DEFAULT 0 COMMENT '文章被点赞次数',
   `share_count` INT DEFAULT 0 COMMENT '文章被分享次数',
+  `allow_comment` TINYINT DEFAULT 1 COMMNET '是否允许评论',
   `ranking` INT DEFAULT 0 COMMENT '文章总分',
   `ranking_count` INT DEFAULT 0 COMMENT '文章评分次数',
   `create_at` DATETIME COMMENT '创建时间',
