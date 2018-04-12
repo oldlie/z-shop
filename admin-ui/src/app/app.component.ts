@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     console.log('ready goto login page!');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).catch(err => {
+      console.log('navigate to /login', err);
+    });
   }
 }

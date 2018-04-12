@@ -1,17 +1,24 @@
 import {Component, forwardRef, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ValidateResult} from '../common/validate-result';
+import {LoginService} from '../services/login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [
+    LoginService
+  ]
 })
 export class LoginComponent implements OnInit {
 
   validateForm: FormGroup;
 
-  constructor(@Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder) { }
+  constructor(@Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
+              private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit() {
     this.validateForm = this.formBuilder.group({
@@ -22,6 +29,16 @@ export class LoginComponent implements OnInit {
 
   submit() {
     console.log(this.validateForm.value);
+    if (this.validateForm.valid) {
+      this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
+        .then(response => {
+          if (response.status === 0) {
+            this.router.navigate(['/dashboard']).catch(err => {
+              console.log('navigate to dashboard', err);
+            });
+          }
+        });
+    }
   }
 
   reset() {
@@ -55,7 +72,7 @@ export class LoginComponent implements OnInit {
     return { status: 'success' };
   }
 
-  private passwordValidator = (control: FormControl): ValidateResult => {
+  private passwordValidator = (control: FormControl): {[key: string]: any} => {
     if (!control.value) {
       return { status: 'error', message: '密码是必填的' };
     }
