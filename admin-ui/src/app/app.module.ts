@@ -7,12 +7,16 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
+import { MainNavigationComponent } from './widget/main-navigation/main-navigation.component';
+import { MainAsideComponent } from './widget/main-aside/main-aside.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PageNotFoundComponent,
+    MainNavigationComponent,
+    MainAsideComponent,
   ],
   imports: [
     BrowserModule,
