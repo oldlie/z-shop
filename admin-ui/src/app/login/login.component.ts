@@ -15,12 +15,14 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   validateForm: FormGroup;
+  allowSubmit: boolean;
 
   constructor(@Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
               private loginService: LoginService,
               private router: Router) { }
 
   ngOnInit() {
+    this.allowSubmit = false;
     this.validateForm = this.formBuilder.group({
       password: [ '', [this.passwordValidator] ],
       mail: [ '', [this.emailValidator] ],
@@ -28,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.validateForm.value);
     if (this.validateForm.valid) {
       this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
         .then(response => {
@@ -65,7 +66,7 @@ export class LoginComponent implements OnInit {
     return control.dirty && control.hasError('message') ? control.errors.message : '';
   }
   private emailValidator = (control: FormControl): ValidateResult => {
-    const mailReg: RegExp = /^[A-Za-z0-9一-龥]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    const mailReg: RegExp = /^[A-Za-z0-9一-龥]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     if (!mailReg.test(control.value)) {
       return { status: 'error', message: '邮箱格式不正确' };
     }
