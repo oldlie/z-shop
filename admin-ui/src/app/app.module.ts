@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { MainNavigationComponent } from './widget/main-navigation/main-navigation.component';
 import { MainAsideComponent } from './widget/main-aside/main-aside.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MainAsideComponent } from './widget/main-aside/main-aside.component';
     PageNotFoundComponent,
     MainNavigationComponent,
     MainAsideComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

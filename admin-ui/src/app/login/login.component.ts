@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
 
   validateForm: FormGroup;
   allowSubmit: boolean;
+  username: string;
+  password: string;
 
   constructor(@Inject(forwardRef(() => FormBuilder)) private formBuilder: FormBuilder,
               private loginService: LoginService,
@@ -24,22 +26,24 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.allowSubmit = false;
     this.validateForm = this.formBuilder.group({
-      password: [ '', [this.passwordValidator] ],
-      mail: [ '', [this.emailValidator] ],
+      password: [ this.password, [this.passwordValidator] ],
+      mail: [ this.username, [this.emailValidator] ],
     });
   }
 
-  submit() {
-    if (this.validateForm.valid) {
-      this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
-        .then(response => {
-          if (response.status === 0) {
-            this.router.navigate(['/dashboard']).catch(err => {
-              console.log('navigate to dashboard', err);
-            });
-          }
-        });
+ submit() {
+   if (this.validateForm.controls['mail'].hasError('message') || 
+    this.validateForm.controls['password'].hasError('message')) {
+      return;
     }
+    this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
+      .then(response => {
+        if (response.status === 0) {
+          this.router.navigate(['/home']).catch(err => {
+            console.log('navigate to dashboard', err);
+          });
+        }
+      });
   }
 
   reset() {
@@ -65,6 +69,7 @@ export class LoginComponent implements OnInit {
     const control: AbstractControl = this.validateForm.controls[item];
     return control.dirty && control.hasError('message') ? control.errors.message : '';
   }
+
   private emailValidator = (control: FormControl): ValidateResult => {
     const mailReg: RegExp = /^[A-Za-z0-9一-龥]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
     if (!mailReg.test(control.value)) {
