@@ -1,6 +1,9 @@
-<p>
-  add-commodity works!
-</p>
+<div class="ray-row">
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item to="/dashboard">控制面板</el-breadcrumb-item>
+      <el-breadcrumb-item to="/commodity/item/add">添加商品</el-breadcrumb-item>
+    </el-breadcrumb>
+</div>
 
 <div el-row class="ray-row">
   <div el-col xs="24" md="12">
@@ -25,5 +28,16 @@
   <div el-col xs="24" md="24">
     <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [model]="comment">
     </el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="24">
+    <el-button-group>
+        <el-button>添加规格</el-button>
+        <el-button>添加导航/类别</el-button>
+        <el-button>添加标签</el-button>
+    </el-button-group>
+    <el-button type="primary">保存商品</el-button>
   </div>
 </div>

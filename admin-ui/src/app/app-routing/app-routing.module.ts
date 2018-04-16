@@ -5,12 +5,14 @@ import { PageNotFoundComponent } from '../page-not-found/page-not-found.componen
 import { HomeComponent } from '../home/home.component';
 import { CommodityComponent } from '../shop/commodity/commodity.component';
 import { AddCommodityComponent } from '../shop/add-commodity/add-commodity.component';
+import { SpecComponent } from '../shop/spec/spec.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
   {path: 'commodity/index', component: CommodityComponent},
   {path: 'commodity/item/add', component: AddCommodityComponent},
+  {path: 'commodity/spec', component: SpecComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

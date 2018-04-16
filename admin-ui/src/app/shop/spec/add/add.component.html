@@ -1,0 +1,61 @@
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.title" placeholder="规格名称"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.breed" placeholder="品种"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.origin" placeholder="原产地"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.feature" placeholder="特征"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.spec" placeholder="规格"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.store" placeholder="存储方式"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="spec.productDatetime" placeholder="生产/捕捞/采摘日期"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <label>价格：</label>
+    <el-input-number [model]="val" (modelChange)="changeHandle($event)" [min]="1"></el-input-number>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <label>库存：</label>
+    <el-input-number [model]="val" (modelChange)="changeHandle($event)" [min]="1" [max]="9999"></el-input-number>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="24">
+    <el-button type="primary">保存</el-button>
+  </div>
+</div>

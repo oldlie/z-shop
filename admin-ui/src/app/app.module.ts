@@ -12,6 +12,8 @@ import { MainAsideComponent } from './widget/main-aside/main-aside.component';
 import { HomeComponent } from './home/home.component';
 import { CommodityComponent } from './shop/commodity/commodity.component';
 import { AddCommodityComponent } from './shop/add-commodity/add-commodity.component';
+import { SpecComponent } from './shop/spec/spec.component';
+import { AddComponent } from './shop/spec/add/add.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { AddCommodityComponent } from './shop/add-commodity/add-commodity.compon
     HomeComponent,
     CommodityComponent,
     AddCommodityComponent,
+    SpecComponent,
+    AddComponent,
   ],
   imports: [
     BrowserModule,
