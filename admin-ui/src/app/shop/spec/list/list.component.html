@@ -1,0 +1,19 @@
+<div el-row class="ray-row">
+  <div el-col span="24">
+
+    <el-table [model]="tableData" height="300px" [scroll-x]="true" center="header" >
+      <el-table-column model-key="title" label="名称"></el-table-column>
+      <el-table-column model-key="spec" label="规格"></el-table-column>
+      <el-table-column model-key="price" label="价格" width="80"></el-table-column>
+      <el-table-column model-key="inventory" label="库存" width="80"></el-table-column>
+      <el-table-column label="操作" width="140">
+        <ng-template #slot let-scope="scope">
+          <el-button type="text" size="small" (click)="chose(scope)">选择</el-button>
+          <el-button *ngIf="commodityId == 0" type="text" size="small" (click)="update(scope)">修改</el-button>
+          <el-button *ngIf="commodityId == 0" type="text" size="small" (click)="delete(scope)">删除</el-button>
+        </ng-template>
+      </el-table-column>
+    </el-table>
+
+  </div>
+</div>

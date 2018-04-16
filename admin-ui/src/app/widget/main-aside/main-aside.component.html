@@ -1,19 +1,45 @@
-<el-menu model="2" class="el-menu-vertical-demo">
+<el-menu [model]="index" >
   <el-submenu index="1">
     <ng-template #title>
-      <i class="el-icon-message"></i>导航
+      <i class="fa fa-home fa-lg"></i> 订制首页
     </ng-template>
-    <el-menu-item-group title="分组一">
-      <el-menu-item index="1-1">选项1</el-menu-item>
-      <el-menu-item index="1-2">选项2</el-menu-item>
-    </el-menu-item-group>
-    <el-menu-item-group title="分组2">
-      <el-menu-item index="1-3">选项3</el-menu-item>
-    </el-menu-item-group>
-    <el-submenu index="1-4" title="选项4">
-      <el-menu-item index="1-4-1">选项1</el-menu-item>
-    </el-submenu>
+    <el-menu-item index="1-1">轮播图设置</el-menu-item>
+    <el-menu-item index="1-2">首页商品设置</el-menu-item>
+    <el-menu-item index="1-3">首页文章设置</el-menu-item>
+    <el-menu-item index="1-4">页脚设置</el-menu-item>
+    <el-menu-item index="1-5">首页预览</el-menu-item>
   </el-submenu>
-  <el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
-  <el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
+  <el-submenu index="2">
+    <ng-template #title><i class="fa fa-user fa-lg"></i> 账号和权限</ng-template>
+    <el-menu-item index="2-1">账号设置</el-menu-item>
+    <el-menu-item index="2-2">权限设置</el-menu-item>
+  </el-submenu>
+  <el-submenu index="3">
+    <ng-template #title><i class="fa fa-shopping-cart fa-lg"></i> 商品管理</ng-template>
+    <el-menu-item index="3-1" to="/commodity/index">商品列表</el-menu-item>
+    <el-menu-item index="3-2" to="/commodity/item/add">新建商品</el-menu-item>
+    <el-menu-item index="3-3" to="/commodity/spec">规格列表</el-menu-item>
+    <el-menu-item index="3-5">类别列表</el-menu-item>
+    <el-menu-item index="3-6">新建类别</el-menu-item>
+  </el-submenu>
+  <el-menu-item index="4"><i class="fa fa-tags fa-lg"></i> 标签管理</el-menu-item>
+  <el-submenu index="5">
+    <ng-template #title><i class="fa fa-book fa-lg"></i> 文章管理</ng-template>
+    <el-menu-item index="5-1">文章列表</el-menu-item>
+    <el-menu-item index="5-2">新建文章</el-menu-item>
+    <el-menu-item index="5-3">类别列表</el-menu-item>
+    <el-menu-item index="5-4">新建类别</el-menu-item>
+  </el-submenu>
+  <el-submenu index="6">
+    <ng-template #title><i class="fa fa-navicon fa-lg"></i> 导航设置</ng-template>
+    <el-menu-item index="6-1">商品导航</el-menu-item>
+    <el-menu-item index="6-2">文章导航</el-menu-item>
+  </el-submenu>
+  <el-submenu index="7">
+    <ng-template #title><i class="fa fa-credit-card fa-lg"></i> 支付设置</ng-template>
+    <el-menu-item index="7-1">支付宝</el-menu-item>
+    <el-menu-item index="7-2">微信</el-menu-item>
+  </el-submenu>
+  <el-menu-item index="8"><i class="fa fa-cogs fa-lg"></i> 系统设置</el-menu-item>
+
 </el-menu>

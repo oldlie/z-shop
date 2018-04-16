@@ -21,8 +21,11 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
+    "admin-lte": "^2.4.3",
+    "angular2-fontawesome": "^5.2.1",
     "core-js": "^2.4.1",
     "element-angular": "^0.7.4",
+    "font-awesome": "^4.7.0",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },

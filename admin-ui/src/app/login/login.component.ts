@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   }
 
  submit() {
-   if (this.validateForm.controls['mail'].hasError('message') || 
+   if (this.validateForm.controls['mail'].hasError('message') ||
     this.validateForm.controls['password'].hasError('message')) {
       return;
     }

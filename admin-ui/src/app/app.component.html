@@ -1,1 +1,19 @@
-<router-outlet></router-outlet>
+<div *ngIf="isLogin; else elseBlock">
+    <app-login></app-login>
+</div>
+<ng-template #elseBlock>
+    <div el-container direction="vertical" class="demo-box">
+        <div el-header>
+            <app-main-navigation></app-main-navigation>
+        </div>
+        <div el-container  style="padding: 0 20px;">
+            <div el-aside style="min-height: 600px">
+                <app-main-aside [index]="defaultAsideIndex"></app-main-aside>
+            </div>
+            <div el-container direction="vertical">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+    
+</ng-template>
