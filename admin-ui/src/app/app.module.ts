@@ -14,6 +14,7 @@ import { CommodityComponent } from './shop/commodity/commodity.component';
 import { AddCommodityComponent } from './shop/add-commodity/add-commodity.component';
 import { SpecComponent } from './shop/spec/spec.component';
 import { AddComponent } from './shop/spec/add/add.component';
+import { ListComponent } from './shop/spec/list/list.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AddComponent } from './shop/spec/add/add.component';
     AddCommodityComponent,
     SpecComponent,
     AddComponent,
+    ListComponent,
   ],
   imports: [
     BrowserModule,

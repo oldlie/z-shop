@@ -7,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpecComponent implements OnInit {
 
-  index = '2';
+  index = '1';
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  handle(index: string) {
+    this.index = index;
+  }
 }

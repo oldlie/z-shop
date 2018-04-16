@@ -30,7 +30,7 @@
 
 <div el-row class="ray-row">
   <div el-col xs="24" md="12">
-    <el-input [model]="spec.store" placeholder="存储方式"></el-input>
+    <el-input [(model)]="spec.store" placeholder="存储方式"></el-input>
   </div>
 </div>
 
@@ -43,14 +43,14 @@
 <div el-row class="ray-row">
   <div el-col xs="24" md="12">
     <label>价格：</label>
-    <el-input-number [model]="val" (modelChange)="changeHandle($event)" [min]="1"></el-input-number>
+    <el-input-number [(model)]="spec.price" [min]="1"></el-input-number>
   </div>
 </div>
 
 <div el-row class="ray-row">
   <div el-col xs="24" md="12">
     <label>库存：</label>
-    <el-input-number [model]="val" (modelChange)="changeHandle($event)" [min]="1" [max]="9999"></el-input-number>
+    <el-input-number [model]="spec.inventory" [min]="1" [max]="9999"></el-input-number>
   </div>
 </div>
 
