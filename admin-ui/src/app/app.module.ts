@@ -10,6 +10,8 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { MainNavigationComponent } from './widget/main-navigation/main-navigation.component';
 import { MainAsideComponent } from './widget/main-aside/main-aside.component';
 import { HomeComponent } from './home/home.component';
+import { CommodityComponent } from './shop/commodity/commodity.component';
+import { AddCommodityComponent } from './shop/add-commodity/add-commodity.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { HomeComponent } from './home/home.component';
     MainNavigationComponent,
     MainAsideComponent,
     HomeComponent,
+    CommodityComponent,
+    AddCommodityComponent,
   ],
   imports: [
     BrowserModule,

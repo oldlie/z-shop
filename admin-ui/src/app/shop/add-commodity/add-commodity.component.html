@@ -1,0 +1,29 @@
+<p>
+  add-commodity works!
+</p>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="title" placeholder="标题"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input type="textarea" [autosize]="{ minRows: 2, maxRows: 4}" placeholder="注意事项，用于提示特殊情况" [model]="comment">
+    </el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="12">
+    <el-input [model]="summary" placeholder="简要描述"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col xs="24" md="24">
+    <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [model]="comment">
+    </el-input>
+  </div>
+</div>

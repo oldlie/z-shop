@@ -7,6 +7,7 @@ CREATE TABLE `product` (
   `description` VARCHAR(255) COMMENT '商品描述' COLLATE 'utf8_unicode_ci',
   `status` TINYINT COMMENT '商品状态：0，商品初始；1，商品上架;2，商品下架' COLLATE 'utf8_unicode_ci',
   `ranking` INT DEFAULT 0 COMMENT '商品总分',
+  `ranking_count` INT DEFAULT 0 COMMENT '商品总打分次数',
   `view_count` INT DEFAULT 0 COMMENT '商品被查看次数',
   `share_count` INT DEFAULT 0 COMMENT '商品被分享次数',
   `ranking_count` INT DEFAULT 0 COMMENT '商品评分次数',
