@@ -1,0 +1,13 @@
+<div el-row class="ray-row">
+  <el-menu [model]="index" (modelChange)="handle($event)" mode="horizontal">
+    <el-menu-item index="1">{{title}}导航展示</el-menu-item>
+    <el-menu-item index="2">添加{{title}}导航</el-menu-item>
+  </el-menu>
+</div>
+
+<div el-container direction="vertical" *ngIf="index === '1'">
+  <app-navigation-list [viewType]="viewType" ></app-navigation-list>
+</div>
+<div el-container direction="vertical" *ngIf="index === '2'">
+    <app-navigation-add [viewType]="viewType" ></app-navigation-add>
+</div>

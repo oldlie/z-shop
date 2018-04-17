@@ -6,6 +6,7 @@ import { HomeComponent } from '../home/home.component';
 import { CommodityComponent } from '../shop/commodity/commodity.component';
 import { AddCommodityComponent } from '../shop/add-commodity/add-commodity.component';
 import { SpecComponent } from '../shop/spec/spec.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
@@ -13,6 +14,7 @@ const appRoutes = [
   {path: 'commodity/index', component: CommodityComponent},
   {path: 'commodity/item/add', component: AddCommodityComponent},
   {path: 'commodity/spec', component: SpecComponent},
+  {path: 'navigation/:t', component: NavigationComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];
