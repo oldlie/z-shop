@@ -15,6 +15,9 @@ import { AddCommodityComponent } from './shop/add-commodity/add-commodity.compon
 import { SpecComponent } from './shop/spec/spec.component';
 import { AddComponent } from './shop/spec/add/add.component';
 import { ListComponent } from './shop/spec/list/list.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { AddComponent as NavAddComponent } from './navigation/add/add.component';
+import { ListComponent as NavListComponent } from './navigation/list/list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { ListComponent } from './shop/spec/list/list.component';
     SpecComponent,
     AddComponent,
     ListComponent,
+    NavigationComponent,
+    NavAddComponent,
+    NavListComponent,
   ],
   imports: [
     BrowserModule,

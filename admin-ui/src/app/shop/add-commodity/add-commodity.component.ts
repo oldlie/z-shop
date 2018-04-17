@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommodityStatus, CommodityVI } from '../commodity-vi';
+import { ElNotificationService } from 'element-angular';
 
 @Component({
   selector: 'app-add-commodity',
@@ -18,7 +19,7 @@ export class AddCommodityComponent implements OnInit {
   status = CommodityStatus.init;
   showSpecDialog = false;
 
-  constructor() { }
+  constructor(private notify: ElNotificationService) { }
 
   ngOnInit() {
     this.commodity = {
@@ -36,6 +37,11 @@ export class AddCommodityComponent implements OnInit {
   }
 
   addSpec() {
+    if (this.title === '') {
+      this.notify['warning']('添加规格前请先填写商品名称。');
+      return;
+    }
     this.showSpecDialog = true;
   }
+
 }

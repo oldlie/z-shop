@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'z-shop';
   isLogin = false;
-  defaultAsideIndex = '3-3';
+  defaultAsideIndex = '6-1';
 
-  private startPageUrl = '/commodity/item/add';
+  private startPageUrl = '/navigation/1';
 
   constructor(private router: Router) {}
 
