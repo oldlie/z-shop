@@ -1,11 +1,13 @@
 <div el-row class="ray-row">
   <div el-col span="24">
 
-    <el-table [model]="list" height="300px" [scroll-x]="true" center="header" >
-      <el-table-column model-key="id" label="#"></el-table-column>
+    <el-table [model]="list" height="300px" [scroll-x]="true" center="header">
+      <el-table-column model-key="id" label="ID"></el-table-column>
       <el-table-column model-key="title" label="名称"></el-table-column>
-      <el-table-column *ngIf="modelId === 1" label="操作" width="140">
-        <el-button type="text" size="small" (click)="chose(scope)">选择</el-button>
+      <el-table-column label="操作" width="140">
+        <ng-template #slot let-scope="scope">
+          <el-button *ngIf="modelId === 1" type="text" size="small" (click)="chose(scope)">选择</el-button>
+        </ng-template>
       </el-table-column>
     </el-table>
 
