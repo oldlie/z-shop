@@ -18,6 +18,8 @@ import { ListComponent } from './shop/spec/list/list.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AddComponent as NavAddComponent } from './navigation/add/add.component';
 import { ListComponent as NavListComponent } from './navigation/list/list.component';
+import { AddArticleComponent } from './article/add-article/add-article.component';
+import { ListArticleComponent } from './article/list-article/list-article.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ListComponent as NavListComponent } from './navigation/list/list.compon
     NavigationComponent,
     NavAddComponent,
     NavListComponent,
+    AddArticleComponent,
+    ListArticleComponent,
   ],
   imports: [
     BrowserModule,

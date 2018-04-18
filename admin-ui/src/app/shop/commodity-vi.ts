@@ -14,7 +14,7 @@ export interface CommodityVI {
   viewCount: number;
   shareCount: number;
   createAt?: Date;
-  updartAt?: Date;
+  updateAt?: Date;
 }
 
 export enum CommodityStatus {
