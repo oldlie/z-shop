@@ -6,7 +6,7 @@ CREATE TABLE `article_comment` (
   `user_nickname` VARCHAR(32) NOT NULL COMMENT '用户在本站的昵称',
   `comment` VARCHAR(255) NOT NULL COMMENT '评论内容',
   `create_at` DATETIME NOT NULL COMMENT '评论时间',
-  `reply_count` INT DEFAULT 0 COMMENT '这条评论回复数',
+  `reply_count` INT DEFAULT 0 COMMENT '这条评论回复数'
 )
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB

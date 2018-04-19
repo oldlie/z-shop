@@ -10,9 +10,8 @@ CREATE TABLE `commodity` (
   `ranking_count` INT DEFAULT 0 COMMENT '商品总打分次数',
   `view_count` INT DEFAULT 0 COMMENT '商品被查看次数',
   `share_count` INT DEFAULT 0 COMMENT '商品被分享次数',
-  `ranking_count` INT DEFAULT 0 COMMENT '商品评分次数',
   `create_at` DATETIME COMMENT '商品创建时间',
-  `update_at` DATETIME COMMENT '商品最后更新时间',
+  `update_at` DATETIME COMMENT '商品最后更新时间'
 )
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB
