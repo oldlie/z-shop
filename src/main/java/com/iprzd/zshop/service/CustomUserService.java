@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class CustomUserService implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -44,4 +43,6 @@ public class CustomUserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(users.getUsername(),
                 users.getPassword(), authorities);
     }
+
+
 }

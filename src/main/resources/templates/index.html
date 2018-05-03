@@ -10,7 +10,7 @@
 <body>
     <div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
         Logged in user: <span sec:authentication="name"></span>
-        Roles: <span sec:authentication="principal.authorityList"></span>
+        Roles: <span sec:authentication="principal.authorities"></span>
         <div>
             <form action="#" th:action="@{/logout}" method="post">
                 <input type="submit" value="Logout" />
@@ -24,5 +24,6 @@
         <li>Go to the <a href="/user/index" th:href="@{/user/index}">secured pages</a></li>
     </ul>
 
+    <script th:src="@{static/main.bundle.js}"></script>
 </body>
 </html>

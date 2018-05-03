@@ -4,6 +4,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
@@ -18,9 +21,12 @@ public class MainController {
     }
 
     @RequestMapping("/user/index")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public String userIndex() {
-        return "user/index";
+    //@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ModelAndView userIndex(HttpServletRequest req, Exception e) {
+        ModelAndView mv = new ModelAndView("user/index");
+        mv.addObject("e", e);
+        mv.addObject("uri", req.getRequestURI());
+        return mv;
     }
 
     @RequestMapping("/login")

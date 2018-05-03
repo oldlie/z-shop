@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   isLogin = false;
   defaultAsideIndex = '6-1';
 
-  private startPageUrl = '/navigation/1';
+  private startPageUrl = '/login';
 
   constructor(private router: Router) {}
 
