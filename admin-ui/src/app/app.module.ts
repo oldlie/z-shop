@@ -20,6 +20,7 @@ import { AddComponent as NavAddComponent } from './navigation/add/add.component'
 import { ListComponent as NavListComponent } from './navigation/list/list.component';
 import { AddArticleComponent } from './article/add-article/add-article.component';
 import { ListArticleComponent } from './article/list-article/list-article.component';
+import { CoreService } from './services/core.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import { ListArticleComponent } from './article/list-article/list-article.compon
     AppRoutingModule,
     ElModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    CoreService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

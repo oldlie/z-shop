@@ -29,6 +29,19 @@ export class LoginComponent implements OnInit {
       password: [ this.password, [this.passwordValidator] ],
       mail: [ this.username, [this.emailValidator] ],
     });
+
+    this.test();
+  }
+
+  test() {
+    this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
+      .then(response => {
+        if (response.status === 0) {
+          this.router.navigate(['/home']).catch(err => {
+            console.log('navigate to dashboard', err);
+          });
+        }
+      });
   }
 
  submit() {

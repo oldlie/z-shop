@@ -57,14 +57,14 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                 .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
                 .signWith(SignatureAlgorithm.HS512, "MyJwtSecret")
                 .compact();
-        res.addHeader("Authorization", "Bearer " + token);
-        res.getWriter().print("{\"code\":1,\"message\":\""+ token +"\"}");
+        res.addHeader("Authorization", "ZShop " + token);
+        res.getWriter().print("{\"status\":0,\"message\":\"success\",\"token\":\""+ token +"\"}");
         res.getWriter().flush();
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.getWriter().print("{\"code\":0,\"message\":\""+ failed.getLocalizedMessage() +"\"}");
+        response.getWriter().print("{\"status\":1,\"message\":\""+ failed.getLocalizedMessage() +"\"}");
         response.getWriter().flush();
     }
 }
