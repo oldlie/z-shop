@@ -1,8 +1,8 @@
-package com.iprzd.zshop.controller;
+package com.iprzd.zshop.controller.response;
 
-public class ResponseJson {
+public class BaseResponse {
     private int status;
-    private int message;
+    private String message;
 
     public int getStatus() {
         return status;
@@ -12,11 +12,11 @@ public class ResponseJson {
         this.status = status;
     }
 
-    public int getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(int message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 }

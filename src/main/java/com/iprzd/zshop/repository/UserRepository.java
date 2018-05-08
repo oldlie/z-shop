@@ -1,9 +1,9 @@
 package com.iprzd.zshop.repository;
 
-import com.iprzd.zshop.repository.entity.Users;
+import com.iprzd.zshop.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Users, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    Users findByUsername(String username);
+    User findByUsername(String username);
 }

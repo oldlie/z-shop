@@ -1,8 +1,10 @@
-package com.iprzd.zshop;
+package com.iprzd.zshop.config;
 
+import com.iprzd.zshop.repository.UserRepository;
 import com.iprzd.zshop.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,31 +18,25 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // 启用方法安全设置
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Override
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserService();
+    private CustomUserService customUserService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public SecurityConfiguration(CustomUserService customUserService,
+                             UserRepository userRepository,
+                             BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.customUserService = customUserService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/static/**", "/index").permitAll()
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+        http.cors().and().csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/signup", "/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login").failureUrl("/login-error");
+                .addFilter(new JWTLoginFilter(authenticationManager()))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), this.customUserService));
         http.logout().logoutSuccessUrl("/");
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-       /* auth
-                .inMemoryAuthentication()
-                .withUser(User.withDefaultPasswordEncoder().username("user").password("password").roles("USER"));*/
-
-        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
-    }
 }
