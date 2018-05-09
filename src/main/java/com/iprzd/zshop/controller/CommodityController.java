@@ -1,7 +1,7 @@
 package com.iprzd.zshop.controller;
 
 import com.iprzd.zshop.controller.response.BaseResponse;
-import com.iprzd.zshop.entity.Commodity;
+import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.service.CommodityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

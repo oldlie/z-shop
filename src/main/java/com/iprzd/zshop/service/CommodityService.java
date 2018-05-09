@@ -1,7 +1,7 @@
 package com.iprzd.zshop.service;
 
-import com.iprzd.zshop.entity.Commodity;
-import com.iprzd.zshop.repository.CommodityRepository;
+import com.iprzd.zshop.entity.commodity.Commodity;
+import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.iprzd.zshop.entity;
+package com.iprzd.zshop.entity.commodity;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
