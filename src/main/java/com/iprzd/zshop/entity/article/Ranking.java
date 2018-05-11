@@ -1,4 +1,4 @@
-package com.iprzd.zshop.entity.commodity;
+package com.iprzd.zshop.entity.article;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,14 +11,14 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "t_commodity_ranking")
+@Table(name = "t_article_ranking")
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Ranking {
     @Id @GeneratedValue
     private long id;
-    private long productId;
+    private long articleId;
     private long userId;
     private int ranking;
     private Date createAt;
@@ -31,12 +31,12 @@ public class Ranking {
         this.id = id;
     }
 
-    public long getProductId() {
-        return productId;
+    public long getArticleId() {
+        return articleId;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setArticleId(long articleId) {
+        this.articleId = articleId;
     }
 
     public long getUserId() {
