@@ -6,6 +6,17 @@ export interface Base {
     timestamp?: string;
 }
 
+export interface ResponseData {
+    status: number;
+    message: string;
+    token: string;
+}
+
+export interface ValidateResult {
+    status: string;
+    message?: string;
+}
+
 export interface List extends Base {
     total: number;
     pages: number;

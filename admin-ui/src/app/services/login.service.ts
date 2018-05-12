@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ResponseData, urlPrefix } from '../common/response-data';
 import { HttpClient } from '@angular/common/http';
 import { CoreService } from './core.service';
+import { ResponseData } from '../response/response';
 
 @Injectable()
 export class LoginService {

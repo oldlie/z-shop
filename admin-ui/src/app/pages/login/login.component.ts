@@ -1,8 +1,8 @@
 import {Component, forwardRef, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ValidateResult} from '../../common/validate-result';
 import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
+import { ValidateResult } from '../../response/response';
 
 @Component({
   selector: 'app-login',
