@@ -1,7 +1,7 @@
 import {Component, forwardRef, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ValidateResult} from '../common/validate-result';
-import {LoginService} from '../services/login.service';
+import {ValidateResult} from '../../common/validate-result';
+import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
       .then(response => {
         if (response.status === 0) {
-          this.router.navigate(['/home']).catch(err => {
+          this.router.navigate(['/tag']).catch(err => {
             console.log('navigate to dashboard', err);
           });
         }

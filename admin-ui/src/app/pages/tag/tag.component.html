@@ -1,0 +1,26 @@
+
+
+  <div el-row class="ray-row">
+
+    <div el-col span="24">
+      <el-input [(model)]="newTagTitle" placeholder="请输入标签内容">
+        <ng-template #append>
+          <el-button (click)="save()">保存</el-button>
+        </ng-template>
+      </el-input>
+      
+    </div>
+
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col span="24">
+      <el-tag *ngFor="let tag of list"
+       [closable]="true" [type]="tag.type" 
+       (close)="deleteTag(tag)"
+      >
+        {{tag.name}}
+      </el-tag>
+    </div>
+  </div>
+

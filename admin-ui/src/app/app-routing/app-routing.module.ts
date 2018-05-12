@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, } from '@angular/router';
-import { LoginComponent } from '../login/login.component';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
-import { HomeComponent } from '../home/home.component';
-import { CommodityComponent } from '../shop/commodity/commodity.component';
-import { AddCommodityComponent } from '../shop/add-commodity/add-commodity.component';
-import { SpecComponent } from '../shop/spec/spec.component';
-import { NavigationComponent } from '../navigation/navigation.component';
+import { LoginComponent } from '../pages/login/login.component';
+import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
+import { HomeComponent } from '../pages/home/home.component';
+import { CommodityComponent } from '../pages/shop/commodity/commodity.component';
+import { AddCommodityComponent } from '../pages/shop/add-commodity/add-commodity.component';
+import { SpecComponent } from '../pages/shop/spec/spec.component';
+import { NavigationComponent } from '../pages/navigation/navigation.component';
+import { TagComponent } from '../pages/tag/tag.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
@@ -15,6 +16,7 @@ const appRoutes = [
   {path: 'commodity/item/add', component: AddCommodityComponent},
   {path: 'commodity/spec', component: SpecComponent},
   {path: 'navigation/:t', component: NavigationComponent},
+  {path: 'tag', component: TagComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}
 ];

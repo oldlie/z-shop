@@ -3,24 +3,25 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ElModule } from 'element-angular';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoginComponent } from './pages/login/login.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { MainNavigationComponent } from './widget/main-navigation/main-navigation.component';
 import { MainAsideComponent } from './widget/main-aside/main-aside.component';
-import { HomeComponent } from './home/home.component';
-import { CommodityComponent } from './shop/commodity/commodity.component';
-import { AddCommodityComponent } from './shop/add-commodity/add-commodity.component';
-import { SpecComponent } from './shop/spec/spec.component';
-import { AddComponent } from './shop/spec/add/add.component';
-import { ListComponent } from './shop/spec/list/list.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { AddComponent as NavAddComponent } from './navigation/add/add.component';
-import { ListComponent as NavListComponent } from './navigation/list/list.component';
-import { AddArticleComponent } from './article/add-article/add-article.component';
-import { ListArticleComponent } from './article/list-article/list-article.component';
+import { HomeComponent } from './pages/home/home.component';
+import { CommodityComponent } from './pages/shop/commodity/commodity.component';
+import { AddCommodityComponent } from './pages/shop/add-commodity/add-commodity.component';
+import { SpecComponent } from './pages/shop/spec/spec.component';
+import { AddComponent } from './pages/shop/spec/add/add.component';
+import { ListComponent } from './pages/shop/spec/list/list.component';
+import { NavigationComponent } from './pages/navigation/navigation.component';
+import { AddComponent as NavAddComponent } from './pages/navigation/add/add.component';
+import { ListComponent as NavListComponent } from './pages/navigation/list/list.component';
+import { AddArticleComponent } from './pages/article/add-article/add-article.component';
+import { ListArticleComponent } from './pages/article/list-article/list-article.component';
 import { CoreService } from './services/core.service';
+import { TagComponent } from './pages/tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CoreService } from './services/core.service';
     NavListComponent,
     AddArticleComponent,
     ListArticleComponent,
+    TagComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { CoreService } from './services/core.service';
     ElModule.forRoot(),
   ],
   providers: [
-    CoreService
+    CoreService,
   ],
   bootstrap: [AppComponent]
 })

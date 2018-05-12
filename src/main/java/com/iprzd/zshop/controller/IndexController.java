@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class LoginController {
+public class IndexController {
 
     private UserRepository userRepository;
     private AuthorityRepository authorityRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public LoginController(AuthorityRepository authorityRepository,
-            BCryptPasswordEncoder bCryptPasswordEncoder,
-            UserRepository userRepository) {
+    public IndexController(AuthorityRepository authorityRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           UserRepository userRepository) {
         this.authorityRepository = authorityRepository;
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

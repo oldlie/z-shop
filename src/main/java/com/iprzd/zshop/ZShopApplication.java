@@ -10,7 +10,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @SpringBootApplication
 public class ZShopApplication {
@@ -37,10 +39,13 @@ public class ZShopApplication {
     @Bean
     @SuppressWarnings("unchecked")
     public FilterRegistrationBean simpleCorsFilter() {
+        List<String> origins = new ArrayList<>();
+        origins.add("http://localhost:4200");
+        origins.add("http://localhost:4200/**");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        config.setAllowedOrigins(origins);
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
         source.registerCorsConfiguration("/**", config);

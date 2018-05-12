@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CoreService {
@@ -17,9 +19,23 @@ export class CoreService {
 
   private header;
   get Header() {
-    return this.header = {'Authorization': `ZShop ${this.token}`};
+    return this.header = {'Authorization': `ZShop ${this.token}`, 'Content-Type': 'application/json'};
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
+  getPage(page: number) {
+    return page > 1 ? page - 1 : 0;
+  }
+
+  get(url: string, params: any): Observable<Object> {
+    return this.http.get(url, {
+      headers: this.Header,
+      params: params,
+    });
+  }
+
+  post(url: string, body: any):  Observable<Object> {
+    return this.http.post(url, body, {headers: this.Header});
+  }
 }

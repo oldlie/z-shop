@@ -1,11 +1,13 @@
 package com.iprzd.zshop.entity.commodity;
 
+import com.iprzd.zshop.entity.Tag;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "t_commodity")
@@ -32,6 +34,12 @@ public class Commodity {
     private int shareCount;
     private Date createAt;
     private Date updateAt;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "t_commodity_tag",
+            joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private List<Tag> tags;
 
     public long getId() {
         return id;
@@ -127,5 +135,13 @@ public class Commodity {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }
