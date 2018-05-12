@@ -8,11 +8,13 @@ import { AddCommodityComponent } from '../pages/shop/add-commodity/add-commodity
 import { SpecComponent } from '../pages/shop/spec/spec.component';
 import { NavigationComponent } from '../pages/navigation/navigation.component';
 import { TagComponent } from '../pages/tag/tag.component';
+import { MenuComponent as CommodityMenuComponent } from '../pages/shop/menu/menu.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
   {path: 'commodity/index', component: CommodityComponent},
+  {path: 'commodity/menu', component: CommodityMenuComponent},
   {path: 'commodity/item/add', component: AddCommodityComponent},
   {path: 'commodity/spec', component: SpecComponent},
   {path: 'navigation/:t', component: NavigationComponent},

@@ -18,16 +18,28 @@ public class CommodityMenuService {
         this.menuRepository = menuRepository;
     }
 
-    public BaseResponse store(Menu commodityMenu) {
+    public BaseResponse store(Menu menu) {
         BaseResponse response = new BaseResponse();
-        commodityMenu = this.menuRepository.save(commodityMenu);
-        if (commodityMenu.getId() > 0) {
+
+        Menu commodityMenu;
+        if (menu.getId() > 0) {
+            commodityMenu = this.menuRepository.findById(menu.getId()).get();
+            commodityMenu.setTitle(menu.getTitle());
+            commodityMenu.setParentId(menu.getParentId());
+            commodityMenu.setComment(menu.getComment());
+        } else {
+            commodityMenu = menu;
+        }
+
+        menu = this.menuRepository.save(commodityMenu);
+        if (menu.getId() > 0) {
             response.setStatus(StatusCode.SUCCESS);
             response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
         } else {
             response.setStatus(StatusCode.SAVE_COMMODITY_MENU_FAILED);
             response.setMessage(StatusCode.getMessage(StatusCode.SAVE_COMMODITY_MENU_FAILED));
         }
+
         return response;
     }
 

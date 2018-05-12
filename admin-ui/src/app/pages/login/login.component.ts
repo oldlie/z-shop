@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
       .then(response => {
         if (response.status === 0) {
-          this.router.navigate(['/tag']).catch(err => {
+          this.router.navigate(['/commodity/menu']).catch(err => {
             console.log('navigate to dashboard', err);
           });
         }

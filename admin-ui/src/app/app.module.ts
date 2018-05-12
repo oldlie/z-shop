@@ -22,6 +22,7 @@ import { AddArticleComponent } from './pages/article/add-article/add-article.com
 import { ListArticleComponent } from './pages/article/list-article/list-article.component';
 import { CoreService } from './services/core.service';
 import { TagComponent } from './pages/tag/tag.component';
+import { MenuComponent } from './pages/shop/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TagComponent } from './pages/tag/tag.component';
     AddArticleComponent,
     ListArticleComponent,
     TagComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,

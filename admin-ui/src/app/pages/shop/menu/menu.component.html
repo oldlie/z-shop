@@ -1,0 +1,58 @@
+<div el-row class="ray-row">
+  <div el-col [xs]="24" [md]="12">
+    <el-input placeholder="栏目名称" [(model)]="menu"></el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col [xs]="24" [md]="12">
+    <el-input placeholder="上级栏目名称" [model]="parent" [elDisabled]="false">
+      <ng-template #append>
+        <el-button (click)="selectParent()">选择上级栏目</el-button>
+      </ng-template>
+    </el-input>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+    <div el-col [xs]="24" [md]="12">
+      <el-input placeholder="备注" [(model)]="comment"></el-input>
+    </div>
+  </div>
+
+<div el-row class="ray-row">
+  <div el-col [xs]="24" [md]="12">
+    <el-button (click)="save()" type="primary">保存</el-button>
+  </div>
+</div>
+
+<div el-row class="ray-row">
+  <div el-col span="24">
+
+    <el-menu [model]="0" (modelChange)="handle($event)" class="el-menu-demo" mode="horizontal">
+      <el-menu-item index="1">
+        <i class="el-icon-plus"></i>
+      </el-menu-item>
+      <el-submenu index="2" title="我的工作台">
+        <el-menu-item index="2-1">选项1</el-menu-item>
+        <el-menu-item index="2-2">选项2</el-menu-item>
+        <el-menu-item index="2-3">选项3</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="3">
+        <a href="https://github.com/eleme/element-angular" target="_blank">GITHUB</a>
+      </el-menu-item>
+    </el-menu>
+
+  </div>
+
+</div>
+
+<el-dialog [(visible)]="toggle">
+  <ng-template #title>
+    <span>选择上级栏目</span>
+  </ng-template>
+  <span>我选择在夏威夷演讲。</span>
+  <ng-template #footer>
+    <el-button (click)="toggle = false">是的</el-button>
+  </ng-template>
+</el-dialog>

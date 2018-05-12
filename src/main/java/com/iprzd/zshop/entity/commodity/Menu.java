@@ -20,6 +20,7 @@ public class Menu {
     private long id;
     private String title;
     private long parentId;
+    private int children;
     private String comment;
 
     public long getId() {
@@ -44,6 +45,14 @@ public class Menu {
 
     public void setParentId(long parentId) {
         this.parentId = parentId;
+    }
+
+    public int getChildren() {
+        return children;
+    }
+
+    public void setChildren(int children) {
+        this.children = children;
     }
 
     public String getComment() {
