@@ -22,8 +22,4 @@ export class AddComponent implements OnInit {
     };
   }
 
-  onNotify(type: string) {
-    this.notify[type]('这是一条消息提示: ' + type, type);
-  }
-
 }

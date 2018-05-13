@@ -52,7 +52,21 @@ public class CommodityMenuService {
 
     public BaseResponse delete(long id) {
         BaseResponse response = new BaseResponse();
-        this.menuRepository.deleteById(id);
+
+        if (!this.menuRepository.findById(id).isPresent()) {
+            response.setStatus(StatusCode.DELETE_COMMODITY_MENU_FAILED);
+            response.setMessage("该栏目已经不存在了，请刷新前端页面。");
+            return response;
+        }
+
+        Menu menu = this.menuRepository.findById(id).get();
+        if (menu.getChildren() > 0) {
+            response.setStatus(StatusCode.DELETE_COMMODITY_MENU_FAILED);
+            response.setMessage("含有下级栏目，还不能删除。");
+            return response;
+        }
+
+        this.menuRepository.delete(menu);
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
         return response;
