@@ -7,6 +7,7 @@ import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.repository.commodity.MenuRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -33,6 +34,12 @@ public class CommodityMenuService {
 
         menu = this.menuRepository.save(commodityMenu);
         if (menu.getId() > 0) {
+            if (menu.getParentId() > 0) {
+                Menu parentMenu = this.menuRepository.findById(menu.getParentId()).get();
+                parentMenu.setChildren(parentMenu.getChildren() + 1);
+                this.menuRepository.save(parentMenu);
+            }
+
             response.setStatus(StatusCode.SUCCESS);
             response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
         } else {

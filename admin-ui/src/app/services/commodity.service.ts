@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Base } from '../response/response';
 import { CoreService } from './core.service';
+import { CommodityMenuListResponse } from '../response/commodity';
 
 @Injectable()
 export class CommodityService {
@@ -22,4 +23,10 @@ export class CommodityService {
     const url = `${this.core.UrlPrefix}/admin/commodity/menu/delete`;
     return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
   }
+
+  findMenuByParentId(parentId: number): Promise<CommodityMenuListResponse> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/menu/children`;
+    return this.core.get(url, {id: parentId}).toPromise().then(res => res as CommodityMenuListResponse);
+  }
+
 }

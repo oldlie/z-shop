@@ -15,10 +15,10 @@
 </div>
 
 <div el-row class="ray-row">
-    <div el-col [xs]="24" [md]="12">
-      <el-input placeholder="备注" [(model)]="comment"></el-input>
-    </div>
+  <div el-col [xs]="24" [md]="12">
+    <el-input placeholder="备注" [(model)]="comment"></el-input>
   </div>
+</div>
 
 <div el-row class="ray-row">
   <div el-col [xs]="24" [md]="12">
@@ -51,8 +51,23 @@
   <ng-template #title>
     <span>选择上级栏目</span>
   </ng-template>
-  <span>我选择在夏威夷演讲。</span>
+
+  <el-table [model]="childrenList" [stripe]="true">
+    <el-table-column model-key="title" label="栏目" width="140">
+      <ng-template #slot let-scope="scope">
+        <el-button type="text" (click)="cc(childrenList[scope.index])">{{childrenList[scope.index].title}}</el-button>
+      </ng-template>
+    </el-table-column>
+    <el-table-column model-key="comment" label="备注" width="140">
+    </el-table-column>
+    <el-table-column model-key="children" label="子栏目" width="140">
+      <ng-template #slot let-scope="scope">
+        <el-button *ngIf="childrenList[scope.index].children > 0" type="text" size="small" (click)="ccc(childrenList[scope.index].id)">进入子栏目</el-button>
+      </ng-template>
+    </el-table-column>
+  </el-table>
+
   <ng-template #footer>
-    <el-button (click)="toggle = false">是的</el-button>
+    <el-button (click)="toggle = false">关闭</el-button>
   </ng-template>
 </el-dialog>
