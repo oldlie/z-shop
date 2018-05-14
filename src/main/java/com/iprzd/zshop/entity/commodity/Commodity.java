@@ -35,11 +35,17 @@ public class Commodity {
     private Date createAt;
     private Date updateAt;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_tag",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private List<Tag> tags;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "t_commodity_spec_map",
+            joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "spec_id", referencedColumnName = "id"))
+    private List<Specification> specifications;
 
     public long getId() {
         return id;
@@ -143,5 +149,13 @@ public class Commodity {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<Specification> getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(List<Specification> specifications) {
+        this.specifications = specifications;
     }
 }
