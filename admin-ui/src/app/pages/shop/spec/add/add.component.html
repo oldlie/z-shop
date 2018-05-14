@@ -1,61 +1,73 @@
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.title" placeholder="规格名称"></el-input>
-  </div>
-</div>
+<div class="form-horizontal container-fluid">
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.breed" placeholder="品种"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.title" placeholder="规格名称"></el-input>
+    </div>
+    <label class="col-sm-1 control-label" style="text-align: left;">
+      <span class="text-danger">*</span>
+    </label>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.origin" placeholder="原产地"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.breed" placeholder="品种"></el-input>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.feature" placeholder="特征"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.origin" placeholder="原产地"></el-input>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.spec" placeholder="规格"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.feature" placeholder="特征"></el-input>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [(model)]="spec.store" placeholder="存储方式"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.spec" placeholder="规格"></el-input>
+    </div>
+    <label class="col-sm-1 control-label" style="text-align: left;">
+      <span class="text-danger">*</span>
+    </label>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [model]="spec.productDatetime" placeholder="生产/捕捞/采摘日期"></el-input>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [(model)]="spec.store" placeholder="存储方式"></el-input>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <label>价格：</label>
-    <el-input-number [(model)]="spec.price" [min]="1"></el-input-number>
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <el-input [model]="spec.productDatetime" placeholder="生产/捕捞/采摘日期"></el-input>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <label>库存：</label>
-    <el-input-number [model]="spec.inventory" [min]="1" [max]="9999"></el-input-number>
+  <div class="form-group">
+    <div class="col-sm-12 col-md-9">
+      <label>价格：</label>
+      <el-input-number [(model)]="spec.price" [min]="1"></el-input-number>
+      <span class="text-danger">*</span>
+    </div>
   </div>
-</div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="24">
-    <el-button type="primary">保存</el-button>
+  <div class="form-group">
+    <div class="col-sm-12 col-md-9">
+      <label>库存：</label>
+      <el-input-number [(model)]="spec.inventory" [min]="1" [max]="9999"></el-input-number>
+      <span class="text-danger">*</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+      <div class="col-sm-12 col-md-9">
+        <el-button type="primary" (click)="save()">保存</el-button>
+      </div>
   </div>
 </div>
+<!--./form-->

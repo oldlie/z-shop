@@ -1,4 +1,4 @@
-package com.iprzd.zshop.service;
+package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.controller.admin.request.ListRequest;
 import com.iprzd.zshop.controller.admin.request.commodity.SpecListByTitleRequest;

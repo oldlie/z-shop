@@ -4,31 +4,31 @@ import com.iprzd.zshop.controller.admin.request.IdRequest;
 import com.iprzd.zshop.controller.response.BaseResponse;
 import com.iprzd.zshop.controller.response.CommodityMenuListResponse;
 import com.iprzd.zshop.entity.commodity.Menu;
-import com.iprzd.zshop.service.CommodityMenuService;
+import com.iprzd.zshop.service.commodity.MenuService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/commodity/menu")
 public class MenuController {
 
-    private CommodityMenuService commodityMenuService;
+    private MenuService menuService;
 
-    public MenuController(CommodityMenuService commodityMenuService) {
-        this.commodityMenuService = commodityMenuService;
+    public MenuController(MenuService menuService) {
+        this.menuService = menuService;
     }
 
     @PostMapping("/store")
     public BaseResponse store(@RequestBody Menu menu) {
-        return this.commodityMenuService.store(menu);
+        return this.menuService.store(menu);
     }
 
     @PostMapping("/delete")
     public BaseResponse delete(@RequestBody IdRequest request) {
-        return this.commodityMenuService.delete(request.getId());
+        return this.menuService.delete(request.getId());
     }
 
     @GetMapping("/children")
     public CommodityMenuListResponse findByParentId(@RequestParam("id") long id) {
-        return this.commodityMenuService.findByParentId(id);
+        return this.menuService.findByParentId(id);
     }
 }

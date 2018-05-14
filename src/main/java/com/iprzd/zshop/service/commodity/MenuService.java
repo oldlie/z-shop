@@ -1,4 +1,4 @@
-package com.iprzd.zshop.service;
+package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.controller.response.BaseResponse;
 import com.iprzd.zshop.controller.response.CommodityMenuListResponse;
@@ -12,11 +12,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class CommodityMenuService {
+public class MenuService {
 
     private MenuRepository menuRepository;
 
-    public CommodityMenuService(MenuRepository menuRepository) {
+    public MenuService(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
     }
 

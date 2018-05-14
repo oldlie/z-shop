@@ -1,4 +1,4 @@
-package com.iprzd.zshop.service;
+package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
