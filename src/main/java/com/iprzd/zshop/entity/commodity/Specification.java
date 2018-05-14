@@ -4,11 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "t_commodity_spec")
@@ -28,6 +26,8 @@ public class Specification {
     private String productDatetime;
     private BigDecimal price;
     private int inventory;
+    @ManyToMany(mappedBy = "specifications")
+    private List<Commodity> commodities;
 
     public long getId() {
         return id;
@@ -115,5 +115,13 @@ public class Specification {
 
     public void setInventory(int inventory) {
         this.inventory = inventory;
+    }
+
+    public List<Commodity> getCommodities() {
+        return commodities;
+    }
+
+    public void setCommodities(List<Commodity> commodities) {
+        this.commodities = commodities;
     }
 }

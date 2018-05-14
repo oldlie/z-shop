@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class CommodityMenuService {
@@ -64,6 +65,15 @@ public class CommodityMenuService {
             response.setStatus(StatusCode.DELETE_COMMODITY_MENU_FAILED);
             response.setMessage("含有下级栏目，还不能删除。");
             return response;
+        }
+
+        Optional<Menu> optional = this.menuRepository.findById(menu.getParentId());
+        if (optional.isPresent()) {
+            // 有父节点的话，更新父节点计数
+            Menu parent = optional.get();
+            int children = parent.getChildren() - 1;
+            parent.setChildren(children <= 0 ? 0 : children);
+            this.menuRepository.save(parent);
         }
 
         this.menuRepository.delete(menu);
