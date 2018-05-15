@@ -2,7 +2,7 @@ package com.iprzd.zshop.controller.admin.commodity;
 
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
-import com.iprzd.zshop.http.response.admin.CommodityMenuListResponse;
+import com.iprzd.zshop.http.response.admin.commodity.MenuListResponse;
 import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.service.commodity.MenuService;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class MenuController {
     }
 
     @GetMapping("/children")
-    public CommodityMenuListResponse findByParentId(@RequestParam("id") long id) {
+    public MenuListResponse findByParentId(@RequestParam("id") long id) {
         return this.menuService.findByParentId(id);
     }
 }

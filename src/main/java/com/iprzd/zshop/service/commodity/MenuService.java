@@ -1,7 +1,7 @@
 package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.http.response.BaseResponse;
-import com.iprzd.zshop.http.response.admin.CommodityMenuListResponse;
+import com.iprzd.zshop.http.response.admin.commodity.MenuListResponse;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.repository.commodity.MenuRepository;
@@ -102,8 +102,8 @@ public class MenuService {
         return response;
     }
 
-    public CommodityMenuListResponse findByParentId(long parentId) {
-        CommodityMenuListResponse response = new CommodityMenuListResponse();
+    public MenuListResponse findByParentId(long parentId) {
+        MenuListResponse response = new MenuListResponse();
         response.setList(this.menuRepository.findByParentId(parentId));
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
