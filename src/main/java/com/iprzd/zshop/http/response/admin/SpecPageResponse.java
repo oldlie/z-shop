@@ -1,5 +1,6 @@
-package com.iprzd.zshop.controller.admin.response;
+package com.iprzd.zshop.http.response.admin;
 
+import com.iprzd.zshop.http.response.PageResponse;
 import com.iprzd.zshop.entity.commodity.Specification;
 
 import java.util.List;

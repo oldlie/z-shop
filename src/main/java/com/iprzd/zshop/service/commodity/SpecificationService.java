@@ -1,10 +1,10 @@
 package com.iprzd.zshop.service.commodity;
 
-import com.iprzd.zshop.controller.admin.request.ListRequest;
-import com.iprzd.zshop.controller.admin.request.commodity.SpecListByTitleRequest;
-import com.iprzd.zshop.controller.admin.response.AdminResponse;
-import com.iprzd.zshop.controller.admin.response.SpecPageResponse;
-import com.iprzd.zshop.controller.response.StatusCode;
+import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
+import com.iprzd.zshop.http.response.admin.SpecPageResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.repository.commodity.SpecificationRepository;
 import org.jetbrains.annotations.NotNull;
@@ -23,8 +23,8 @@ public class SpecificationService {
         this.repository = specificationRepository;
     }
 
-    public AdminResponse store(Specification specification) {
-        AdminResponse response = new AdminResponse();
+    public BaseResponse store(Specification specification) {
+        BaseResponse response = new BaseResponse();
         Specification tag;
         if (specification.getId() > 0) {
             tag = this.repository.findById(specification.getId()).get();
@@ -47,8 +47,8 @@ public class SpecificationService {
         return response;
     }
 
-    public AdminResponse delete(long id) {
-        AdminResponse response = new AdminResponse();
+    public BaseResponse delete(long id) {
+        BaseResponse response = new BaseResponse();
         Optional<Specification> optional = this.repository.findById(id);
         if (!optional.isPresent()) {
             response.setStatus(StatusCode.DELETE_COMMODITY_SPEC_FAILED);
@@ -57,7 +57,7 @@ public class SpecificationService {
         }
 
         this.repository.delete(optional.get());
-        return StatusCode.adminSuccessResponse(response);
+        return StatusCode.successResponse(response);
     }
 
     public SpecPageResponse findAll(ListRequest request) {

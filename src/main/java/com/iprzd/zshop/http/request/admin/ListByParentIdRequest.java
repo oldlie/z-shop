@@ -1,6 +1,6 @@
-package com.iprzd.zshop.controller.admin.request.tag;
+package com.iprzd.zshop.http.request.admin;
 
-import com.iprzd.zshop.controller.admin.request.ListRequest;
+import com.iprzd.zshop.http.request.ListRequest;
 
 public class ListByParentIdRequest extends ListRequest {
     private long parentId;

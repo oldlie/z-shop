@@ -1,4 +1,4 @@
-package com.iprzd.zshop.controller.admin.request;
+package com.iprzd.zshop.http.request;
 
 import org.springframework.data.domain.Sort;
 

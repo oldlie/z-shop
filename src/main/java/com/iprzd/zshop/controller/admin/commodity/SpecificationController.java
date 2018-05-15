@@ -1,11 +1,11 @@
 package com.iprzd.zshop.controller.admin.commodity;
 
-import com.iprzd.zshop.controller.admin.request.IdRequest;
-import com.iprzd.zshop.controller.admin.request.ListRequest;
-import com.iprzd.zshop.controller.admin.request.commodity.SpecListByTitleRequest;
-import com.iprzd.zshop.controller.admin.request.commodity.SpecificationRequest;
-import com.iprzd.zshop.controller.admin.response.AdminResponse;
-import com.iprzd.zshop.controller.admin.response.SpecPageResponse;
+import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
+import com.iprzd.zshop.http.request.admin.commodity.SpecificationRequest;
+import com.iprzd.zshop.http.response.admin.SpecPageResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.service.commodity.SpecificationService;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class SpecificationController {
     }
 
     @PostMapping("/store")
-    public AdminResponse store(@RequestBody SpecificationRequest request) {
+    public BaseResponse store(@RequestBody SpecificationRequest request) {
         Specification specification = new Specification();
         specification.setId(request.getId());
         specification.setTitle(request.getTitle());
@@ -38,7 +38,7 @@ public class SpecificationController {
     }
 
     @PostMapping("/delete")
-    public AdminResponse delete(@RequestBody IdRequest request) {
+    public BaseResponse delete(@RequestBody IdRequest request) {
         return this.specificationService.delete(request.getId());
     }
 

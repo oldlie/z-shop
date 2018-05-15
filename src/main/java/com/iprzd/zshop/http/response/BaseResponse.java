@@ -1,4 +1,4 @@
-package com.iprzd.zshop.controller.response;
+package com.iprzd.zshop.http.response;
 
 public class BaseResponse {
     private int status;
@@ -19,4 +19,5 @@ public class BaseResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

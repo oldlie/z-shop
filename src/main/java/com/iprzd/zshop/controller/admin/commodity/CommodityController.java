@@ -1,6 +1,6 @@
 package com.iprzd.zshop.controller.admin.commodity;
 
-import com.iprzd.zshop.controller.response.BaseResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.service.commodity.CommodityService;
 import org.slf4j.Logger;

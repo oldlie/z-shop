@@ -1,6 +1,6 @@
-package com.iprzd.zshop.controller.admin.request.commodity;
+package com.iprzd.zshop.http.request.admin.commodity;
 
-import com.iprzd.zshop.controller.admin.request.ListRequest;
+import com.iprzd.zshop.http.request.ListRequest;
 
 public class SpecListByTitleRequest extends ListRequest {
 

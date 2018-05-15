@@ -1,4 +1,4 @@
-package com.iprzd.zshop.controller.admin.request.commodity;
+package com.iprzd.zshop.http.request.admin.commodity;
 
 import java.math.BigDecimal;
 

@@ -1,10 +1,11 @@
-package com.iprzd.zshop.controller.admin.response;
+package com.iprzd.zshop.http.response.admin;
 
+import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.Tag;
 
 import java.util.List;
 
-public class TagPageResponse extends AdminResponse {
+public class TagPageResponse extends BaseResponse {
     private int total;
     private int pages;
     private List<Tag> tagList;

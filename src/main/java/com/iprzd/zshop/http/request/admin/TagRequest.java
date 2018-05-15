@@ -1,4 +1,4 @@
-package com.iprzd.zshop.controller.admin.request.tag;
+package com.iprzd.zshop.http.request.admin;
 
 public class TagRequest {
     private long id;
