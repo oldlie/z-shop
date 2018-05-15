@@ -10,13 +10,14 @@ import { CoreService } from './services/core.service';
 export class AppComponent implements OnInit {
   title = 'z-shop';
   defaultAsideIndex = '6-1';
+  isLogin = false;
 
   private startPageUrl = '/login';
 
-  constructor(private core: CoreService, private router: Router) {}
+  constructor(public core: CoreService, private router: Router) {}
 
   ngOnInit() {
-
+    console.log(this.isLogin);
     if (this.core.isLogin) {
       console.log('"wo le go qu"');
       console.log('ready goto login page!');

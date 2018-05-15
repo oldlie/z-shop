@@ -53,7 +53,10 @@ export class MenuComponent implements OnInit {
   }
 
   save() {
-    console.log(this.parentId);
+    if (this.menu === '') {
+      this.message.warning('请填写栏目名称。');
+      return;
+    }
     this.commodity.saveMenu(this.menu, this.parentId, this.comment).then(res => {
       if (res.status === 0) {
         this.message.success(`[${this.menu}]已经保存`);

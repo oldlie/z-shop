@@ -1,10 +1,10 @@
 package com.iprzd.zshop.service;
 
-import com.iprzd.zshop.controller.admin.request.ListRequest;
-import com.iprzd.zshop.controller.admin.request.tag.TagRequest;
-import com.iprzd.zshop.controller.admin.response.AdminResponse;
-import com.iprzd.zshop.controller.admin.response.TagPageResponse;
-import com.iprzd.zshop.controller.response.StatusCode;
+import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.request.admin.TagRequest;
+import com.iprzd.zshop.http.response.admin.TagPageResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.repository.TagRepository;
 import org.springframework.data.domain.Page;
@@ -20,8 +20,8 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public AdminResponse save(TagRequest request) {
-        AdminResponse response = new AdminResponse();
+    public BaseResponse save(TagRequest request) {
+        BaseResponse response = new BaseResponse();
         if (isTitleEmpty(request)) {
             response.setStatus(StatusCode.SAVE_TAG_FAILED);
             response.setMessage("请设置标签名称。");
@@ -46,8 +46,8 @@ public class TagService {
         return response;
     }
 
-    public AdminResponse delete(long id) {
-        AdminResponse response = new AdminResponse();
+    public BaseResponse delete(long id) {
+        BaseResponse response = new BaseResponse();
         this.tagRepository.deleteById(id);
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));

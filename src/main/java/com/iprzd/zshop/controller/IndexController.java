@@ -1,13 +1,10 @@
 package com.iprzd.zshop.controller;
 
-import com.iprzd.zshop.controller.response.BaseResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.core.userdetails.UserDetailsResourceFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,13 +1,12 @@
 package com.iprzd.zshop.service.commodity;
 
-import com.iprzd.zshop.controller.response.BaseResponse;
-import com.iprzd.zshop.controller.response.CommodityMenuListResponse;
-import com.iprzd.zshop.controller.response.StatusCode;
+import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.admin.commodity.MenuListResponse;
+import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.repository.commodity.MenuRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,12 +22,27 @@ public class MenuService {
     public BaseResponse store(Menu menu) {
         BaseResponse response = new BaseResponse();
 
+        if ("".equals(menu.getTitle())) {
+            response.setStatus(StatusCode.SAVE_COMMODITY_MENU_FAILED);
+            response.setMessage("请填写栏目名称。");
+            return response;
+        }
+
+        Optional<Menu> optional;
+
         Menu commodityMenu;
         if (menu.getId() > 0) {
-            commodityMenu = this.menuRepository.findById(menu.getId()).get();
-            commodityMenu.setTitle(menu.getTitle());
-            commodityMenu.setParentId(menu.getParentId());
-            commodityMenu.setComment(menu.getComment());
+            optional = this.menuRepository.findById(menu.getId());
+            if (optional.isPresent()) {
+                commodityMenu = optional.get();
+                commodityMenu.setTitle(menu.getTitle());
+                commodityMenu.setParentId(menu.getParentId());
+                commodityMenu.setComment(menu.getComment());
+            } else {
+                response.setStatus(StatusCode.SAVE_COMMODITY_MENU_FAILED);
+                response.setMessage("这个栏目已经被其他用户删除，您可以重新添加这个栏目。");
+                return response;
+            }
         } else {
             commodityMenu = menu;
         }
@@ -36,9 +50,12 @@ public class MenuService {
         menu = this.menuRepository.save(commodityMenu);
         if (menu.getId() > 0) {
             if (menu.getParentId() > 0) {
-                Menu parentMenu = this.menuRepository.findById(menu.getParentId()).get();
-                parentMenu.setChildren(parentMenu.getChildren() + 1);
-                this.menuRepository.save(parentMenu);
+                optional = this.menuRepository.findById(menu.getParentId());
+                if (optional.isPresent()) {
+                    Menu parentMenu = optional.get();
+                    parentMenu.setChildren(parentMenu.getChildren() + 1);
+                    this.menuRepository.save(parentMenu);
+                }
             }
 
             response.setStatus(StatusCode.SUCCESS);
@@ -103,8 +120,8 @@ public class MenuService {
         return response;
     }
 
-    public CommodityMenuListResponse findByParentId(long parentId) {
-        CommodityMenuListResponse response = new CommodityMenuListResponse();
+    public MenuListResponse findByParentId(long parentId) {
+        MenuListResponse response = new MenuListResponse();
         response.setList(this.menuRepository.findByParentId(parentId));
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));

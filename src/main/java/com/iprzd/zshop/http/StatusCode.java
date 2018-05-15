@@ -1,6 +1,6 @@
-package com.iprzd.zshop.controller.response;
+package com.iprzd.zshop.http;
 
-import com.iprzd.zshop.controller.admin.response.AdminResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class StatusCode {
         return map.get(code);
     }
 
-    public static AdminResponse adminSuccessResponse(@NotNull AdminResponse response) {
+    public static BaseResponse successResponse(@NotNull BaseResponse response) {
         response.setStatus(SUCCESS);
         response.setMessage("操作成功。");
         return response;

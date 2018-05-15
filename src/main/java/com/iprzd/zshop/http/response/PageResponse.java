@@ -1,6 +1,6 @@
-package com.iprzd.zshop.controller.admin.response;
+package com.iprzd.zshop.http.response;
 
-public class PageResponse extends AdminResponse {
+public class PageResponse extends BaseResponse {
     private int total;
     private int pages;
 

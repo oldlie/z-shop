@@ -1,10 +1,10 @@
 package com.iprzd.zshop.controller.admin;
 
-import com.iprzd.zshop.controller.admin.request.IdRequest;
-import com.iprzd.zshop.controller.admin.request.ListRequest;
-import com.iprzd.zshop.controller.admin.request.tag.TagRequest;
-import com.iprzd.zshop.controller.admin.response.AdminResponse;
-import com.iprzd.zshop.controller.admin.response.TagPageResponse;
+import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.request.admin.TagRequest;
+import com.iprzd.zshop.http.response.admin.TagPageResponse;
+import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.service.TagService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class TagController {
     }
 
     @PostMapping("/store")
-    public AdminResponse store(@RequestBody TagRequest request) {
+    public BaseResponse store(@RequestBody TagRequest request) {
         return tagService.save(request);
     }
 
@@ -32,7 +32,7 @@ public class TagController {
     }
 
     @PostMapping("/delete")
-    public AdminResponse delete(@RequestBody IdRequest request) {
+    public BaseResponse delete(@RequestBody IdRequest request) {
         return this.tagService.delete(request.getId());
     }
 }
