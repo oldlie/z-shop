@@ -1,9 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommodityService } from '../../../../services/commodity.service';
 
 @Component({
   selector: 'app-commodity-spec-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css'],
+  providers: [
+    CommodityService,
+  ]
 })
 export class ListComponent implements OnInit {
 
@@ -12,15 +16,17 @@ export class ListComponent implements OnInit {
 
   tableData: any[];
 
-  constructor() { }
+  constructor(private commodity: CommodityService) { }
 
   ngOnInit() {
-    this.tableData = [
-      {id: 1, title: 'title 1', spec: 'spec 1', price: 1.00, inventory: 10},
-      {id: 2, title: 'title 2', spec: 'spec 2', price: 11.00, inventory: 20},
-      {id: 3, title: 'title 3', spec: 'spec 3', price: 11.00, inventory: 30},
-      {id: 4, title: 'title 4', spec: 'spec 4', price: 111.00, inventory: 40},
-    ];
+    this.tableData = [];
+    this.commodity.listSpec(0, 10).then(res => {
+      if (res.status === 0) {
+        this.tableData = res.list;
+      } else {
+        console.log(res.message);
+      }
+    });
   }
 
   chose(data: any) {

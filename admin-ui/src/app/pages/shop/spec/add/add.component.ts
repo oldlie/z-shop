@@ -48,5 +48,13 @@ export class AddComponent implements OnInit {
       this.notify.warning('请填写库存。');
       return;
     }
+
+    this.commodity.saveSpec(this.spec).then(res => {
+      if (res.status === 0) {
+        this.notify.success('规格已经保存了。');
+      } else {
+        this.notify.warning(res.message);
+      }
+    });
   }
 }
