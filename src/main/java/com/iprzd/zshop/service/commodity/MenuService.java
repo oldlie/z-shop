@@ -22,12 +22,27 @@ public class MenuService {
     public BaseResponse store(Menu menu) {
         BaseResponse response = new BaseResponse();
 
+        if ("".equals(menu.getTitle())) {
+            response.setStatus(StatusCode.SAVE_COMMODITY_MENU_FAILED);
+            response.setMessage("请填写栏目名称。");
+            return response;
+        }
+
+        Optional<Menu> optional;
+
         Menu commodityMenu;
         if (menu.getId() > 0) {
-            commodityMenu = this.menuRepository.findById(menu.getId()).get();
-            commodityMenu.setTitle(menu.getTitle());
-            commodityMenu.setParentId(menu.getParentId());
-            commodityMenu.setComment(menu.getComment());
+            optional = this.menuRepository.findById(menu.getId());
+            if (optional.isPresent()) {
+                commodityMenu = optional.get();
+                commodityMenu.setTitle(menu.getTitle());
+                commodityMenu.setParentId(menu.getParentId());
+                commodityMenu.setComment(menu.getComment());
+            } else {
+                response.setStatus(StatusCode.SAVE_COMMODITY_MENU_FAILED);
+                response.setMessage("这个栏目已经被其他用户删除，您可以重新添加这个栏目。");
+                return response;
+            }
         } else {
             commodityMenu = menu;
         }
@@ -35,9 +50,12 @@ public class MenuService {
         menu = this.menuRepository.save(commodityMenu);
         if (menu.getId() > 0) {
             if (menu.getParentId() > 0) {
-                Menu parentMenu = this.menuRepository.findById(menu.getParentId()).get();
-                parentMenu.setChildren(parentMenu.getChildren() + 1);
-                this.menuRepository.save(parentMenu);
+                optional = this.menuRepository.findById(menu.getParentId());
+                if (optional.isPresent()) {
+                    Menu parentMenu = optional.get();
+                    parentMenu.setChildren(parentMenu.getChildren() + 1);
+                    this.menuRepository.save(parentMenu);
+                }
             }
 
             response.setStatus(StatusCode.SUCCESS);
