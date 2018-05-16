@@ -1,7 +1,7 @@
 <div el-row class="ray-row">
   <div el-col span="24">
 
-    <el-table [model]="tableData" height="300px" [scroll-x]="true" center="header" >
+    <el-table [model]="tableData" height="600px" center="header" >
       <el-table-column model-key="title" label="名称"></el-table-column>
       <el-table-column model-key="spec" label="规格"></el-table-column>
       <el-table-column model-key="price" label="价格" width="80"></el-table-column>
@@ -15,5 +15,13 @@
       </el-table-column>
     </el-table>
 
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="sm-12 text-right">
+      <el-pagination [page-count]="total" [small]="small" [model]="page"> </el-pagination>
+    </div>
   </div>
 </div>

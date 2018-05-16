@@ -15,14 +15,20 @@ export class ListComponent implements OnInit {
   commodityId = 0;
 
   tableData: any[];
+  page = 0;
+  total = 0;
+  size = 10;
+  small = true;
 
   constructor(private commodity: CommodityService) { }
 
   ngOnInit() {
     this.tableData = [];
-    this.commodity.listSpec(0, 10).then(res => {
+    this.commodity.listSpec(0, this.size).then(res => {
       if (res.status === 0) {
         this.tableData = res.list;
+        this.total = res.pages;
+        console.log(res);
       } else {
         console.log(res.message);
       }

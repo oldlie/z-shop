@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SpecComponent implements OnInit {
 
-  index = '2';
+  index = '1';
   @Input()
   commodityId: number;
 
