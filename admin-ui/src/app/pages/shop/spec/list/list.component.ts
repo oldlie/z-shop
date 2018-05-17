@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { CommodityService } from '../../../../services/commodity.service';
+import { CommoditySpec } from '../../../../response/commodity';
+import { CommoditySpecVI } from '../../commodity-vi';
+import { ElMessageService } from 'element-angular';
 
 @Component({
   selector: 'app-commodity-spec-list',
@@ -13,6 +16,8 @@ export class ListComponent implements OnInit {
 
   @Input()
   commodityId = 0;
+  @Output()
+  editEvent = new EventEmitter<CommoditySpecVI>();
 
   tableData: any[];
   page = 0;
@@ -20,7 +25,7 @@ export class ListComponent implements OnInit {
   size = 10;
   small = true;
 
-  constructor(private commodity: CommodityService) { }
+  constructor(private commodity: CommodityService, private message: ElMessageService) { }
 
   ngOnInit() {
     this.tableData = [];
@@ -28,22 +33,54 @@ export class ListComponent implements OnInit {
       if (res.status === 0) {
         this.tableData = res.list;
         this.total = res.pages;
-        console.log(res);
+        console.log('total', this.total);
       } else {
         console.log(res.message);
       }
     });
   }
 
-  chose(data: any) {
-    console.log('chose', this.tableData[data.index]);
+  chose(data: CommoditySpec) {
+    console.log('chose', data);
   }
 
-  update(data: any) {
+  edit(data: CommoditySpec) {
     console.log('update', data);
+    const vi = {
+      id: data.id,
+      title: data.title,
+      breed: data.breed,
+      origin: data.origin,
+      feature: data.feature,
+      spec: data.spec,
+      store: data.store,
+      productDatetime: data.productDatetime,
+      price: data.price,
+      inventory: data.inventory
+    } as CommoditySpecVI;
+    this.editEvent.emit(vi);
   }
 
-  delete(data: any) {
-    console.log('delete', data);
+  delete(data: CommoditySpec) {
+    this.total = 0; // 刷新分页组件
+    this.commodity.deleteSpec(data.id).then(res => {
+      if (res.status === 0) {
+        this.loadData(this.page);
+      } else {
+        this.message.warning(res.message);
+      }
+    });
+  }
+
+  loadData(page: number) {
+    this.commodity.listSpec(page, this.size).then(res => {
+      this.tableData = [];
+      if (res.status === 0) {
+        this.tableData = res.list;
+        this.total = res.pages;
+      } else {
+        console.log(res.message);
+      }
+    });
   }
 }

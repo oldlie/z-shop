@@ -23,6 +23,7 @@ import { ListArticleComponent } from './pages/article/list-article/list-article.
 import { CoreService } from './services/core.service';
 import { TagComponent } from './pages/tag/tag.component';
 import { MenuComponent } from './pages/shop/menu/menu.component';
+import { PaginationComponent } from './widget/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MenuComponent } from './pages/shop/menu/menu.component';
     ListArticleComponent,
     TagComponent,
     MenuComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,7 @@ export class CommodityService {
 
   // region Spec
 
-  saveSpec(spec: CommoditySpecVI) {
+  saveSpec(spec: CommoditySpecVI): Promise<Base> {
     const url = `${this.core.UrlPrefix}/admin/commodity/spec/store`;
     return this.core.post(url, spec).toPromise().then(res => res as Base);
   }
@@ -47,5 +47,9 @@ export class CommodityService {
       .then(res => res as CommoditySpecListResponse);
   }
 
+  deleteSpec(id: number): Promise<Base> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/spec/delete`;
+    return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
+  }
   // endregion
 }

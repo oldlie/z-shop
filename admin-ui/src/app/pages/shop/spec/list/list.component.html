@@ -8,9 +8,9 @@
       <el-table-column model-key="inventory" label="库存" width="80"></el-table-column>
       <el-table-column label="操作" width="140">
         <ng-template #slot let-scope="scope">
-          <el-button type="text" size="small" (click)="chose(scope)">选择</el-button>
-          <el-button *ngIf="commodityId == 0" type="text" size="small" (click)="update(scope)">修改</el-button>
-          <el-button *ngIf="commodityId == 0" type="text" size="small" (click)="delete(scope)">删除</el-button>
+          <el-button *ngIf="commodityId > 0" type="text" size="small" (click)="chose(tableData[scope.index])">选择</el-button>
+          <el-button *ngIf="commodityId === 0" type="text" size="small" (click)="edit(tableData[scope.index])">修改</el-button>
+          <el-button *ngIf="commodityId === 0" type="text" size="small" (click)="delete(tableData[scope.index])">删除</el-button>
         </ng-template>
       </el-table-column>
     </el-table>
@@ -18,10 +18,13 @@
   </div>
 </div>
 
-<div class="container-fluid">
+<div *ngIf="total > 0" class="container-fluid">
   <div class="row">
     <div class="sm-12 text-right">
-      <el-pagination [page-count]="total" [small]="small" [model]="page"> </el-pagination>
+      <app-pagination 
+      [page]="page" 
+      [pages]="total" 
+      (pageIndexChangeEvent)="loadData($event)"></app-pagination>
     </div>
   </div>
 </div>

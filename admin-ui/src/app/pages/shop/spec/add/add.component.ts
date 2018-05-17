@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommoditySpecVI } from '../../commodity-vi';
 import { ElNotificationService } from 'element-angular';
 import { CommodityService } from '../../../../services/commodity.service';
@@ -13,18 +13,23 @@ import { CommodityService } from '../../../../services/commodity.service';
 })
 export class AddComponent implements OnInit {
 
+  @Input()
   spec: CommoditySpecVI;
 
   constructor(private commodity: CommodityService,
      private notify: ElNotificationService) { }
 
   ngOnInit() {
-    this.spec = {
-      title: '',
-      spec: '',
-      price: 1,
-      inventory: 0
-    };
+
+    if (!this.spec) {
+      this.spec = {
+        title: '',
+        spec: '',
+        price: 1,
+        inventory: 0
+      };
+    }
+
   }
 
   save() {
