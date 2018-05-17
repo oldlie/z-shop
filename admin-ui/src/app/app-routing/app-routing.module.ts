@@ -15,7 +15,7 @@ const appRoutes = [
   {path: 'home', component: HomeComponent},
   {path: 'commodity/index', component: CommodityComponent},
   {path: 'commodity/menu', component: CommodityMenuComponent},
-  {path: 'commodity/item/add', component: AddCommodityComponent},
+  {path: 'commodity/add', component: AddCommodityComponent},
   {path: 'commodity/spec', component: SpecComponent},
   {path: 'navigation/:t', component: NavigationComponent},
   {path: 'tag', component: TagComponent},

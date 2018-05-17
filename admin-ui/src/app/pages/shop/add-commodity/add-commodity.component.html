@@ -1,60 +1,186 @@
-<div class="ray-row">
+<div class="container-fluid">
+
+  <div class="ray-row">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item to="/dashboard">控制面板</el-breadcrumb-item>
-      <el-breadcrumb-item to="/commodity/item/add">添加商品</el-breadcrumb-item>
+      <el-breadcrumb-item to="/commodity/add">添加商品</el-breadcrumb-item>
     </el-breadcrumb>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="16">
+      <el-input [(model)]="commodityVI.title" placeholder="标题"></el-input>
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="16">
+      <el-input [model]="summary" placeholder="简要描述"></el-input>
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="16">
+      <el-input type="textarea" [autosize]="{ minRows: 2, maxRows: 4}" placeholder="注意事项，用于提示特殊情况,可以不填写" [model]="comment">
+      </el-input>
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [model]="comment">
+      </el-input>
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-button (click)="addSpec()">添加规格</el-button>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>规格</th>
+              <th>价格</th>
+              <th>库存</th>
+              <th>操纵</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let spec of specificationList">
+              <td>{{spec.title}}</td>
+              <td>{{spec.spec}}</td>
+              <td>{{spec.price}}</td>
+              <td>{{spec.inventory}}</td>
+              <td>
+                <el-button type="text" size="small" (click)="deleteSpec(spec)">删除</el-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- ./ table-responsive -->
+
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-button (click)="addMenu()">添加导航/类别</el-button>
+    </div>
+  </div>
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-breadcrumb *ngIf="refreshMenu" separator="/">
+        <el-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-button (click)="addTag()">添加标签</el-button>
+
+    </div>
+  </div>
+
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-button type="primary">保存商品</el-button>
+
+    </div>
+  </div>
+
 </div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="16">
-    <el-input [(model)]="commodity.title" placeholder="标题"></el-input>
+<div *ngIf="showSpecDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showSpecDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加/选择规则</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+        <app-commodity-spec [commodityId]="specifciationFlag" (checkSpecEvent)="checkSpecListener($event)"></app-commodity-spec>
+      </div>
+      <!-- ./body -->
+      <div class="modal-footer">
+        <el-button (click)="showSpecDialog = false">关闭</el-button>
+      </div>
+    </div>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="16">
-    <el-input [model]="summary" placeholder="简要描述"></el-input>
+<div *ngIf="showMenuDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showMenuDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加栏目</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+        <el-table [model]="menuSourceList" [stripe]="true">
+          <el-table-column model-key="title" label="栏目" width="140">
+            <ng-template #slot let-scope="scope">
+              <el-button type="text" (click)="cc(menuSourceList[scope.index])">{{menuSourceList[scope.index].title}}</el-button>
+            </ng-template>
+          </el-table-column>
+          <el-table-column model-key="comment" label="备注" width="140">
+          </el-table-column>
+          <el-table-column model-key="children" label="子栏目" width="140">
+            <ng-template #slot let-scope="scope">
+              <el-button *ngIf="menuSourceList[scope.index].children > 0" type="text" size="small" (click)="ccc(menuSourceList[scope.index])">进入子栏目</el-button>
+            </ng-template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <!-- ./body -->
+      <div class="modal-footer">
+        <el-button (click)="checkMenuRoot()">选择根目录</el-button>
+        <el-button (click)="showMenuDialog = false">关闭</el-button>
+      </div>
+    </div>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="16">
-    <el-input type="textarea" [autosize]="{ minRows: 2, maxRows: 4}" placeholder="注意事项，用于提示特殊情况,可以不填写" [model]="comment">
-    </el-input>
+<div *ngIf="showTagDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showTagDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加标签</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+
+        <div class="form">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="查找tag">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+            <!-- /input-group -->
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <el-button (click)="showTagDialog = false">关闭</el-button>
+      </div>
+    </div>
+
+
   </div>
 </div>
-
-<div el-row class="ray-row">
-  <div el-col xs="24" md="24">
-    <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [model]="comment">
-    </el-input>
-  </div>
-</div>
-
-<div el-row class="ray-row">
-  <div el-col xs="24" md="24">
-    <el-button (click)="addSpec()">添加规格</el-button>
-
-  </div>
-</div>
-
-<div el-row class="ray-row">
-  <div el-col xs="24" md="24">
-    <el-button-group>
-
-        <el-button>添加导航/类别</el-button>
-        <el-button>添加标签</el-button>
-    </el-button-group>
-    <el-button type="primary">保存商品</el-button>
-  </div>
-</div>
-
-<el-dialog [(visible)]="showSpecDialog">
-  <ng-template #title>
-    <span>添加/选择规则</span>
-  </ng-template>
-  <app-commodity-spec></app-commodity-spec>
-  <ng-template #footer>
-    <el-button (click)="showSpecDialog = false">关闭</el-button>
-  </ng-template>
-</el-dialog>

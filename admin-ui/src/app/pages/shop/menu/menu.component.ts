@@ -114,4 +114,10 @@ export class MenuComponent implements OnInit {
       }
     });
   }
+
+  closeDialog() {
+    this.parentId = 0;
+    this.parent = '根目录';
+    this.toggle = false;
+  }
 }

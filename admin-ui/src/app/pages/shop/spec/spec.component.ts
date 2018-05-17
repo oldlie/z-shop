@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommoditySpecVI } from '../commodity-vi';
 
 @Component({
@@ -12,6 +12,8 @@ export class SpecComponent implements OnInit {
   @Input()
   commodityId: number;
   editSpecification: CommoditySpecVI;
+  @Output()
+  checkSpecEvent = new EventEmitter<CommoditySpecVI>();
 
   constructor() { }
 
@@ -27,5 +29,9 @@ export class SpecComponent implements OnInit {
     this.editSpecification = specification;
     console.log('editSpecification', specification);
     this.index = '2';
+  }
+
+  checkSpecListener(specification: CommoditySpecVI) {
+    this.checkSpecEvent.emit(specification);
   }
 }

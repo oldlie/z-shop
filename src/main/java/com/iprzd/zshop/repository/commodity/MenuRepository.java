@@ -10,4 +10,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     @Query("from com.iprzd.zshop.entity.commodity.Menu where parentId=?1")
     List<Menu> findByParentId(long id);
+
+    @Query("from com.iprzd.zshop.entity.commodity.Menu where id in ?1")
+    List<Menu> findAllByIdIn(final List<Long> ids);
 }

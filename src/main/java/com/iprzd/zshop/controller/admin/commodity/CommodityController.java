@@ -1,5 +1,6 @@
 package com.iprzd.zshop.controller.admin.commodity;
 
+import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.service.commodity.CommodityService;
@@ -23,17 +24,7 @@ public class CommodityController {
     }
 
     @PostMapping("/store")
-    public BaseResponse store(Commodity commodity) {
-        BaseResponse response = new BaseResponse();
-        commodity = this.commodityService.store(commodity);
-        if (commodity.getId() > 0) {
-            response.setStatus(0);
-        } else {
-            response.setStatus(2);
-            response.setMessage("保存商品操作未成功。");
-            logger.debug("保存商品操作未成功");
-            logger.debug(commodity.toString());
-        }
-        return response;
+    public BaseResponse store(CommodityRequest request) {
+        return this.commodityService.store(request);
     }
 }

@@ -2,15 +2,17 @@
     <app-login></app-login>
 </div>
 <ng-template #elseBlock>
-    <div el-container direction="vertical" class="demo-box">
-        <div el-header>
+    <div class="container-fluid">
+        <div class="row">
             <app-main-navigation></app-main-navigation>
         </div>
-        <div el-container  style="padding: 0 20px;">
-            <div el-aside style="min-height: 800px">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-3 col-lg-2">
                 <app-main-aside [index]="defaultAsideIndex"></app-main-aside>
             </div>
-            <div el-container direction="vertical">
+
+            <div class="col-sm-12 col-md-9 col-lg-10" style="box-sizing: border-box; overflow-y: auto;">
                 <router-outlet></router-outlet>
             </div>
         </div>

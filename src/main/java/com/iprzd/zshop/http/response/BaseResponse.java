@@ -2,7 +2,7 @@ package com.iprzd.zshop.http.response;
 
 public class BaseResponse {
     private int status;
-    private String message;
+    private String message = "SUCCESS";
 
     public int getStatus() {
         return status;

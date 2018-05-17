@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   commodityId = 0;
   @Output()
   editEvent = new EventEmitter<CommoditySpecVI>();
+  @Output()
+  checkEvent = new EventEmitter<CommoditySpecVI>();
 
   tableData: any[];
   page = 0;
@@ -28,6 +30,7 @@ export class ListComponent implements OnInit {
   constructor(private commodity: CommodityService, private message: ElMessageService) { }
 
   ngOnInit() {
+    console.log('commodity list', this.commodityId);
     this.tableData = [];
     this.commodity.listSpec(0, this.size).then(res => {
       if (res.status === 0) {
@@ -42,10 +45,10 @@ export class ListComponent implements OnInit {
 
   chose(data: CommoditySpec) {
     console.log('chose', data);
+    this.checkEvent.emit(data);
   }
 
   edit(data: CommoditySpec) {
-    console.log('update', data);
     const vi = {
       id: data.id,
       title: data.title,

@@ -9,5 +9,7 @@
   <app-commodity-spec-add [spec]="editSpecification"></app-commodity-spec-add>
 </div>
 <div el-container direction="vertical" *ngIf="index === '1'">
-  <app-commodity-spec-list (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
+  <app-commodity-spec-list  [commodityId]="commodityId"
+    (checkEvent)="checkSpecListener($event)"
+    (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
 </div>

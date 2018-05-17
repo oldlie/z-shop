@@ -47,6 +47,12 @@ public class Commodity {
             inverseJoinColumns = @JoinColumn(name = "spec_id", referencedColumnName = "id"))
     private List<Specification> specifications;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "t_commodity_menu_map",
+            joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"))
+    private List<Menu> menus;
+
     public long getId() {
         return id;
     }
@@ -157,5 +163,13 @@ public class Commodity {
 
     public void setSpecifications(List<Specification> specifications) {
         this.specifications = specifications;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }
