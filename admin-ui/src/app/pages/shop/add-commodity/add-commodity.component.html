@@ -82,7 +82,14 @@
   <div el-row class="ray-row">
     <div el-col xs="24" md="24">
       <el-button (click)="addTag()">添加标签</el-button>
+    </div>
+  </div>
 
+  <div el-row class="ray-row">
+    <div el-col xs="24" md="24">
+      <el-tag *ngFor="let tag of tagCheckedList" [closable]="true" [type]="tag.type" (click)="checkTag(tag)" (close)="deleteTag(tag)">
+        {{tag.title}}
+      </el-tag>
     </div>
   </div>
 
@@ -161,17 +168,43 @@
         <h4 class="modal-title">添加标签</h4>
       </div>
       <!-- ./header -->
-      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+      <div class="modal-body">
 
         <div class="form">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="查找tag">
+              <input type="text" name="tagTitle" class="form-control" placeholder="查找tag" [(ngModel)]="tagTitle">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="button">Go!</button>
               </span>
             </div>
             <!-- /input-group -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <el-tag *ngFor="let tag of tagList" [type]="tag.type" (click)="checkTag(tag)">
+              {{tag.title}}
+            </el-tag>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <nav aria-label="...">
+              <ul class="pager">
+                <li *ngIf="tagPage > 1" class="previous" [class.disabled]="tagPage === 0">
+                  <a (click)="prevTagPage()">
+                    <span aria-hidden="true">&larr;</span> 上翻页</a>
+                </li>
+                <li *ngIf="tagPage > tagPages - 1" class="next" [class.disabled]="tagPages === tagPage + 1">
+                  <a (click="nextTagPage()" )>下翻页
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
 

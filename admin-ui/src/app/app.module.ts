@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { MainNavigationComponent } from './widget/main-navigation/main-navigation.component';
 import { MainAsideComponent } from './widget/main-aside/main-aside.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -51,6 +51,7 @@ import { PaginationComponent } from './widget/pagination/pagination.component';
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     ElModule.forRoot(),
   ],

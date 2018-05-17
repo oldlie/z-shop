@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommodityStatus, CommodityVI, CommoditySpecVI } from '../commodity-vi';
 import { ElNotificationService } from 'element-angular';
 import { CommoditySpec, CommodityMenu } from '../../../response/commodity';
-import { Tag } from '../../../response/tag';
+import { Tag, TagList } from '../../../response/tag';
 import { CommodityService } from '../../../services/commodity.service';
+import { TagService } from '../../../services/tag.service';
 
 @Component({
   selector: 'app-add-commodity',
@@ -11,6 +12,7 @@ import { CommodityService } from '../../../services/commodity.service';
   styleUrls: ['./add-commodity.component.css'],
   providers: [
     CommodityService,
+    TagService,
   ]
 })
 export class AddCommodityComponent implements OnInit {
@@ -25,7 +27,7 @@ export class AddCommodityComponent implements OnInit {
   status = CommodityStatus.init;
   showSpecDialog = false;
   showMenuDialog = false;
-  showTagDialog = true;
+  showTagDialog = false;
 
   specifciationFlag = 1;
   specificationList = new Array<CommoditySpecVI>();
@@ -34,10 +36,15 @@ export class AddCommodityComponent implements OnInit {
   menuSourceList = new Array<CommodityMenu>();
   menuParentId = 0;
   refreshMenu = false;
-  tag = '';
+  tagTitle = '';
+  tagPage = 0;
+  tagPageSize = 20;
+  tagPages = 0;
+  tagCheckedList = new Array<Tag>();
 
   constructor(private commodity: CommodityService,
-    private notify: ElNotificationService) { }
+    private notify: ElNotificationService,
+    private tag: TagService) { }
 
   ngOnInit() {
     this.commodityVI = {
@@ -68,7 +75,7 @@ export class AddCommodityComponent implements OnInit {
     console.log('deleteSpec', this.specificationList);
     for (let i = 0; i < this.specificationList.length; i++) {
       const item = this.specificationList[i];
-      console.log(i, item);
+
       if (specification.id === item.id) {
         this.specificationList.splice(i, 1);
         return;
@@ -122,7 +129,65 @@ export class AddCommodityComponent implements OnInit {
     });
   }
 
+  checkTag(tag: Tag) {
+    this.tagCheckedList.push(tag);
+  }
+
   addTag() {
-    this.showTagDialog = true;
+    this.tag.list(this.tagPage, this.tagPageSize).then((response: TagList) => {
+      this.tagList = [];
+      if (response.status === 0) {
+        for (const item of response.tagList) {
+          this.tagList.push({
+            id: item.id,
+            title: item.title,
+            parentId: item.parentId
+          });
+        }
+        this.tagPages = response.pages;
+        this.showTagDialog = true;
+      } else {
+        this.notify.warning(response.message);
+      }
+    });
+  }
+
+  deleteTag(tag: Tag) {
+    for (let i = 0; i < this.tagList.length; i++) {
+      if (tag.id === this.tagList[i].id) {
+        this.tagCheckedList.splice(i, 1);
+        return;
+      }
+    }
+  }
+
+  nextTagPage() {
+    if (this.tagPage < this.tagPages - 1) {
+      this.tagPage++;
+      this.loadTag();
+    }
+  }
+
+  prevTagPage() {
+    if (this.tagPage > 0) {
+      this.tagPage--;
+      this.loadTag();
+    }
+  }
+
+  private loadTag() {
+    this.tag.list(this.tagPage, this.tagPageSize).then((response: TagList) => {
+      if (response.status === 0) {
+        this.tagList = [];
+        for (const item of response.tagList) {
+          this.tagList.push({
+            id: item.id,
+            title: item.title,
+            parentId: item.parentId
+          });
+        }
+        this.tagPages = response.pages;
+      }
+    });
   }
 }
