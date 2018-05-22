@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     ];
   }
 
-  chose(scope: any) {
-    this.choseTrigger.emit(this.list[scope.index]);
+  chose(vi: NavigationVi) {
+    this.choseTrigger.emit(vi);
   }
 }

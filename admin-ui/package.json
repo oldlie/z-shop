@@ -24,8 +24,8 @@
     "admin-lte": "^2.4.3",
     "angular2-fontawesome": "^5.2.1",
     "core-js": "^2.4.1",
-    "element-angular": "^0.7.4",
     "font-awesome": "^4.7.0",
+    "ng-zorro-antd": "^0.7.0",
     "ngx-quill": "^2.2.0",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"

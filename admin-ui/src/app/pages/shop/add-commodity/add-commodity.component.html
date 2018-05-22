@@ -9,26 +9,29 @@
 
   <div el-row class="ray-row">
     <div el-col xs="24" md="16">
-      <el-input [(model)]="commodityVI.title" placeholder="标题"></el-input>
+        <span class="text-danger" style="float: right;z-index: 100;">*</span>
+        <el-input [(model)]="commodityVI.title" placeholder="标题" style="width: 90%;"></el-input>
     </div>
   </div>
 
   <div el-row class="ray-row">
     <div el-col xs="24" md="16">
-      <el-input [model]="summary" placeholder="简要描述"></el-input>
+      <el-input [(model)]="commodityVI.description" placeholder="简要描述"></el-input>
     </div>
   </div>
 
   <div el-row class="ray-row">
     <div el-col xs="24" md="16">
-      <el-input type="textarea" [autosize]="{ minRows: 2, maxRows: 4}" placeholder="注意事项，用于提示特殊情况,可以不填写" [model]="comment">
+      <el-input type="textarea"
+       [autosize]="{ minRows: 2, maxRows: 4}"
+        placeholder="注意事项，用于提示特殊情况,可以不填写" [(model)]="commodityVI.comment">
       </el-input>
     </div>
   </div>
 
   <div el-row class="ray-row">
     <div el-col xs="24" md="24">
-      <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [model]="comment">
+      <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [(model)]="comment">
       </el-input>
     </div>
   </div>
@@ -95,7 +98,7 @@
 
   <div el-row class="ray-row">
     <div el-col xs="24" md="24">
-      <el-button type="primary">保存商品</el-button>
+      <el-button type="primary" (click)="save()">保存商品</el-button>
 
     </div>
   </div>

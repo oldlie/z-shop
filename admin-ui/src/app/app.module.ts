@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ElModule } from 'element-angular';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -53,7 +53,7 @@ import { PaginationComponent } from './widget/pagination/pagination.component';
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
-    ElModule.forRoot(),
+    NgZorroAntdModule.forRoot(),
   ],
   providers: [
     CoreService,

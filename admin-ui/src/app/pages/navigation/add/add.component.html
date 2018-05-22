@@ -1,35 +1,29 @@
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-input [(model)]="model.title" placeholder="名称"></el-input>
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
+    <input nz-input placeholder="名称" [(ngModel)]="model.title">
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="12">
-    <el-button (click)="asignParent()">选择上级导航</el-button>
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
+    <button nz-button nzType="default" (click)="asignParent()">选择上级导航</button>
     <span>不选择默认为一级导航</span>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col xs="24" md="16">
-    <el-input type="textarea" [autosize]="{ minRows: 2, maxRows: 4}" placeholder="备注" [(model)]="model.comment">
-    </el-input>
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
+    <textarea nz-input placeholder="备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="model.comment"></textarea>
+  </div>
+</div>
+</div>
+
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
+    <button nz-button nzType="primary" (click)="save($event)">保存</button>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col span="24">
-    <el-button type="primary" (click)="save($event)">保存</el-button>
-  </div>
-</div>
-
-<el-dialog [(visible)]="showListDialog">
-  <ng-template #title>
-    <span>选择上级导航</span>
-  </ng-template>
-    <app-navigation-list [viewType]="viewType" [modelId]="1" (choseTrigger)="recevieParent($event)"></app-navigation-list>
-  <ng-template #footer>
-    <el-button (click)="showSpecDialog = false">关闭</el-button>
-  </ng-template>
-</el-dialog>
+<nz-modal [(nzVisible)]="showListDialog" nzTitle="选择上级导航" (nzOnCancel)="showSpecDialog = false">
+  <app-navigation-list [viewType]="viewType" [modelId]="1" (choseTrigger)="recevieParent($event)"></app-navigation-list>
+</nz-modal>

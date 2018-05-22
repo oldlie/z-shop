@@ -1,15 +1,10 @@
-<div el-row class="ray-row">
-  <el-menu [model]="index" (modelChange)="handle($event)" mode="horizontal">
-    <el-menu-item index="1">规格列表</el-menu-item>
-    <el-menu-item index="2">添加规格</el-menu-item>
-  </el-menu>
-</div>
-
-<div el-container direction="vertical" *ngIf="index === '2'">
-  <app-commodity-spec-add [spec]="editSpecification"></app-commodity-spec-add>
-</div>
-<div el-container direction="vertical" *ngIf="index === '1'">
-  <app-commodity-spec-list  [commodityId]="commodityId"
-    (checkEvent)="checkSpecListener($event)"
-    (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
+<div nz-row>
+  <nz-tabset>
+    <nz-tab nzTitle="规格列表">
+      <app-commodity-spec-add [spec]="editSpecification"></app-commodity-spec-add>
+    </nz-tab>
+    <nz-tab nzTitle="添加规格">
+      <app-commodity-spec-list [commodityId]="commodityId" (checkEvent)="checkSpecListener($event)" (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
+    </nz-tab>
+  </nz-tabset>
 </div>

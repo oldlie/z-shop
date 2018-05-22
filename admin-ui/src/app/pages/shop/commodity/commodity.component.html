@@ -1,28 +1,3 @@
-<div el-row class="ray-row">
-  <div el-col span="24">
-    <el-input placeholder="请选择日期" icon="search" [(model)]="filterKey"></el-input>
-  </div>
-</div>
-
-<div el-row class="ray-row">
-  <div el-col span="24">
-    <el-table [model]="list" [scroll-x]="true" center="all">
-      <el-table-column model-key="title" label="商品名" width="140"></el-table-column>
-      <el-table-column model-key="summary" label="简要描述" width="240"></el-table-column>
-      <el-table-column label="操作" width="120">
-        <ng-template #slot let-scope="scope">
-          <el-button type="text" size="small" (click)="edit(scope)">编辑</el-button>&nbsp;
-          <el-button type="text" size="small" (click)="delete(scope)">删除</el-button>
-        </ng-template>
-      </el-table-column>
-    </el-table>
-  </div>
-</div>
-
-<div el-row class="ray-row">
-  <div el-col span="24">
-    <el-pagination [total]="40"
-                   [layout]="['prev', 'pager', 'next', 'jumper', 'size', 'total']">
-    </el-pagination>
-  </div>
-</div>
+<p>
+  commodity works!
+</p>

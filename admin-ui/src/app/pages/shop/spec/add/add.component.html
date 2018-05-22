@@ -2,7 +2,7 @@
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.title" placeholder="规格名称"></el-input>
+      <input nz-input placeholder="规格名称" [(ngModel)]="spec.title">
     </div>
     <label class="col-sm-1 control-label" style="text-align: left;">
       <span class="text-danger">*</span>
@@ -11,25 +11,25 @@
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.breed" placeholder="品种"></el-input>
+      <input nz-input placeholder="品种" [(ngModel)]="spec.breed">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.origin" placeholder="原产地"></el-input>
+      <input nz-input placeholder="原产地" [(ngModel)]="spec.origin">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.feature" placeholder="特征"></el-input>
+      <input nz-input placeholder="特征" [(ngModel)]="spec.feature">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.spec" placeholder="规格"></el-input>
+      <input nz-input placeholder="规格" [(ngModel)]="spec.spec">
     </div>
     <label class="col-sm-1 control-label" style="text-align: left;">
       <span class="text-danger">*</span>
@@ -38,20 +38,20 @@
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.store" placeholder="存储方式"></el-input>
+      <input nz-input placeholder="存储方式" [(ngModel)]="spec.store">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
-      <el-input [(model)]="spec.productDatetime" placeholder="生产/捕捞/采摘日期"></el-input>
+      <input nz-input placeholder="生产/捕捞/采摘日期" [(ngModel)]="spec.productDatetime">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-sm-12 col-md-9">
       <label>价格：</label>
-      <el-input-number [(model)]="spec.price" [min]="1"></el-input-number>
+      <nz-input-number [(ngModel)]="spec.price" [nzMin]="1"  [nzStep]="1"></nz-input-number>
       <span class="text-danger">*</span>
     </div>
   </div>
@@ -59,14 +59,14 @@
   <div class="form-group">
     <div class="col-sm-12 col-md-9">
       <label>库存：</label>
-      <el-input-number [(model)]="spec.inventory" [min]="1" [max]="9999"></el-input-number>
+      <nz-input-number [(ngModel)]="spec.inventory" [nzMin]="1" [nzMax]="9999" [nzStep]="1"></nz-input-number>
       <span class="text-danger">*</span>
     </div>
   </div>
 
   <div class="form-group">
       <div class="col-sm-12 col-md-9">
-        <el-button type="primary" (click)="save()">保存</el-button>
+        <button nz-button nzType="primary" (click)="save()">保存</button>
       </div>
   </div>
 </div>

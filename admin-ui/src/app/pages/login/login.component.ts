@@ -1,5 +1,5 @@
 import {Component, forwardRef, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
 import { ValidateResult } from '../../response/response';
@@ -26,15 +26,15 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.allowSubmit = false;
     this.validateForm = this.formBuilder.group({
-      password: [ this.password, [this.passwordValidator] ],
-      mail: [ this.username, [this.emailValidator] ],
+      password: [ this.password, [Validators.required]],
+      username: [ this.username, [Validators.required]],
     });
 
     this.test();
   }
 
   test() {
-    this.loginService.login(this.validateForm.get('mail').value, this.validateForm.get('password').value)
+    this.loginService.login(this.validateForm.get('username').value, this.validateForm.get('password').value)
       .then(response => {
         if (response.status === 0) {
           this.router.navigate(['/commodity/add']).catch(err => {

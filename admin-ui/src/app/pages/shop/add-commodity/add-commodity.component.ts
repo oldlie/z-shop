@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommodityStatus, CommodityVI, CommoditySpecVI } from '../commodity-vi';
 import { ElNotificationService } from 'element-angular';
 import { CommoditySpec, CommodityMenu } from '../../../response/commodity';
@@ -17,6 +17,7 @@ import { TagService } from '../../../services/tag.service';
 })
 export class AddCommodityComponent implements OnInit {
 
+  @Input()
   commodityVI: CommodityVI;
 
   id = 0;
@@ -47,18 +48,20 @@ export class AddCommodityComponent implements OnInit {
     private tag: TagService) { }
 
   ngOnInit() {
-    this.commodityVI = {
-      id: 0,
-      title: '',
-      summary: '',
-      comment: '',
-      description: '',
-      status: 0,
-      ranking: 0,
-      rankingCount: 0,
-      viewCount: 0,
-      shareCount: 0
-    };
+    if (!this.commodityVI) {
+      this.commodityVI = {
+        id: 0,
+        title: '',
+        summary: '',
+        comment: '',
+        description: '',
+        status: 0,
+        ranking: 0,
+        rankingCount: 0,
+        viewCount: 0,
+        shareCount: 0
+      };
+    }
   }
 
   addSpec() {

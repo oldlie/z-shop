@@ -1,11 +1,11 @@
-<div el-row class="ray-row">
-  <div el-col [xs]="24" [md]="12">
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
     <el-input placeholder="栏目名称" [(model)]="menu"></el-input>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col [xs]="24" [md]="12">
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
     <el-input placeholder="上级栏目名称" [model]="parent" [elDisabled]="false">
       <ng-template #append>
         <el-button (click)="selectParent()">选择上级栏目</el-button>
@@ -14,86 +14,100 @@
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col [xs]="24" [md]="12">
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
     <el-input placeholder="备注" [(model)]="comment"></el-input>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col [xs]="24" [md]="12">
+<div nz-row>
+  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
     <el-button (click)="save()" type="primary">保存</el-button>
   </div>
 </div>
 
-<div el-row class="ray-row">
-  <div el-col span="24">
+<div nz-row>
+  <div nz-col nzSpan="24">
     <p>预览[点击可以删除节点]：</p>
 
     <div class="container-fluid">
       <div class="row">
 
-          <nav class="navbar navbar-default">
-              <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7"
-                    aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" >ZShop</a>
-                </div>
-      
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
-                  <ul class="nav navbar-nav" (mouseleave)="ml()">
-                    <ng-container *ngFor="let item of list">
-                      <li *ngIf="item.children === 0"><a (click)="delete(item)">{{item.title}}</a></li>
-                      <li *ngIf="item.children > 0" class="dropdown">
-                        <a (mouseenter)="childMenu(item)" (click)="delete(item)">{{item.title}} <span class="caret"></span></a>
-                        <ul *ngIf="item.id === mouseOnId" class="dropdown-menu" style="display: block;">
-                          <li *ngFor="let child of childrenList" ><a (click)="delete(child)">{{child.title}}</a></li>
-                        </ul>
+        <nav class="navbar navbar-default">
+          <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7"
+                aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand">ZShop</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
+              <ul class="nav navbar-nav" (mouseleave)="ml()">
+                <ng-container *ngFor="let item of list">
+                  <li *ngIf="item.children === 0">
+                    <a (click)="delete(item)">{{item.title}}</a>
+                  </li>
+                  <li *ngIf="item.children > 0" class="dropdown">
+                    <a (mouseenter)="childMenu(item)" (click)="delete(item)">{{item.title}}
+                      <span class="caret"></span>
+                    </a>
+                    <ul *ngIf="item.id === mouseOnId" class="dropdown-menu" style="display: block;">
+                      <li *ngFor="let child of childrenList">
+                        <a (click)="delete(child)">{{child.title}}</a>
                       </li>
-                    </ng-container>
-                  </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-              </div>
-            </nav>
+                    </ul>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+        </nav>
 
       </div>
-      
+
     </div>
 
   </div>
 
 </div>
 
-<el-dialog [(visible)]="toggle">
-  <ng-template #title>
-    <span>选择上级栏目</span>
+<nz-modal [(nzVisible)]="toggle" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="closeDialog()">
+  <ng-template #modalTitle>
+    选择上级栏目
   </ng-template>
 
-  <el-table [model]="childrenList" [stripe]="true">
-    <el-table-column model-key="title" label="栏目" width="140">
-      <ng-template #slot let-scope="scope">
-        <el-button type="text" (click)="cc(childrenList[scope.index])">{{childrenList[scope.index].title}}</el-button>
-      </ng-template>
-    </el-table-column>
-    <el-table-column model-key="comment" label="备注" width="140">
-    </el-table-column>
-    <el-table-column model-key="children" label="子栏目" width="140">
-      <ng-template #slot let-scope="scope">
-        <el-button *ngIf="childrenList[scope.index].children > 0" type="text" size="small" (click)="ccc(childrenList[scope.index].id)">进入子栏目</el-button>
-      </ng-template>
-    </el-table-column>
-  </el-table>
-
-  <ng-template #footer>
-    <el-button (click)="closeDialog()">选择根目录并关闭</el-button>
-    <el-button (click)="toggle = false">关闭</el-button>
+  <ng-template #modalContent>
+    <nz-table>
+      <thead>
+        <tr>
+          <th>栏目</th>
+          <th>备注</th>
+          <th>子栏目</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of childrenList">
+          <td>
+            <a (click)="cc(data)">{{data.title}}</a>
+          </td>
+          <td>{{data.comment}}</td>
+          <td>
+            <a *ngIf="data.children > 0" (click)="ccc(data.id)">进入子栏目</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
   </ng-template>
-</el-dialog>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="closeDialog()">选择根目录并关闭</button>
+    <button nz-button nzType="primary" (click)="toggle = false">关闭</button>
+  </ng-template>
+</nz-modal>
