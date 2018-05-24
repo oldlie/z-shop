@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommodityStatus, CommodityVI, CommoditySpecVI } from '../commodity-vi';
-import { ElNotificationService } from 'element-angular';
+import { NzMessageService } from 'ng-zorro-antd';
 import { CommoditySpec, CommodityMenu } from '../../../response/commodity';
 import { Tag, TagList } from '../../../response/tag';
 import { CommodityService } from '../../../services/commodity.service';
@@ -44,7 +44,7 @@ export class AddCommodityComponent implements OnInit {
   tagCheckedList = new Array<Tag>();
 
   constructor(private commodity: CommodityService,
-    private notify: ElNotificationService,
+    private message: NzMessageService,
     private tag: TagService) { }
 
   ngOnInit() {
@@ -150,7 +150,7 @@ export class AddCommodityComponent implements OnInit {
         this.tagPages = response.pages;
         this.showTagDialog = true;
       } else {
-        this.notify.warning(response.message);
+        this.message.warning(response.message);
       }
     });
   }

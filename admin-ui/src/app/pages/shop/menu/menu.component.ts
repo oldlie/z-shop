@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommodityService } from '../../../services/commodity.service';
-import { ElMessageService } from 'element-angular';
+import { NzMessageService } from 'ng-zorro-antd';
 import { CommodityMenu } from '../../../response/commodity';
 
 @Component({
@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   childrenListShow = false;
   mouseOnId = 0;
 
-  constructor(private commodity: CommodityService, private message: ElMessageService) { }
+  constructor(private commodity: CommodityService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.initData();
@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
         this.list = [];
         this.list = res.list;
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -47,7 +47,7 @@ export class MenuComponent implements OnInit {
         this.childrenList = [];
         this.childrenList = res.list;
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -62,7 +62,7 @@ export class MenuComponent implements OnInit {
         this.message.success(`[${this.menu}]已经保存`);
         this.initData();
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -79,7 +79,7 @@ export class MenuComponent implements OnInit {
         this.childrenList = [];
         this.childrenList = res.list;
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -103,14 +103,14 @@ export class MenuComponent implements OnInit {
 
   delete(menu: CommodityMenu) {
     if (menu.children > 0) {
-      this.message.warning('还不能删除这个栏目，请先删除它的子栏目。');
+      this.message.create('warning', '还不能删除这个栏目，请先删除它的子栏目。');
       return;
     }
     this.commodity.deleteMenu(menu.id).then(res => {
       if (res.status === 0) {
         this.initData();
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }

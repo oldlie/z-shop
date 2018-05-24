@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tag, TagList } from '../../response/tag';
 import { TagService } from '../../services/tag.service';
-import { ElMessageService } from 'element-angular';
+import { NzMessageService } from 'ng-zorro-antd';
 import { Base } from '../../response/response';
 
 @Component({
@@ -9,7 +9,7 @@ import { Base } from '../../response/response';
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
   providers: [
-    ElMessageService,
+    NzMessageService,
     TagService,
   ]
 })
@@ -22,7 +22,7 @@ export class TagComponent implements OnInit {
   total = 0;
   newTagTitle = '';
 
-  constructor(private message: ElMessageService, private tag: TagService) { }
+  constructor(private message: NzMessageService, private tag: TagService) { }
 
   ngOnInit() {
     this.loadList();
@@ -33,16 +33,16 @@ export class TagComponent implements OnInit {
     console.log('click save button');
     this.newTagTitle = this.newTagTitle.replace(/(^\s|\s$)*/g, '');
     if (this.newTagTitle === '') {
-      this.message.warning('请填写标签名字');
+      this.message.create('warning', '请填写标签名字');
       return;
     }
     this.tag.save(this.newTagTitle).then(res => {
       if (res.status === 0) {
-        this.message['success'](`标签[${this.newTagTitle}]已经保存`);
+        this.message.create('success', `标签[${this.newTagTitle}]已经保存`);
         this.newTagTitle = '';
         this.loadList();
       } else {
-        this.message['warning'](res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -50,10 +50,10 @@ export class TagComponent implements OnInit {
   deleteTag(tag: ElTag) {
     this.tag.delete(tag.id).then((res: Base) => {
       if (res.status === 0) {
-        this.message.success(`标签[${tag.id}:${tag.name}]已经删除。`);
+        this.message.create('success', `标签[${tag.id}:${tag.name}]已经删除。`);
         this.loadList();
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }
@@ -73,7 +73,7 @@ export class TagComponent implements OnInit {
         this.pages = response.pages;
         this.total = response.total;
       } else {
-        this.message.warning(response.message);
+        this.message.create('warning', response.message);
       }
     });
   }

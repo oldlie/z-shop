@@ -2,7 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { CommodityService } from '../../../../services/commodity.service';
 import { CommoditySpec } from '../../../../response/commodity';
 import { CommoditySpecVI } from '../../commodity-vi';
-import { ElMessageService } from 'element-angular';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-commodity-spec-list',
@@ -27,7 +27,7 @@ export class ListComponent implements OnInit {
   size = 10;
   small = true;
 
-  constructor(private commodity: CommodityService, private message: ElMessageService) { }
+  constructor(private commodity: CommodityService, private message: NzMessageService) { }
 
   ngOnInit() {
     console.log('commodity list', this.commodityId);
@@ -70,7 +70,7 @@ export class ListComponent implements OnInit {
       if (res.status === 0) {
         this.loadData(this.page);
       } else {
-        this.message.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommoditySpecVI } from '../../commodity-vi';
-import { ElNotificationService } from 'element-angular';
+import { NzMessageService } from 'ng-zorro-antd';
 import { CommodityService } from '../../../../services/commodity.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class AddComponent implements OnInit {
   spec: CommoditySpecVI;
 
   constructor(private commodity: CommodityService,
-     private notify: ElNotificationService) { }
+     private message: NzMessageService) { }
 
   ngOnInit() {
 
@@ -35,30 +35,30 @@ export class AddComponent implements OnInit {
   save() {
     console.log(this.spec.title);
     if (this.spec.title === '') {
-      this.notify.warning('请填写规格名称。');
+      this.message.create('warning', '请填写规格名称。');
       return;
     }
 
     if (this.spec.spec === '') {
-      this.notify.warning('请填写具体规格。');
+      this.message.create('warning', '请填写具体规格。');
       return;
     }
 
     if (this.spec.price <= 0) {
-      this.notify.warning('请填写价格。');
+      this.message.create('warning', '请填写价格。');
       return;
     }
 
     if (this.spec.inventory <= 0) {
-      this.notify.warning('请填写库存。');
+      this.message.create('warning', '请填写库存。');
       return;
     }
 
     this.commodity.saveSpec(this.spec).then(res => {
       if (res.status === 0) {
-        this.notify.success('规格已经保存了。');
+        this.message.create('success', '规格已经保存了。');
       } else {
-        this.notify.warning(res.message);
+        this.message.create('warning', res.message);
       }
     });
   }

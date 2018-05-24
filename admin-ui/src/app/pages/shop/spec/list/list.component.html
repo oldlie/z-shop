@@ -1,20 +1,30 @@
-<div el-row class="ray-row">
-  <div el-col span="24">
+<div nz-row>
+  <div nz-col nzSpan="12">
 
-    <el-table [model]="tableData" height="660px" center="header" >
-      <el-table-column model-key="title" label="名称"></el-table-column>
-      <el-table-column model-key="spec" label="规格"></el-table-column>
-      <el-table-column model-key="price" label="价格" width="80"></el-table-column>
-      <el-table-column model-key="inventory" label="库存" width="80"></el-table-column>
-      <el-table-column label="操作" width="140">
-        <ng-template #slot let-scope="scope">
-          <el-button *ngIf="commodityId > 0" type="text" size="small" (click)="chose(tableData[scope.index])">选择</el-button>
-          <el-button *ngIf="commodityId === 0" type="text" size="small" (click)="edit(tableData[scope.index])">修改</el-button>
-          <el-button *ngIf="commodityId === 0" type="text" size="small" (click)="delete(tableData[scope.index])">删除</el-button>
-        </ng-template>
-      </el-table-column>
-    </el-table>
-
+      <nz-table>
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>规格</th>
+              <th>价格</th>
+              <th>库存</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of tableData">
+              <td>{{data.title}}</td>
+              <td>{{data.spec}}</td>
+              <td>{{data.price}}</td>
+              <td>{{data.inventory}}</td>
+              <td>
+                <a *ngIf="commodityId > 0" (click)="chose(data)">选择</a>
+                <a *ngIf="commodityId === 0" (click)="edit(data)">修改</a>
+                <a *ngIf="commodityId === 0" (click)="delete(data)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavigationVi, NavigationType } from '../navigation-vi';
-import { ElNotificationService } from 'element-angular';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-navigation-add',
@@ -14,7 +14,7 @@ export class AddComponent implements OnInit {
   viewType: NavigationType;
   showListDialog = false;
 
-  constructor(private notify: ElNotificationService) { }
+  constructor(private notification: NzNotificationService) { }
 
   ngOnInit() {
     this.model = {
@@ -37,7 +37,7 @@ export class AddComponent implements OnInit {
 
   save(event: Event) {
     if (this.model.title === '') {
-      this.notify.warning('请填写导航名称');
+      this.notification.create('warning', '提示', '请填写导航名称。');
       return;
     }
   }

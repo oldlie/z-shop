@@ -1,32 +1,33 @@
-<div nz-row>
-  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
-    <el-input placeholder="栏目名称" [(model)]="menu"></el-input>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <input type="text" nz-input placeholder="栏目名称" [(ngModel)]="menu">
   </div>
 </div>
 
-<div nz-row>
-  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
-    <el-input placeholder="上级栏目名称" [model]="parent" [elDisabled]="false">
-      <ng-template #append>
-        <el-button (click)="selectParent()">选择上级栏目</el-button>
-      </ng-template>
-    </el-input>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+      <input type="text" nz-input placeholder="上级栏目名称" [(ngModel)]="parent" disabled="disabled">
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nzSearch (click)="selectParent()" nz-button nzSearch>选择上级栏目</button>
+    </ng-template>
   </div>
 </div>
 
-<div nz-row>
-  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
-    <el-input placeholder="备注" [(model)]="comment"></el-input>
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+    <input type="text" nz-input placeholder="备注" [(ngModel)]="comment">
   </div>
 </div>
 
-<div nz-row>
-  <div nz-col [nzGutter]="{xs:24, sm:24, md:12}">
-    <el-button (click)="save()" type="primary">保存</el-button>
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+    <button nz-button nzType="primary" (click)="save()">保存</button>
   </div>
 </div>
 
-<div nz-row>
+<div nz-row class="ray-row">
   <div nz-col nzSpan="24">
     <p>预览[点击可以删除节点]：</p>
 

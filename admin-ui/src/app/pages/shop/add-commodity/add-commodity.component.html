@@ -1,44 +1,38 @@
 <div class="container-fluid">
 
-  <div class="ray-row">
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item to="/dashboard">控制面板</el-breadcrumb-item>
-      <el-breadcrumb-item to="/commodity/add">添加商品</el-breadcrumb-item>
-    </el-breadcrumb>
-  </div>
-
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="16">
-        <span class="text-danger" style="float: right;z-index: 100;">*</span>
-        <el-input [(model)]="commodityVI.title" placeholder="标题" style="width: 90%;"></el-input>
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="16">
+      <input nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="16">
-      <el-input [(model)]="commodityVI.description" placeholder="简要描述"></el-input>
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="16">
+      <input nz-input placeholder="简要描述" [(ngModel)]="commodityVI.description">
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="16">
-      <el-input type="textarea"
-       [autosize]="{ minRows: 2, maxRows: 4}"
-        placeholder="注意事项，用于提示特殊情况,可以不填写" [(model)]="commodityVI.comment">
-      </el-input>
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="16">
+      <input nz-input placeholder="简要描述" [(ngModel)]="commodityVI.description">
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-input type="textarea" [autosize]="{ minRows: 6, maxRows: 8}" placeholder="内容" [(model)]="comment">
-      </el-input>
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="16">
+      <textarea nz-input placeholder="注意事项，用于提示特殊情况,可以不填写" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-button (click)="addSpec()">添加规格</el-button>
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24">
+      <textarea nz-input placeholder="内容" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
+    </div>
+  </div>
+
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24">
+      <button nz-button (click)="addSpec()">添加规格</button>
 
       <div class="table-responsive">
         <table class="table table-bordered">
@@ -58,7 +52,7 @@
               <td>{{spec.price}}</td>
               <td>{{spec.inventory}}</td>
               <td>
-                <el-button type="text" size="small" (click)="deleteSpec(spec)">删除</el-button>
+                <a (click)="deleteSpec(spec)">删除</a>
               </td>
             </tr>
           </tbody>
@@ -69,37 +63,34 @@
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-button (click)="addMenu()">添加导航/类别</el-button>
+  <div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <button nz-button (click)="addMenu()">添加导航/类别</button>
     </div>
   </div>
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-breadcrumb *ngIf="refreshMenu" separator="/">
-        <el-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-  </div>
-
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-button (click)="addTag()">添加标签</el-button>
+  <div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <nz-breadcrumb *ngIf="refreshMenu">
+        <nz-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-tag *ngFor="let tag of tagCheckedList" [closable]="true" [type]="tag.type" (click)="checkTag(tag)" (close)="deleteTag(tag)">
-        {{tag.title}}
-      </el-tag>
+  <div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <button nz-button (click)="addTag()">添加标签</button>
     </div>
   </div>
 
-  <div el-row class="ray-row">
-    <div el-col xs="24" md="24">
-      <el-button type="primary" (click)="save()">保存商品</el-button>
+  <div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <nz-tag *ngFor="let tag of tagCheckedList" nzMode="closeable" (click)="checkTag(tag)" (nzOnClose)="deleteTag(tag)">{{tag.title}}</nz-tag>
+    </div>
+  </div>
 
+  <div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <button nz-button nzType="primary" >保存</button>
     </div>
   </div>
 
@@ -120,7 +111,7 @@
       </div>
       <!-- ./body -->
       <div class="modal-footer">
-        <el-button (click)="showSpecDialog = false">关闭</el-button>
+        <button nz-button (click)="showSpecDialog = false">关闭</button>
       </div>
     </div>
   </div>
@@ -137,25 +128,32 @@
       </div>
       <!-- ./header -->
       <div class="modal-body" style="height: 600px; overflow-y: auto;">
-        <el-table [model]="menuSourceList" [stripe]="true">
-          <el-table-column model-key="title" label="栏目" width="140">
-            <ng-template #slot let-scope="scope">
-              <el-button type="text" (click)="cc(menuSourceList[scope.index])">{{menuSourceList[scope.index].title}}</el-button>
-            </ng-template>
-          </el-table-column>
-          <el-table-column model-key="comment" label="备注" width="140">
-          </el-table-column>
-          <el-table-column model-key="children" label="子栏目" width="140">
-            <ng-template #slot let-scope="scope">
-              <el-button *ngIf="menuSourceList[scope.index].children > 0" type="text" size="small" (click)="ccc(menuSourceList[scope.index])">进入子栏目</el-button>
-            </ng-template>
-          </el-table-column>
-        </el-table>
+
+        <nz-table>
+          <thead>
+            <tr>
+              <th>栏目</th>
+              <th>备注</th>
+              <th>子栏目</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of childrenList">
+              <td>
+                <a (click)="cc(data)">{{data.title}}</a>
+              </td>
+              <td>{{data.comment}}</td>
+              <td>
+                <a *ngIf="data.children > 0" (click)="ccc(data.id)">进入子栏目</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
       </div>
       <!-- ./body -->
       <div class="modal-footer">
-        <el-button (click)="checkMenuRoot()">选择根目录</el-button>
-        <el-button (click)="showMenuDialog = false">关闭</el-button>
+        <button nz-button (click)="checkMenuRoot()">选择根目录</button>
+        <button nz-button (click)="showMenuDialog = false">关闭</button>
       </div>
     </div>
   </div>
@@ -187,9 +185,7 @@
 
         <div class="row">
           <div class="col-sm-12">
-            <el-tag *ngFor="let tag of tagList" [type]="tag.type" (click)="checkTag(tag)">
-              {{tag.title}}
-            </el-tag>
+            <nz-tag *ngFor="let tag of tagList" (click)="checkTag(tag)">{{tag.title}}</nz-tag>
           </div>
         </div>
 
@@ -213,7 +209,7 @@
 
       </div>
       <div class="modal-footer">
-        <el-button (click)="showTagDialog = false">关闭</el-button>
+        <button nz-button (click)="showTagDialog = false">关闭</button>
       </div>
     </div>
 

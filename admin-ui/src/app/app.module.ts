@@ -24,6 +24,7 @@ import { CoreService } from './services/core.service';
 import { TagComponent } from './pages/tag/tag.component';
 import { MenuComponent } from './pages/shop/menu/menu.component';
 import { PaginationComponent } from './widget/pagination/pagination.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PaginationComponent } from './widget/pagination/pagination.component';
     FormsModule,
     AppRoutingModule,
     NgZorroAntdModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [
     CoreService,
