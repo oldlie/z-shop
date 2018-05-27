@@ -8,7 +8,7 @@ import { CommoditySpecVI } from '../commodity-vi';
 })
 export class SpecComponent implements OnInit {
 
-  index = '0';
+  index = 0;
   @Input()
   commodityId = 0;
   editSpecification: CommoditySpecVI;
@@ -20,15 +20,15 @@ export class SpecComponent implements OnInit {
   ngOnInit() {
   }
 
-  handle(index: string) {
-    this.index = index;
-    this.editSpecification = null;
+  handle(index: number) {
+    if (index === 0) {
+      this.editSpecification = null;
+    }
   }
 
   editSpecListener(specification: CommoditySpecVI) {
     this.editSpecification = specification;
-    console.log('editSpecification', specification);
-    this.index = '1';
+    this.index = 1;
   }
 
   checkSpecListener(specification: CommoditySpecVI) {

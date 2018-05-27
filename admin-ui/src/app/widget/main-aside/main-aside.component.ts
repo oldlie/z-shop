@@ -14,7 +14,6 @@ export class MainAsideComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log('MainAsideComponent:', this.index);
   }
 
   goto(url: string) {

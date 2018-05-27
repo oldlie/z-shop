@@ -21,6 +21,7 @@ export class AddComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('init?', this.spec);
     if (!this.spec) {
       this.spec = {
         title: '',

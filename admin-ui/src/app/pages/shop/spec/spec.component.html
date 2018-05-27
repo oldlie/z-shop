@@ -1,10 +1,10 @@
 <div nz-row>
-  <nz-tabset [(nzSelectedIndex)]="index">
+  <nz-tabset [(nzSelectedIndex)]="index" (nzSelectedIndexChange)="handle($event)">
     <nz-tab nzTitle="规格列表">
-      <app-commodity-spec-list *ngIf="index == '0'" [commodityId]="commodityId" (checkEvent)="checkSpecListener($event)" (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
+      <app-commodity-spec-list *ngIf="index === 0" [commodityId]="commodityId" (checkEvent)="checkSpecListener($event)" (editEvent)="editSpecListener($event)"></app-commodity-spec-list>
     </nz-tab>
     <nz-tab nzTitle="添加规格">
-      <app-commodity-spec-add *ngIf="index == '1'" [spec]="editSpecification"></app-commodity-spec-add>
+      <app-commodity-spec-add *ngIf="index === 1" [spec]="editSpecification" (nzClick)="handle()"></app-commodity-spec-add>
     </nz-tab>
   </nz-tabset>
 </div>

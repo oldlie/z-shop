@@ -20,7 +20,6 @@ export class PaginationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('pages', this.pages);
     this.config = this.calculatePaginationInfo(this.page, this.pages, this.cells);
   }
 

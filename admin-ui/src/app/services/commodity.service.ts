@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Base } from '../response/response';
 import { CoreService } from './core.service';
-import { CommodityMenuListResponse, CommoditySpecListResponse } from '../response/commodity';
-import { CommoditySpecVI } from '../pages/shop/commodity-vi';
+import { CommodityMenuListResponse, CommoditySpecListResponse, CommodityMenu, CommodityListResponse } from '../response/commodity';
+import { CommoditySpecVI, CommodityVI } from '../pages/shop/commodity-vi';
+import { Tag } from '../response/tag';
 
 @Injectable()
 export class CommodityService {
@@ -52,4 +53,53 @@ export class CommodityService {
     return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
   }
   // endregion
+
+  save(model: CommodityVI,
+    menuList: Array<CommodityMenu>,
+    tagList: Array<Tag>,
+    specList: Array<CommoditySpecVI>
+  ): Promise<Base> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/store`;
+    const menus = [];
+    for (const item of menuList) {
+      menus.push(item.id);
+    }
+    const tags = [];
+    for (const item of tagList) {
+      tags.push(item.id);
+    }
+    const specifications = [];
+    for (const item of specList) {
+      specifications.push(item.id);
+    }
+    const params = {
+      id: model.id,
+      title: model.title,
+      summary: model.summary,
+      comment: model.comment,
+      description: model.description,
+      status: model.status,
+      menus: menus.join(','),
+      tags: tags.join(','),
+      specifications: specifications.join(',')
+    };
+    return this.core.post(url, params).toPromise().then(res => res as Base);
+  }
+
+  list(page: number, size: number, orderBy: string, order: number): Promise<CommodityListResponse> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/list`;
+    const params = {
+      page: page.toString(),
+      size: size.toString(),
+      orderBy: orderBy,
+      order: order.toString()
+    };
+
+    return this.core.get(url, params).toPromise().then(res => res as CommodityListResponse);
+  }
+
+  delete(id: number): Promise<Base> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/delete`;
+    return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
+  }
 }

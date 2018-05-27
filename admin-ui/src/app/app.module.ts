@@ -25,6 +25,7 @@ import { TagComponent } from './pages/tag/tag.component';
 import { MenuComponent } from './pages/shop/menu/menu.component';
 import { PaginationComponent } from './widget/pagination/pagination.component';
 import { HttpClientModule } from '@angular/common/http';
+import { IndexComponent } from './pages/shop/index/index.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { HttpClientModule } from '@angular/common/http';
     TagComponent,
     MenuComponent,
     PaginationComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,

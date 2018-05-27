@@ -1,4 +1,5 @@
 import { Base, List } from './response';
+import { Tag } from './tag';
 
 export interface CommodityMenu {
     id: number;
@@ -28,4 +29,27 @@ export interface CommoditySpec {
 
 export interface CommoditySpecListResponse extends List {
     list: Array<CommoditySpec>;
+}
+
+
+export interface Commodity {
+    id: number;
+    title: string;
+    summary: string;
+    comment?: string;
+    description: string;
+    status: number;
+    ranking: number;
+    rankingCount: number;
+    viewCount: number;
+    shareCount: number;
+    createAt?: Date;
+    updateAt?: Date;
+    tags?: Array<Tag>;
+    specifications?: Array<CommoditySpec>;
+    menus?: Array<CommodityMenu>;
+}
+
+export interface CommodityListResponse extends List {
+    list: Array<Commodity>;
 }

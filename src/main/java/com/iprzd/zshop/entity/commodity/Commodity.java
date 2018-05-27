@@ -35,22 +35,24 @@ public class Commodity {
     private Date createAt;
     private Date updateAt;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_tag",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private List<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_spec_map",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "spec_id", referencedColumnName = "id"))
     private List<Specification> specifications;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE CascadeType. REMOVE CascadeType. REMOVE
+    @ManyToMany(cascade =  { CascadeType.PERSIST }, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_menu_map",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"))
+    @OrderBy(value = "id asc")
     private List<Menu> menus;
 
     public long getId() {

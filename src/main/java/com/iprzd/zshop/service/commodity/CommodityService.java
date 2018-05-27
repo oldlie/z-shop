@@ -1,19 +1,24 @@
 package com.iprzd.zshop.service.commodity;
 
-import com.iprzd.zshop.controller.admin.commodity.CommodityController;
+import com.google.gson.Gson;
 import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.http.StatusCode;
+import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
 import com.iprzd.zshop.repository.TagRepository;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import com.iprzd.zshop.repository.commodity.MenuRepository;
 import com.iprzd.zshop.repository.commodity.SpecificationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +30,7 @@ import java.util.Optional;
 public class CommodityService {
 
     private static Logger logger = LoggerFactory.getLogger(CommodityService.class);
+    private Gson gson = new Gson();
 
     private CommodityRepository commodityRepository;
     private MenuRepository menuRepository;
@@ -102,5 +108,23 @@ public class CommodityService {
 
         this.commodityRepository.save(commodity);
         return StatusCode.successResponse(response);
+    }
+
+    public CommodityListResponse findAll(ListRequest request) {
+        CommodityListResponse response = new CommodityListResponse();
+        Page<Commodity> page = this.commodityRepository.findAll(
+                PageRequest.of(request.getPage(), request.getSize(), request.getSort())
+        );
+        response.setStatus(StatusCode.SUCCESS);
+        response.setList(page.getContent());
+        response.setPages(page.getTotalPages());
+        return response;
+    }
+
+    public BaseResponse delete(IdRequest request) {
+        BaseResponse response = new BaseResponse();
+        this.commodityRepository.deleteById(request.getId());
+        response.setStatus(StatusCode.SUCCESS);
+        return response;
     }
 }

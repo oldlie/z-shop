@@ -1,37 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { CommodityVI } from '../commodity-vi';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Commodity } from '../../../response/commodity';
+import { CommodityService } from '../../../services/commodity.service';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-commodity',
   templateUrl: './commodity.component.html',
-  styleUrls: ['./commodity.component.css']
+  styleUrls: ['./commodity.component.css'],
+  providers: [
+    CommodityService,
+  ]
 })
 export class CommodityComponent implements OnInit {
 
-  list: Array<CommodityVI>;
-  page = 1;
-  total: number;
+  list = new Array<Commodity>();
+  page = 0;
+  size = 10;
+  pages = 0;
+  orderBy = 'id';
+  order = 0;
   filterKey: string;
+  @Output()
+  updateEvent = new EventEmitter<Commodity>();
 
-  constructor() { }
+  constructor(private commodity: CommodityService, private notify: NzNotificationService) { }
 
   ngOnInit() {
     const now = new Date();
-    this.list = [
-      {id: 1, title: 'commodity 1', summary: 'summary 1', description: '', status: 0, ranking: 0, rankingCount: 0, shareCount: 0,
-        viewCount: 0, comment: '', createAt: now, updateAt: now},
-      {id: 2, title: 'commodity 2', summary: 'summary 2', description: '', status: 0, ranking: 0, rankingCount: 0, shareCount: 0,
-        viewCount: 0, comment: '', createAt: now, updateAt: now},
-      {id: 3, title: 'commodity 3', summary: 'summary 3', description: '', status: 0, ranking: 0, rankingCount: 0, shareCount: 0,
-        viewCount: 0, comment: '', createAt: now, updateAt: now},
-    ];
+    this.findAll();
   }
 
-  edit(scope: any) {
+  add2Home(item: Commodity) {
 
   }
 
-  delete(scope: any) {
+  edit(item: Commodity) {
+    this.updateEvent.emit(item);
+  }
 
+  delete(item: Commodity) {
+    this.commodity.delete(item.id).then(res => {
+      if (res.status === 0) {
+        const temp = this.list.filter(d => d.id !== item.id);
+        this.list = temp;
+        this.notify.success('提示', '已删除');
+      } else {
+        this.notify.warning('提示', res.message);
+      }
+    });
+  }
+
+  loadData(page: number) {
+    this.page = page;
+    this.findAll();
+  }
+
+  private findAll() {
+    this.commodity.list(this.page, this.size, this.orderBy, this.order).then(res => {
+      if (res.status === 0) {
+        this.list = res.list;
+        this.pages = res.pages;
+      } else {
+        this.notify.warning('提示', res.message);
+      }
+    });
   }
 }

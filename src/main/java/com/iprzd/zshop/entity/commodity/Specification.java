@@ -26,8 +26,6 @@ public class Specification {
     private String productDatetime;
     private BigDecimal price;
     private int inventory;
-    @ManyToMany(mappedBy = "specifications")
-    private List<Commodity> commodities;
 
     public long getId() {
         return id;
@@ -117,11 +115,4 @@ public class Specification {
         this.inventory = inventory;
     }
 
-    public List<Commodity> getCommodities() {
-        return commodities;
-    }
-
-    public void setCommodities(List<Commodity> commodities) {
-        this.commodities = commodities;
-    }
 }

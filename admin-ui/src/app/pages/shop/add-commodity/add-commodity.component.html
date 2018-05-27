@@ -1,104 +1,104 @@
-<div class="container-fluid">
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24" nzMd="16">
-      <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
-        <input type="text" nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
-      </nz-input-group>
-      <ng-template #suffixTemplate>
-        <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.title == ''"></i>
-        <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.title !== ''"></i>
-      </ng-template>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.title == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.title !== ''"></i>
+    </ng-template>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24" nzMd="16">
-      <input nz-input placeholder="简要描述" [(ngModel)]="commodityVI.description">
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="summaryTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="简要描述" [(ngModel)]="commodityVI.summary">
+    </nz-input-group>
+    <ng-template #summaryTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.summary == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.summary !== ''"></i>
+    </ng-template>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24" nzMd="16">
-      <input nz-input placeholder="简要描述" [(ngModel)]="commodityVI.description">
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <textarea nz-input placeholder="注意事项，用于提示特殊情况,可以不填写" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24" nzMd="16">
-      <textarea nz-input placeholder="注意事项，用于提示特殊情况,可以不填写" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <textarea nz-input placeholder="内容" [nzAutosize]="{ minRows: 8, maxRows: 16 }" [(ngModel)]="commodityVI.description"></textarea>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24">
-      <textarea nz-input placeholder="内容" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <button nz-button (click)="addSpec()">添加规格</button>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSm="24">
-      <button nz-button (click)="addSpec()">添加规格</button>
-      <nz-table *ngIf="!refrshSpecTable" #userSpecTable [nzShowPagination]="false" [nzData]="this.specificationList">
-        <thead>
-          <tr>
-            <th>名称</th>
-            <th>规格</th>
-            <th>价格</th>
-            <th>库存</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let spec of userSpecTable.data">
-            <td>{{spec.title}}</td>
-            <td>{{spec.spec}}</td>
-            <td>{{spec.price}}</td>
-            <td>{{spec.inventory}}</td>
-            <td>
-              <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="deleteSpec(spec)">
-                <a nz-popconfirm>删除</a>
-              </nz-popconfirm>
-            </td>
-          </tr>
-        </tbody>
-      </nz-table>
-      <!-- ./ table-responsive -->
-
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <nz-table #userSpecTable [nzShowPagination]="false" nzSize="small" [nzData]="this.specificationList">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>规格</th>
+          <th>价格</th>
+          <th>库存</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let spec of userSpecTable.data">
+          <td>{{spec.title}}</td>
+          <td>{{spec.spec}}</td>
+          <td>{{spec.price}}</td>
+          <td>{{spec.inventory}}</td>
+          <td>
+            <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="deleteSpec(spec)">
+              <a nz-popconfirm>删除</a>
+            </nz-popconfirm>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSpan="24">
-      <button nz-button (click)="addMenu()">添加导航/类别</button>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addMenu()">添加导航/类别</button>
   </div>
-  <div nz-row class="ray-row">
-    <div nz-col nzSpan="24">
-      <nz-breadcrumb *ngIf="refreshMenu">
-        <nz-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</nz-breadcrumb-item>
-      </nz-breadcrumb>
-    </div>
+</div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-breadcrumb *ngIf="refreshMenu">
+      <nz-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSpan="24">
-      <button nz-button (click)="addTag()">添加标签</button>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addTag()">添加标签</button>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSpan="24">
-      <nz-tag *ngFor="let tag of tagCheckedList" nzMode="closeable" (click)="checkTag(tag)" (nzOnClose)="deleteTag(tag)">{{tag.title}}</nz-tag>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-tag *ngFor="let tag of tagCheckedList" nzMode="closeable" (click)="checkTag(tag)" (nzOnClose)="deleteTag(tag)">{{tag.title}}</nz-tag>
   </div>
+</div>
 
-  <div nz-row class="ray-row">
-    <div nz-col nzSpan="24">
-      <button nz-button nzType="primary">保存</button>
-    </div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button nzType="primary" (click)="save()">保存</button>
   </div>
-
 </div>
 
 <div *ngIf="showSpecDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
@@ -111,7 +111,7 @@
         <h4 class="modal-title">添加/选择规则</h4>
       </div>
       <!-- ./header -->
-      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+      <div class="modal-body">
         <app-commodity-spec [commodityId]="specifciationFlag" (checkSpecEvent)="checkSpecListener($event)"></app-commodity-spec>
       </div>
       <!-- ./body -->
@@ -132,7 +132,7 @@
         <h4 class="modal-title">添加栏目</h4>
       </div>
       <!-- ./header -->
-      <div class="modal-body" style="height: 600px; overflow-y: auto;">
+      <div class="modal-body" >
 
         <nz-table #basicTable [nzData]="menuSourceList" [nzShowPagination]="false" [nzLoading]="menuLoading">
           <thead>
@@ -217,7 +217,5 @@
         <button nz-button (click)="showTagDialog = false">关闭</button>
       </div>
     </div>
-
-
   </div>
 </div>

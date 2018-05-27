@@ -9,14 +9,16 @@ import { SpecComponent } from '../pages/shop/spec/spec.component';
 import { NavigationComponent } from '../pages/navigation/navigation.component';
 import { TagComponent } from '../pages/tag/tag.component';
 import { MenuComponent as CommodityMenuComponent } from '../pages/shop/menu/menu.component';
+import { IndexComponent as CommodityIndexComponent } from '../pages/shop/index/index.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'commodity/index', component: CommodityComponent},
+  {path: 'commodity/index', component: CommodityIndexComponent},
   {path: 'commodity/menu', component: CommodityMenuComponent},
   {path: 'commodity/add', component: AddCommodityComponent},
   {path: 'commodity/spec', component: SpecComponent},
+  {path: 'commodity/edit', component: AddCommodityComponent},
   {path: 'navigation/:t', component: NavigationComponent},
   {path: 'tag', component: TagComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
