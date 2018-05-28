@@ -8,9 +8,9 @@ import { CommoditySpecVI } from '../commodity-vi';
 })
 export class SpecComponent implements OnInit {
 
-  index = '1';
+  index = '0';
   @Input()
-  commodityId: number;
+  commodityId = 0;
   editSpecification: CommoditySpecVI;
   @Output()
   checkSpecEvent = new EventEmitter<CommoditySpecVI>();
@@ -28,7 +28,7 @@ export class SpecComponent implements OnInit {
   editSpecListener(specification: CommoditySpecVI) {
     this.editSpecification = specification;
     console.log('editSpecification', specification);
-    this.index = '2';
+    this.index = '1';
   }
 
   checkSpecListener(specification: CommoditySpecVI) {

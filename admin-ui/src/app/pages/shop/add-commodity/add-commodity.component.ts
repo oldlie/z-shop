@@ -28,6 +28,7 @@ export class AddCommodityComponent implements OnInit {
   status = CommodityStatus.init;
   showSpecDialog = false;
   showMenuDialog = false;
+  menuLoading = false;
   showTagDialog = false;
 
   specifciationFlag = 1;
@@ -70,26 +71,35 @@ export class AddCommodityComponent implements OnInit {
   }
 
   checkSpecListener(specification: CommoditySpecVI) {
-    this.specificationList.push(specification);
+    // 我勒个去，阿里这个数据更新实现也太坑了些。
+    // 虽然在大数据量的情况下可能会有性能优势，
+    // 小数据量简直就是自讨没趣啊
+    const dataSet = [];
+    dataSet.push(specification);
+    this.specificationList.forEach(item => {
+      dataSet.push(item);
+    });
+
+    this.specificationList = dataSet;
     this.showSpecDialog = false;
   }
 
   deleteSpec(specification: CommoditySpecVI) {
+    this.showSpecDialog = true;
     console.log('deleteSpec', this.specificationList);
-    for (let i = 0; i < this.specificationList.length; i++) {
-      const item = this.specificationList[i];
 
-      if (specification.id === item.id) {
-        this.specificationList.splice(i, 1);
-        return;
-      }
-    }
+    const dataSet = this.specificationList.filter(d => d.id !== specification.id);
+    this.specificationList = dataSet;
+
+    this.showSpecDialog = false;
   }
 
   addMenu() {
     this.refreshMenu = false;
     this.menuList = [];
+    this.menuLoading = true;
     this.commodity.findMenuByParentId(0).then(res => {
+      this.menuLoading = false;
       if (res.status === 0) {
         this.menuSourceList = [];
         this.menuSourceList = res.list;

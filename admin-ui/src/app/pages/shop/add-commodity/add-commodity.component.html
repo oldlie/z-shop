@@ -2,7 +2,13 @@
 
   <div nz-row class="ray-row">
     <div nz-col nzSm="24" nzMd="16">
-      <input nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
+      <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+        <input type="text" nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.title == ''"></i>
+        <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.title !== ''"></i>
+      </ng-template>
     </div>
   </div>
 
@@ -33,31 +39,30 @@
   <div nz-row class="ray-row">
     <div nz-col nzSm="24">
       <button nz-button (click)="addSpec()">添加规格</button>
-
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>名称</th>
-              <th>规格</th>
-              <th>价格</th>
-              <th>库存</th>
-              <th>操纵</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let spec of specificationList">
-              <td>{{spec.title}}</td>
-              <td>{{spec.spec}}</td>
-              <td>{{spec.price}}</td>
-              <td>{{spec.inventory}}</td>
-              <td>
-                <a (click)="deleteSpec(spec)">删除</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <nz-table *ngIf="!refrshSpecTable" #userSpecTable [nzShowPagination]="false" [nzData]="this.specificationList">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>规格</th>
+            <th>价格</th>
+            <th>库存</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let spec of userSpecTable.data">
+            <td>{{spec.title}}</td>
+            <td>{{spec.spec}}</td>
+            <td>{{spec.price}}</td>
+            <td>{{spec.inventory}}</td>
+            <td>
+              <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="deleteSpec(spec)">
+                <a nz-popconfirm>删除</a>
+              </nz-popconfirm>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
       <!-- ./ table-responsive -->
 
     </div>
@@ -90,7 +95,7 @@
 
   <div nz-row class="ray-row">
     <div nz-col nzSpan="24">
-      <button nz-button nzType="primary" >保存</button>
+      <button nz-button nzType="primary">保存</button>
     </div>
   </div>
 
@@ -129,7 +134,7 @@
       <!-- ./header -->
       <div class="modal-body" style="height: 600px; overflow-y: auto;">
 
-        <nz-table>
+        <nz-table #basicTable [nzData]="menuSourceList" [nzShowPagination]="false" [nzLoading]="menuLoading">
           <thead>
             <tr>
               <th>栏目</th>
@@ -138,13 +143,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of childrenList">
+            <tr *ngFor="let data of basicTable.data">
               <td>
                 <a (click)="cc(data)">{{data.title}}</a>
               </td>
               <td>{{data.comment}}</td>
               <td>
-                <a *ngIf="data.children > 0" (click)="ccc(data.id)">进入子栏目</a>
+                <a *ngIf="data.children > 0" (click)="ccc(data)">进入子栏目</a>
               </td>
             </tr>
           </tbody>

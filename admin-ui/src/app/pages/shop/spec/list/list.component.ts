@@ -26,6 +26,7 @@ export class ListComponent implements OnInit {
   total = 0;
   size = 10;
   small = true;
+  loading = false;
 
   constructor(private commodity: CommodityService, private message: NzMessageService) { }
 
@@ -81,6 +82,23 @@ export class ListComponent implements OnInit {
       if (res.status === 0) {
         this.tableData = res.list;
         this.total = res.pages;
+      } else {
+        console.log(res.message);
+      }
+    });
+  }
+
+  searchData(reset: boolean = false) {
+    if (reset) {
+      this.page = 1;
+    }
+    this.loading = true;
+    this.commodity.listSpec(this.page, this.size).then(res => {
+      this.loading = false;
+      this.tableData = [];
+      if (res.status === 0) {
+        this.tableData = res.list;
+        this.total = +res.pages * this.size;
       } else {
         console.log(res.message);
       }

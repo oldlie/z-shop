@@ -1,7 +1,11 @@
 <div nz-row>
   <div nz-col nzSpan="24">
 
-      <nz-table>
+      <nz-table  #ajaxTable
+        [nzShowPagination]="false"
+        [nzData]="tableData"
+        [nzLoading]="loading"
+        >
           <thead>
             <tr>
               <th>名称</th>
@@ -12,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of tableData">
+            <tr *ngFor="let data of ajaxTable.data">
               <td>{{data.title}}</td>
               <td>{{data.spec}}</td>
               <td>{{data.price}}</td>
