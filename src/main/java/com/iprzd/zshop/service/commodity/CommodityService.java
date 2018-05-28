@@ -1,6 +1,5 @@
 package com.iprzd.zshop.service.commodity;
 
-import com.google.gson.Gson;
 import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.entity.commodity.Menu;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +30,6 @@ import java.util.Optional;
 public class CommodityService {
 
     private static Logger logger = LoggerFactory.getLogger(CommodityService.class);
-    private Gson gson = new Gson();
 
     private CommodityRepository commodityRepository;
     private MenuRepository menuRepository;
@@ -121,8 +120,17 @@ public class CommodityService {
         return response;
     }
 
+    @Transactional
     public BaseResponse delete(IdRequest request) {
         BaseResponse response = new BaseResponse();
+        Optional<Commodity> optional = this.commodityRepository.findById(request.getId());
+        if (!optional.isPresent()) {
+            response.setStatus(StatusCode.SUCCESS);
+            return response;
+        }
+        Commodity commodity = optional.get();
+        // 有点儿问题哦
+
         this.commodityRepository.deleteById(request.getId());
         response.setStatus(StatusCode.SUCCESS);
         return response;

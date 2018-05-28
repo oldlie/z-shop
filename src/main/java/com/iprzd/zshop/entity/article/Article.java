@@ -1,5 +1,6 @@
 package com.iprzd.zshop.entity.article;
 
+import com.iprzd.zshop.entity.Tag;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "t_article")
@@ -41,6 +43,19 @@ public class Article {
     private Date createAt;
     private Date updateAt;
     private Date publishAt;
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "t_article_tag",
+            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private List<Tag> tags;
+
+    @ManyToMany(cascade =  { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    @JoinTable(name = "t_article_menu_map",
+            joinColumns = @JoinColumn(name = "article_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"))
+    @OrderBy(value = "sequence asc")
+    private List<Menu> menus;
 
     public long getId() {
         return id;
@@ -176,5 +191,21 @@ public class Article {
 
     public void setPublishAt(Date publishAt) {
         this.publishAt = publishAt;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 }

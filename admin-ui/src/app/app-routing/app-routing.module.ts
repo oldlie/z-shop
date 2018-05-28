@@ -10,10 +10,12 @@ import { NavigationComponent } from '../pages/navigation/navigation.component';
 import { TagComponent } from '../pages/tag/tag.component';
 import { MenuComponent as CommodityMenuComponent } from '../pages/shop/menu/menu.component';
 import { IndexComponent as CommodityIndexComponent } from '../pages/shop/index/index.component';
+import { IndexComponent as ArticleIndexComponent } from '../pages/article/index/index.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'article/index', component: ArticleIndexComponent},
   {path: 'commodity/index', component: CommodityIndexComponent},
   {path: 'commodity/menu', component: CommodityMenuComponent},
   {path: 'commodity/add', component: AddCommodityComponent},
