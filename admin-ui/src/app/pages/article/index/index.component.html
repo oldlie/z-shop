@@ -3,7 +3,7 @@
     <nz-tab nzTitle="列表">
       <app-list-article *ngIf="index === 0"></app-list-article>
     </nz-tab>
-    <nz-tab nzTitle="tabTitle">
+    <nz-tab [nzTitle]="tabTitle">
       <app-add-article *ngIf="index === 1"></app-add-article>
     </nz-tab>
   </nz-tabset>

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  index = 0;
+  index = 1;
   tabTitle = '新建';
 
   constructor() { }

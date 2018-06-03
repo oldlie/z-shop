@@ -1,3 +1,38 @@
-<p>
-  add-article works!
-</p>
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="标题" [(ngModel)]="model.title">
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="model.title == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="model.title !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="summaryTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="简要描述" [(ngModel)]="model.summary">
+    </nz-input-group>
+    <ng-template #summaryTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="model.summary == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="model.summary !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList"
+     [nzShowButton]="fileList.length < 1" [nzPreview]="handlePreview">
+     <i class="anticon anticon-plus"></i>
+     <div class="ant-upload-text">上传</div>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+      </ng-template>
+    </nz-modal>
+  </div>
+</div>

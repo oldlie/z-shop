@@ -22,6 +22,8 @@ export class CoreService {
     return this.header = {'Authorization': `ZShop ${this.token}`, 'Content-Type': 'application/json'};
   }
 
+  public account = '';
+
   constructor(private http: HttpClient) { }
 
   getPage(page: number) {

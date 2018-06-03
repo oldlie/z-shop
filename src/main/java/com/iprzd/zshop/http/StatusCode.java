@@ -17,6 +17,7 @@ public class StatusCode {
     public static final int DELETE_COMMODITY_MENU_FAILED = 4;
     public static final int DELETE_COMMODITY_SPEC_FAILED = 5;
     public static final int SAVE_ARTICLE_FAILED = 6;
+    public static final int UPLOAD_FILE_FAILED = 7;
 
     public static final int CANNOT_FIND_COMMODITY_MENU_EXCEPTION = 2001;
 

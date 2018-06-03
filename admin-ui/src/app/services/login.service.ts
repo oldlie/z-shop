@@ -37,6 +37,7 @@ export class LoginService {
     return this.http.post(url, JSON.stringify(formData)).toPromise()
       .then((response: ResponseData) => {
         this.core.isLogin = response.status === 0;
+        this.core.account = username;
         this.core.Token = response.token;
         return response;
       });

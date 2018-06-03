@@ -25,7 +25,8 @@ import { TagComponent } from './pages/tag/tag.component';
 import { MenuComponent } from './pages/shop/menu/menu.component';
 import { PaginationComponent } from './widget/pagination/pagination.component';
 import { HttpClientModule } from '@angular/common/http';
-import { IndexComponent } from './pages/shop/index/index.component';
+import { IndexComponent as ShopIndexComponent } from './pages/shop/index/index.component';
+import { IndexComponent as ArticleIndexComponent } from './pages/article/index/index.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { IndexComponent } from './pages/shop/index/index.component';
     TagComponent,
     MenuComponent,
     PaginationComponent,
-    IndexComponent,
+    ShopIndexComponent,
+    ArticleIndexComponent,
   ],
   imports: [
     BrowserModule,

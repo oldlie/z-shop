@@ -83,6 +83,8 @@ public class ArticleService {
                 menuIdList.add(Long.parseLong(id));
             }
             List<Menu> menuList = this.articleMenuRepository.findAllByIdIn(menuIdList);
+            article.setMenus(menuList);
+            this.articleRepository.save(article);
 
             response.setStatus(StatusCode.SUCCESS);
         } else {
