@@ -131,7 +131,7 @@ public class CommodityService {
         Commodity commodity = optional.get();
         // 有点儿问题哦
 
-        this.commodityRepository.deleteById(request.getId());
+        this.commodityRepository.delete(commodity);
         response.setStatus(StatusCode.SUCCESS);
         return response;
     }

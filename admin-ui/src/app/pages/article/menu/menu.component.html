@@ -1,0 +1,80 @@
+<div nz-row class="ray-row">
+    <div nzSpan="24">
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>文章管理</nz-breadcrumb-item>
+            <nz-breadcrumb-item>文章栏目</nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+        <input type="text" nz-input placeholder="栏目名称" [(ngModel)]="menu">
+    </div>
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+        <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+            <input type="text" nz-input placeholder="上级栏目名称" [(ngModel)]="parent" disabled="disabled">
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+            <button nzSearch (click)="selectParent()" nz-button nzSearch>选择上级栏目</button>
+        </ng-template>
+    </div>
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+        <input type="text" nz-input placeholder="备注" [(ngModel)]="comment">
+    </div>
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="12">
+        <button nz-button nzType="primary" (click)="save()">保存</button>
+    </div>
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+        <p>预览文章栏目[点击可以删除节点]</p>
+        <ul nz-menu nzMode="horizontal">
+            <ng-container *ngFor="let menu of menuList">
+                <li (click)="delete(menu)" nz-menu-item *ngIf="menu.children <= 0">{{menu.title}}</li>
+                <li nz-submenu *ngIf="menu.children > 0" (mouseenter)="childMenu(menu)">
+                   <span title>{{menu.title}}</span>
+                   <ul>
+                       <li (click)="delete(child)" nz-menu-item *ngFor="let child of childrenList">{{child.title}}</li>
+                   </ul>
+                </li>
+            </ng-container>
+            <li nz-menu-item></li>
+        </ul>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isMenuVisible" nzTitle="选择文章栏目" [nzContent]="modalContent" (nzOnCancel)="handleMenuCancel()" (nzOnOk)="handleMenuOK()">
+    <ng-template #modalContent>
+        <nz-table #menuTable [nzData]="childrenList" [nzShowPagination]="false" [nzLoading]="menuLoading">
+            <thead>
+                <tr>
+                    <th>栏目</th>
+                    <th>备注</th>
+                    <th>子栏目</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of menuTable.data">
+                    <td>
+                        <a (click)="cc(data)">{{data.title}}</a>
+                    </td>
+                    <td>{{data.comment}}</td>
+                    <td>
+                        <a *ngIf="data.children > 0" (click)="ccc(data.id)">进入子栏目</a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </ng-template>
+</nz-modal>

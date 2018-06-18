@@ -1,6 +1,13 @@
 import { Tag } from './tag';
 import { List } from './response';
 
+/**
+ * 遇到了一个文件命名的问题
+ * 这个文件最初命名为 article.ts, import 语句中后半段为 ../../../article
+ * 同时，有个articleService 命名为 article
+ * 这时，jsrt 会将两个article等同，造成provides中出现循环引用的错误 
+ */
+
 export interface Article {
     id?: number;
     title: string;
@@ -30,4 +37,17 @@ export enum ArticleStatus {
 
 export interface ArticleListResponse extends List {
     list: Array<Article>;
+}
+
+export interface ArticleMenu {
+    id?: number;
+    title: string;
+    parentId: number;
+    comment?: string;
+    sequence?: number;
+    children?: number;
+}
+
+export interface ArticleMenuListResponse extends List {
+    list: Array<ArticleMenu>;
 }

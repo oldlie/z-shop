@@ -23,3 +23,16 @@ export interface List extends Base {
     orderBy?: string;
     order?: number;
 }
+
+export interface UploadFile {
+    id: number;
+    path: string;
+    name: string;
+    creatorId?: number;
+    creator?: string;
+    createAt?: string;
+}
+
+export interface FileResponse extends Base {
+    list: Array<UploadFile>;
+}

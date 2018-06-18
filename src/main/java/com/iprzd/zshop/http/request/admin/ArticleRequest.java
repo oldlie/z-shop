@@ -1,4 +1,4 @@
-package com.iprzd.zshop.http.response.admin;
+package com.iprzd.zshop.http.request.admin;
 
 public class ArticleRequest {
     private long id;

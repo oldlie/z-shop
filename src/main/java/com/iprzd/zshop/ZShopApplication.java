@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 在VSCODE里运行需要先设置VSCODE项目，否则会提示在project中在不到mainClass
+ */
+
 @SpringBootApplication
 public class ZShopApplication {
 

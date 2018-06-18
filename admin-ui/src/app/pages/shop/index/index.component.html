@@ -3,7 +3,7 @@
     <nz-tab nzTitle="商品列表">
       <app-commodity *ngIf="index === 0" (updateEvent)="editCommdoity($event)"></app-commodity>
     </nz-tab>
-    <nz-tab nzTitle="添加规格">
+    <nz-tab nzTitle="添加商品">
         <app-add-commodity *ngIf="index === 1" [commodityVI]="model"></app-add-commodity>
     </nz-tab>
   </nz-tabset>

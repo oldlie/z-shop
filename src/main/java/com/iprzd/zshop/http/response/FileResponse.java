@@ -1,31 +1,17 @@
 package com.iprzd.zshop.http.response;
 
+import com.iprzd.zshop.entity.UploadFile;
+
+import java.util.List;
+
 public class FileResponse extends BaseResponse {
-    private long id;
-    private String name;
-    private String path;
+   private List<UploadFile> list;
 
-    public long getId() {
-        return id;
+    public List<UploadFile> getList() {
+        return list;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
+    public void setList(List<UploadFile> list) {
+        this.list = list;
     }
 }

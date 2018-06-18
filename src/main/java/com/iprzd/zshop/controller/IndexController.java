@@ -13,13 +13,13 @@ import com.iprzd.zshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class IndexController {
@@ -44,7 +44,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "当前版本：v1.0.1";
+        return "当前版本：v1.0.2";
     }
 
     @GetMapping("/init")
@@ -82,6 +82,56 @@ public class IndexController {
     }
 
     @PostMapping("/upload")
+    public FileResponse uploadFile(MultipartHttpServletRequest request, HttpServletResponse servletResponse) {
+        FileResponse response = new FileResponse();
+
+        Iterator<String> itr = request.getFileNames();
+        MultipartFile mpf;
+
+        Calendar calendar = Calendar.getInstance();
+        List<UploadFile> uploadFileList = new ArrayList<>();
+
+        while (itr.hasNext()) {
+            mpf = request.getFile(itr.next());
+            StringBuilder fileNameBuilder = new StringBuilder(64);
+            fileNameBuilder.append(UUID.randomUUID().toString()).append("_").append(mpf.getOriginalFilename());
+
+            StringBuilder path = new StringBuilder(128);
+            path.append(calendar.get(Calendar.YEAR)).append(File.separator) // 上传年
+                    .append(calendar.get(Calendar.MONTH)).append(File.separator) // 上传月
+                    .append(fileNameBuilder.toString());
+
+            File saveFile = new File(this.uploadDirectory + File.separator + path.toString());
+            if (!saveFile.getParentFile().exists()) {
+                if (!saveFile.getParentFile().mkdirs()) {
+                    response.setStatus(StatusCode.UPLOAD_FILE_FAILED);
+                    response.setMessage("服务器没有成功的创建文件夹，请稍后再试");
+                }
+            }
+
+            try {
+                mpf.transferTo(saveFile);
+
+                UploadFile uploadFile = new UploadFile();
+                uploadFile.setPath(path.toString());
+                uploadFile.setName(fileNameBuilder.toString());
+                uploadFile.setCreateAt(calendar.getTime());
+
+                uploadFile = this.uploadFileRepository.save(uploadFile);
+
+                uploadFileList.add(uploadFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+                response.setStatus(StatusCode.UPLOAD_FILE_FAILED);
+                response.setMessage(e.getLocalizedMessage());
+            }
+        }
+
+        response.setList(uploadFileList);
+        return response;
+    }
+
+    @PostMapping("/custom-upload")
     public FileResponse uploadFile(@RequestBody FileRequest request) {
         FileResponse response = new FileResponse();
         if (request.getFile().isEmpty()) {
@@ -121,10 +171,6 @@ public class IndexController {
             uploadFile.setCreateAt(calendar.getTime());
 
             uploadFile = this.uploadFileRepository.save(uploadFile);
-
-            response.setId(uploadFile.getId());
-            response.setName(uploadFile.getName());
-            response.setPath(uploadFile.getPath());
 
         } catch (IOException e) {
             response.setStatus(StatusCode.UPLOAD_FILE_FAILED);

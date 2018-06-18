@@ -27,6 +27,8 @@ import { PaginationComponent } from './widget/pagination/pagination.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IndexComponent as ShopIndexComponent } from './pages/shop/index/index.component';
 import { IndexComponent as ArticleIndexComponent } from './pages/article/index/index.component';
+import { ArticleMenuComponent } from './pages/article/menu/menu.component';
+import { TagActiveDirective } from './directive/tag-active.directive';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { IndexComponent as ArticleIndexComponent } from './pages/article/index/i
     PaginationComponent,
     ShopIndexComponent,
     ArticleIndexComponent,
+    ArticleMenuComponent,
+    TagActiveDirective,
   ],
   imports: [
     BrowserModule,

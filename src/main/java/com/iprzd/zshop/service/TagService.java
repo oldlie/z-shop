@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TagService {
 
@@ -28,7 +30,9 @@ public class TagService {
             return response;
         }
         Tag tag;
-        if (request.getId() > 0) {
+
+        Optional<Tag> optional = this.tagRepository.findById(request.getId());
+        if (request.getId() > 0 && optional.isPresent()) {
             tag = this.tagRepository.findById(request.getId()).get();
         } else {
             tag = new Tag();
@@ -36,6 +40,7 @@ public class TagService {
         tag.setTitle(request.getTitle());
         tag.setParentId(request.getParentId());
         tag = this.tagRepository.save(tag);
+
         if (tag.getId() > 0) {
             response.setStatus(StatusCode.SUCCESS);
             response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
@@ -49,6 +54,7 @@ public class TagService {
     public BaseResponse delete(long id) {
         BaseResponse response = new BaseResponse();
         this.tagRepository.deleteById(id);
+
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
         return response;

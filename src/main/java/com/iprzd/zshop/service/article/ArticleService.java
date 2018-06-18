@@ -1,4 +1,4 @@
-package com.iprzd.zshop.service;
+package com.iprzd.zshop.service.article;
 
 import com.iprzd.zshop.core.verify.LengthVerifier;
 import com.iprzd.zshop.core.verify.NotEmptyVerifier;
@@ -7,11 +7,16 @@ import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.entity.article.Article;
 import com.iprzd.zshop.entity.article.Menu;
 import com.iprzd.zshop.http.StatusCode;
+import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.response.article.ArticleListResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
-import com.iprzd.zshop.http.response.admin.ArticleRequest;
+import com.iprzd.zshop.http.request.admin.ArticleRequest;
 import com.iprzd.zshop.repository.ArticleMenuRepository;
 import com.iprzd.zshop.repository.ArticleRepository;
 import com.iprzd.zshop.repository.TagRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -91,6 +96,22 @@ public class ArticleService {
             response.setStatus(StatusCode.SAVE_ARTICLE_FAILED);
             response.setMessage(response.getMessage());
         }
+        return response;
+    }
+
+    public BaseResponse delete(IdRequest request) {
+        BaseResponse response = new BaseResponse();
+        this.articleRepository.deleteById(request.getId());
+        return response;
+    }
+
+    public ArticleListResponse findAll(ListRequest request) {
+        ArticleListResponse response = new ArticleListResponse();
+        Page<Article> page = this.articleRepository.findAll(
+                PageRequest.of(request.getPage(), request.getSize(), request.getSort())
+        );
+        response.setList(page.getContent());
+        response.setPages(page.getTotalPages());
         return response;
     }
     // endregion

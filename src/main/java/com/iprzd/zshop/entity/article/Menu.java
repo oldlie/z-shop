@@ -20,6 +20,7 @@ public class Menu {
     private String title;
     private long parentId;
     private String comment;
+    private int children;
     private int sequence;
 
     public long getId() {
@@ -52,6 +53,14 @@ public class Menu {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getChildren() {
+        return children;
+    }
+
+    public void setChildren(int children) {
+        this.children = children;
     }
 
     public int getSequence() {

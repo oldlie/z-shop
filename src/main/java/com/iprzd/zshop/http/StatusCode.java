@@ -10,14 +10,20 @@ public class StatusCode {
     private static HashMap<Integer, String> map = new HashMap<>();
 
     public static final int SUCCESS = 0;
+
     public static final int LOGIN_FAILED = 1;
-    public static final int SAVE_COMMODITY_FAILED = 6;
-    public static final int SAVE_COMMODITY_MENU_FAILED = 2;
-    public static final int SAVE_TAG_FAILED = 3;
-    public static final int DELETE_COMMODITY_MENU_FAILED = 4;
-    public static final int DELETE_COMMODITY_SPEC_FAILED = 5;
-    public static final int SAVE_ARTICLE_FAILED = 6;
-    public static final int UPLOAD_FILE_FAILED = 7;
+
+    public static final int DELETE_COMMODITY_MENU_FAILED = 2;
+    public static final int DELETE_COMMODITY_SPEC_FAILED = 3;
+
+    public static final int SAVE_COMMODITY_FAILED = 4;
+    public static final int SAVE_COMMODITY_MENU_FAILED = 5;
+    public static final int SAVE_TAG_FAILED = 6;
+    public static final int SAVE_ARTICLE_FAILED = 7;
+    public static final int SAVE_ARTICLE_MENU_FAILED = 8;
+
+    public static final int UPLOAD_FILE_FAILED = 9;
+
 
     public static final int CANNOT_FIND_COMMODITY_MENU_EXCEPTION = 2001;
 
