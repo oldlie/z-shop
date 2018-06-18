@@ -40,7 +40,7 @@ export class AddArticleComponent implements OnInit {
   menuCheckedList = [];
   tagList = new Array<TagVI>();
   tagTempList = new Array<Tag>();
-  tagCheckedList = [];
+  tagCheckedList = new Array<Tag>();
   saveAsDraft = false;
 
   isMenuVisible = false;
@@ -195,13 +195,21 @@ export class AddArticleComponent implements OnInit {
     }
 
     if (this.menuCheckedList.length > 0) {
-      this.model.menus = this.menuCheckedList.join(',');
+      const menuIds = [];
+      this.menuCheckedList.forEach(x => {
+        menuIds.push(x.id);
+      });
+      this.model.menus = menuIds.join(',');
     } else {
       this.model.menus = '';
     }
     
     if (this.tagCheckedList.length > 0) {
-      this.model.tags = this.tagCheckedList.join(',');
+      const tagIds = [];
+      this.tagCheckedList.forEach(x => {
+        tagIds.push(x.id);
+      });
+      this.model.tags = tagIds.join(',');
     } else {
       this.model.tags = '';
     }
