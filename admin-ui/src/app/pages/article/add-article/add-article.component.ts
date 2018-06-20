@@ -19,7 +19,7 @@ import { FileResponse, UploadFile as File } from '../../../response/response';
 })
 export class AddArticleComponent implements OnInit {
 
-  @Input()
+  @Input() editArticle: Article;
   model: ArticleVI;
   uploadUrl: string;
   fileList = [
@@ -60,8 +60,24 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit() {
     this.uploadUrl = this.core.UrlPrefix + '/upload';
-
-    if (!this.model) {
+    console.log(this.editArticle);
+    if (this.editArticle) {
+      console.log('inited');
+      this.model = {
+        id: this.editArticle.id,
+        title: this.editArticle.title,
+        summary: this.editArticle.summary,
+        imageUrl: this.editArticle.imageUrl,
+        author: this.editArticle.author,
+        content: this.editArticle.content,
+        status: this.editArticle.status
+      };
+      this.saveAsDraft = this.editArticle.status === 0;
+      this.menuCheckedList = this.editArticle.menus;
+      this.tagCheckedList = this.editArticle.tags;
+    }
+    else {
+      console.log('no init');
       this.model = {
         title: '',
         summary: '',

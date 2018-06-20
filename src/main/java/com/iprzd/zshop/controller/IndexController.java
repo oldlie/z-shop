@@ -44,7 +44,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "当前版本：v1.0.3";
+        return "当前版本：v1.0.4";
     }
 
     @GetMapping("/init")

@@ -63,6 +63,7 @@ public class ArticleService {
 
             article.setTitle(request.getTitle());
             article.setSummary(request.getSummary());
+            article.setContent(request.getContent());
             String url = request.getImageUrl();
             url = url == null || "".equals(url) ? "images/article/default.png" : url;
             article.setImageUrl(url);

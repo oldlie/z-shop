@@ -27,6 +27,7 @@ export interface Article {
     updateAt?: Date;
     publishAt?: Date;
     tags?: Array<Tag>;
+    menus?: Array<ArticleMenu>;
 }
 
 export enum ArticleStatus {

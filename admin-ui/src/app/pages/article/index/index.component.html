@@ -1,10 +1,10 @@
 <div nz-row>
   <nz-tabset [(nzSelectedIndex)]="index" (nzSelectedIndexChange)="handle($event)">
     <nz-tab nzTitle="列表">
-      <app-list-article *ngIf="index === 0"></app-list-article>
+      <app-list-article *ngIf="index === 0" (editArticeEvent)="onEditArticleEvent($event)"></app-list-article>
     </nz-tab>
     <nz-tab [nzTitle]="tabTitle">
-      <app-add-article *ngIf="index === 1"></app-add-article>
+      <app-add-article *ngIf="index === 1" [editArticle]="editArticle"></app-add-article>
     </nz-tab>
   </nz-tabset>
 </div>
