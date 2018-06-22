@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
 
   handle(index: number) {
     if (this.index === 1) {
-      // this.editArticle = null;
+      this.editArticle = null;
     }
     this.index = index;
   }

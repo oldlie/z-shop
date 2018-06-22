@@ -73,7 +73,10 @@ export class AddArticleComponent implements OnInit {
         status: this.editArticle.status
       };
       this.saveAsDraft = this.editArticle.status === 0;
+      console.log('menus', this.editArticle.menus);
+      this.refreshMenu = true;
       this.menuCheckedList = this.editArticle.menus;
+      console.log(this.menuCheckedList);
       this.tagCheckedList = this.editArticle.tags;
     }
     else {
