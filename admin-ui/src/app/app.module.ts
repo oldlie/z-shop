@@ -29,6 +29,7 @@ import { IndexComponent as ShopIndexComponent } from './pages/shop/index/index.c
 import { IndexComponent as ArticleIndexComponent } from './pages/article/index/index.component';
 import { ArticleMenuComponent } from './pages/article/menu/menu.component';
 import { TagActiveDirective } from './directive/tag-active.directive';
+import { CarouselComponent } from './pages/home/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { TagActiveDirective } from './directive/tag-active.directive';
     ArticleIndexComponent,
     ArticleMenuComponent,
     TagActiveDirective,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,

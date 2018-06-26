@@ -12,10 +12,12 @@ import { MenuComponent as CommodityMenuComponent } from '../pages/shop/menu/menu
 import { IndexComponent as CommodityIndexComponent } from '../pages/shop/index/index.component';
 import { IndexComponent as ArticleIndexComponent } from '../pages/article/index/index.component';
 import { ArticleMenuComponent } from '../pages/article/menu/menu.component';
+import { CarouselComponent } from '../pages/home/carousel/carousel.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'home/carousel', component: CarouselComponent},
   {path: 'article/index', component: ArticleIndexComponent},
   {path: 'article/menu', component: ArticleMenuComponent},
   {path: 'commodity/index', component: CommodityIndexComponent},

@@ -14,10 +14,10 @@
             </ul>
         </nz-header>
         <nz-layout>
-            <nz-sider [nzWidth]="200" style="background:#fff">
+            <nz-sider [nzWidth]="200" style="background:#fff; box-sizing: border-box;">
                 <app-main-aside [index]="defaultAsideIndex"></app-main-aside>
             </nz-sider>
-            <nz-layout style="padding:0 24px 24px; background:#fff" >
+            <nz-layout style="padding:0 24px 24px; background:#fff; box-sizing: border-box;" >
                 <router-outlet></router-outlet>
             </nz-layout>
         </nz-layout>
