@@ -1,5 +1,5 @@
 <div nz-row>
-  <div nz-col [nzSpan]="24">
+  <div nz-col [nzSpan]="24" style="background-color: #364d79">
 
     <nz-carousel class="ray-nz-carousel">
       <div nz-carousel-content *ngFor="let index of list">
@@ -9,4 +9,72 @@
 
   </div>
 
+</div>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <form nz-form name="carouselForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">标题</nz-form-label>
+        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+          <input nz-input [ngModel]="title" name="title">
+          <nz-form-explain>{{titleTip}}</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">URL</nz-form-label>
+        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+          <nz-input-group nzAddOnBefore="Http://">
+            <input type="text" nz-input [(ngModel)]="url" name="url">
+          </nz-input-group>
+          <nz-form-explain>{{urlTip}}</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">图片</nz-form-label>
+        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+          <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 1"
+            [nzPreview]="handlePreview" (nzChange)="uploadChange($event)">
+            <i class="anticon anticon-plus"></i>
+            <div class="ant-upload-text">上传</div>
+          </nz-upload>
+          <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+            <ng-template #modalContent>
+              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+            </ng-template>
+          </nz-modal>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">顺序</nz-form-label>
+        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+          <input type="number" nz-input [ngModel]="sequence" name="sequence" nzMax="99" nzMin="0">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="5">颜色</nz-form-label>
+        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+          <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+            <nz-option nzLabel="#3c8dbc" nzValue="#3c8dbc"><span style="width: 10px; height: 10px; background-color: #3c8dbc"></span></nz-option>
+            <nz-option nzLabel="#00c0ef" nzValue="#00c0ef"></nz-option>
+            <nz-option nzLabel="#00a65a" nzValue="#00a65a"></nz-option>
+            <nz-option nzLabel="#f39c12" nzValue="#f39c12"></nz-option>
+            <nz-option nzLabel="#f56954" nzValue="#f56954"></nz-option>
+            <nz-option nzLabel="#d2d6de" nzValue="#d2d6de"></nz-option>
+            <nz-option nzLabel="#111111" nzValue="#111111"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <div nz-col nzSpan="12" nzOffset="5">
+          <button nz-button nzType="primary" (click)="save()">保存</button>
+        </div>
+      </nz-form-item>
+    </form>
+  </div>
 </div>
