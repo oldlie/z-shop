@@ -1,4 +1,4 @@
-import { List } from './response';
+import { Page } from './response';
 
 export interface Tag {
     id: number;
@@ -6,6 +6,6 @@ export interface Tag {
     parentId: number;
 }
 
-export interface TagList extends List {
+export interface TagList extends Page {
     tagList: Array<Tag>;
 }

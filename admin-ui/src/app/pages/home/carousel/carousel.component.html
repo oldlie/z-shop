@@ -1,9 +1,12 @@
-<div nz-row>
+<div nz-row *ngIf="list && list.length > 0">
   <div nz-col [nzSpan]="24" style="background-color: #364d79">
 
     <nz-carousel class="ray-nz-carousel">
-      <div nz-carousel-content *ngFor="let index of list">
-        {{index}}
+      <div nz-carousel-content *ngFor="let item of list">
+        <a href="{{item.url}}" target="_blank">
+          <img src="{{'' + item.image}}" alt="{{item.title}}">
+        </a>
+        {{item.title}}
       </div>
     </nz-carousel>
 
@@ -16,15 +19,15 @@
     <form nz-form name="carouselForm">
       <nz-form-item>
         <nz-form-label [nzSpan]="5">标题</nz-form-label>
-        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
-          <input nz-input [ngModel]="title" name="title">
+        <nz-form-control [nzValidateStatus]="titleStatus" [nzSpan]="12" nzHasFeedback>
+          <input nz-input [(ngModel)]="title" name="title">
           <nz-form-explain>{{titleTip}}</nz-form-explain>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label [nzSpan]="5">URL</nz-form-label>
-        <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
+        <nz-form-control [nzValidateStatus]="urlStatus" [nzSpan]="12" nzHasFeedback>
           <nz-input-group nzAddOnBefore="Http://">
             <input type="text" nz-input [(ngModel)]="url" name="url">
           </nz-input-group>
@@ -51,21 +54,35 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="5">顺序</nz-form-label>
         <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
-          <input type="number" nz-input [ngModel]="sequence" name="sequence" nzMax="99" nzMin="0">
+          <input type="number" nz-input [(ngModel)]="sequence" name="sequence" nzMax="99" nzMin="0">
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label [nzSpan]="5">颜色</nz-form-label>
         <nz-form-control nzValidateStatus="default" [nzSpan]="12" nzHasFeedback>
-          <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
-            <nz-option nzLabel="#3c8dbc" nzValue="#3c8dbc"><span style="width: 10px; height: 10px; background-color: #3c8dbc"></span></nz-option>
-            <nz-option nzLabel="#00c0ef" nzValue="#00c0ef"></nz-option>
-            <nz-option nzLabel="#00a65a" nzValue="#00a65a"></nz-option>
-            <nz-option nzLabel="#f39c12" nzValue="#f39c12"></nz-option>
-            <nz-option nzLabel="#f56954" nzValue="#f56954"></nz-option>
-            <nz-option nzLabel="#d2d6de" nzValue="#d2d6de"></nz-option>
-            <nz-option nzLabel="#111111" nzValue="#111111"></nz-option>
+          <nz-select name="color" style="width: 200px;" nzShowSearch nzAllowClear nzPlaceHolder="背景颜色" [(ngModel)]="color">
+            <nz-option nzCustomContent nzLabel="#3c8dbc" nzValue="#3c8dbc">
+              <i style="color: #3c8dbc" class="anticon anticon-environment"></i> #3c8dbc
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#00c0ef" nzValue="#00c0ef">
+              <i style="color: #00c0ef" class="anticon anticon-environment"></i> #00c0ef
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#00a65a" nzValue="#00a65a">
+              <i style="color: #00a65a" class="anticon anticon-environment"></i> #00a65a
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#f39c12" nzValue="#f39c12">
+              <i style="color: #f39c12" class="anticon anticon-environment"></i> #f39c12
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#f56954" nzValue="#f56954">
+              <i style="color: #f56954" class="anticon anticon-environment"></i> #f56954
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#d2d6de" nzValue="#d2d6de">
+              <i style="color: #d2d6de" class="anticon anticon-environment"></i> #d2d6de
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="#111111" nzValue="#111111">
+              <i style="color: #111111" class="anticon anticon-environment"></i> #111111
+            </nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
