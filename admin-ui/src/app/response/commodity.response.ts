@@ -53,3 +53,13 @@ export interface Commodity {
 export interface CommodityListResponse extends Page {
     list: Array<Commodity>;
 }
+
+export interface CommodityImage {
+    id: number;
+    commodityId: number;
+    imagePath: string;
+}
+
+export interface CommodityImageListResponse extends Base {
+    list: Array<CommodityImage>;
+}

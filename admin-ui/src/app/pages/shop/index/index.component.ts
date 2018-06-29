@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Commodity } from '../../../response/commodity';
+import { Commodity } from '../../../response/commodity.response';
 
 @Component({
   selector: 'app-index',
@@ -8,7 +8,7 @@ import { Commodity } from '../../../response/commodity';
 })
 export class IndexComponent implements OnInit {
 
-  index = 0;
+  index = 1;
   model: Commodity;
 
   constructor() { }

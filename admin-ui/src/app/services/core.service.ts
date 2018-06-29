@@ -12,6 +12,11 @@ export class CoreService {
     return this.urlPerfix;
   }
 
+  private resourceURI = 'http://localhost/zs/resource';
+  get ResourceURI() {
+    return this.resourceURI;
+  }
+
   private token = '';
   set Token(token: string) {
     this.token = token;

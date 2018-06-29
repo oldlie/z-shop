@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Base } from '../response/response';
 import { CoreService } from './core.service';
-import { CommodityMenuListResponse, CommoditySpecListResponse, CommodityMenu, CommodityListResponse } from '../response/commodity';
+import { CommodityMenuListResponse, CommoditySpecListResponse, CommodityMenu, CommodityListResponse, CommodityImageListResponse } from '../response/commodity.response';
 import { CommoditySpecVI, CommodityVI } from '../pages/shop/commodity-vi';
 import { Tag } from '../response/tag';
 
@@ -55,6 +55,7 @@ export class CommodityService {
   // endregion
 
   save(model: CommodityVI,
+    imageList: Array<string>,
     menuList: Array<CommodityMenu>,
     tagList: Array<Tag>,
     specList: Array<CommoditySpecVI>
@@ -81,7 +82,8 @@ export class CommodityService {
       status: model.status,
       menus: menus.join(','),
       tags: tags.join(','),
-      specifications: specifications.join(',')
+      specifications: specifications.join(','),
+      images: imageList.join(',')
     };
     return this.core.post(url, params).toPromise().then(res => res as Base);
   }
@@ -101,5 +103,10 @@ export class CommodityService {
   delete(id: number): Promise<Base> {
     const url = `${this.core.UrlPrefix}/admin/commodity/delete`;
     return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
+  }
+
+  listImages(id: number): Promise<CommodityImageListResponse> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/images`;
+    return this.core.post(url, {id: id}).toPromise().then(x => x as CommodityImageListResponse);
   }
 }

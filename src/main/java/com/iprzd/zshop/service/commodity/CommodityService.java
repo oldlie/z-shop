@@ -1,19 +1,26 @@
 package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.entity.Tag;
+import com.iprzd.zshop.entity.UploadFile;
 import com.iprzd.zshop.entity.commodity.Commodity;
+import com.iprzd.zshop.entity.commodity.CommodityImage;
 import com.iprzd.zshop.entity.commodity.Menu;
 import com.iprzd.zshop.entity.commodity.Specification;
+import com.iprzd.zshop.entity.home.HomeCommodity;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.CommodityImageListResponse;
 import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
 import com.iprzd.zshop.repository.TagRepository;
+import com.iprzd.zshop.repository.UploadFileRepository;
+import com.iprzd.zshop.repository.commodity.CommodityImageRepository;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import com.iprzd.zshop.repository.commodity.MenuRepository;
 import com.iprzd.zshop.repository.commodity.SpecificationRepository;
+import com.iprzd.zshop.repository.home.HomeCommodityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -32,20 +39,30 @@ public class CommodityService {
     private static Logger logger = LoggerFactory.getLogger(CommodityService.class);
 
     private CommodityRepository commodityRepository;
+    private CommodityImageRepository commodityImageRepository;
+    private HomeCommodityRepository homeCommodityRepository;
     private MenuRepository menuRepository;
     private SpecificationRepository specificationRepository;
     private TagRepository tagRepository;
+    private UploadFileRepository uploadFileRepository;
 
     public CommodityService(CommodityRepository commodityRepository,
+                            CommodityImageRepository commodityImageRepository,
+                            HomeCommodityRepository homeCommodityRepository,
                             MenuRepository menuRepository,
                             SpecificationRepository specificationRepository,
-                            TagRepository tagRepository){
+                            TagRepository tagRepository,
+                            UploadFileRepository uploadFileRepository){
         this.commodityRepository = commodityRepository;
+        this.commodityImageRepository = commodityImageRepository;
+        this.homeCommodityRepository = homeCommodityRepository;
         this.menuRepository = menuRepository;
         this.specificationRepository = specificationRepository;
         this.tagRepository = tagRepository;
+        this.uploadFileRepository = uploadFileRepository;
     }
 
+    @Transactional
     public BaseResponse store(CommodityRequest request) {
         BaseResponse response = new BaseResponse();
 
@@ -97,6 +114,8 @@ public class CommodityService {
             }
             List<Tag> tagList = this.tagRepository.findAllByIdIn(ids);
             commodity.setTags(tagList);
+
+
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage());
             response.setStatus(StatusCode.SAVE_COMMODITY_FAILED);
@@ -104,8 +123,35 @@ public class CommodityService {
             return response;
         }
 
+        commodity = this.commodityRepository.save(commodity);
 
-        this.commodityRepository.save(commodity);
+        try {
+            List<CommodityImage> existImages =
+                    this.commodityImageRepository.findAllByCommodityIdOrderById(commodity.getId());
+            if (existImages != null && existImages.size() > 0) {
+                this.commodityImageRepository.deleteAll(existImages);
+            }
+
+            String[] imageArray =request.getImages().split(",");
+            List<Long> ids = new ArrayList<>();
+            for (String image : imageArray) {
+                ids.add(Long.parseLong(image));
+            }
+            List<UploadFile> files = this.uploadFileRepository.findAllByIdIn(ids);
+            List<CommodityImage> images = new ArrayList<>();
+            for (UploadFile file : files) {
+                CommodityImage image = new CommodityImage();
+                image.setCommodityId(commodity.getId());
+                image.setImagePath(file.getPath());
+                images.add(image);
+            }
+            this.commodityImageRepository.saveAll(images);
+        } catch (Exception e) {
+            response.setStatus(StatusCode.SAVE_COMMODITY_FAILED);
+            response.setMessage(e.getLocalizedMessage());
+            return response;
+        }
+
         return StatusCode.successResponse(response);
     }
 
@@ -133,6 +179,24 @@ public class CommodityService {
 
         this.commodityRepository.delete(commodity);
         response.setStatus(StatusCode.SUCCESS);
+        return response;
+    }
+
+    public BaseResponse add2Home(Long id) {
+        HomeCommodity homeCommodity = this.homeCommodityRepository.findFirstByCommodityId(id);
+        if (homeCommodity == null) {
+            homeCommodity = new HomeCommodity();
+            homeCommodity.setCommodityId(id);
+            homeCommodity.setSequence(0);
+            this.homeCommodityRepository.save(homeCommodity);
+        }
+        return new BaseResponse();
+    }
+
+    public CommodityImageListResponse listCommodityImage(Long commodityId) {
+        CommodityImageListResponse response = new CommodityImageListResponse();
+        List<CommodityImage> list = this.commodityImageRepository.findAllByCommodityIdOrderById(commodityId);
+        response.setList(list);
         return response;
     }
 }

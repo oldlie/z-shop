@@ -4,6 +4,7 @@ import com.iprzd.zshop.entity.home.Carousel;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CarouselListResponse;
+import com.iprzd.zshop.http.response.HomeCommodityListResponse;
 import com.iprzd.zshop.service.HomePageService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ public class HomeSettingController {
         this.homePageService = homePageService;
     }
 
+    // region carousel
+
     @PostMapping("/carousel/add")
     public BaseResponse addCarousel(@RequestBody Carousel carousel) {
         return this.homePageService.storeCarousel(carousel);
@@ -29,6 +32,20 @@ public class HomeSettingController {
 
     @GetMapping("/carousel/list")
     public CarouselListResponse listCarousel() {
-        return this.homePageService.list();
+        return this.homePageService.listCarousel();
     }
+
+    // endregion
+
+    // region commodity
+    @GetMapping("/commodity/list")
+    public HomeCommodityListResponse listCommodity() {
+        return this.homePageService.listCommodity();
+    }
+
+    @PostMapping("/commodity/delete")
+    public BaseResponse deleteCommodity(@RequestBody IdRequest request) {
+        return this.homePageService.deleteCommodity(request.getId());
+    }
+    // endregion
 }

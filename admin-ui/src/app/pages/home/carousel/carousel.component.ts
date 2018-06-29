@@ -40,7 +40,7 @@ export class CarouselComponent implements OnInit {
   previewVisible = false;
   uploadFileList = [];
 
-  constructor(private core: CoreService, 
+  constructor(public core: CoreService, 
     private home: HomeService,
     private msg: NzMessageService) { }
 
@@ -92,6 +92,7 @@ export class CarouselComponent implements OnInit {
       .then(x => {
         if (x.status === 0) {
           this.msg.success('已添加');
+          this.loadCarousel();
         } else {
           this.msg.error(x.message);
         }
@@ -104,5 +105,20 @@ export class CarouselComponent implements OnInit {
         this.list = x.list;
       }
     });
+  }
+
+  deleteCarousel(model: Carousel) {
+    this.home.deleteCarousel(model.id).then(x => {
+      if (x.status === 0) {
+        this.msg.success('已删除');
+        this.loadCarousel();
+      } else {
+        this.msg.error(x.message);
+      }
+    });
+  }
+
+  formatURI(uri: string): string {
+    return `${this.core.ResourceURI}/${uri.replace(/\\/g, '/')}`;
   }
 }
