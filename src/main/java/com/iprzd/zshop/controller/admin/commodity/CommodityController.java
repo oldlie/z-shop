@@ -4,6 +4,7 @@ import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.CommodityImageListResponse;
 import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
 import com.iprzd.zshop.service.commodity.CommodityService;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,15 @@ public class CommodityController {
     @PostMapping("/delete")
     public BaseResponse delete(@RequestBody IdRequest request) {
         return this.commodityService.delete(request);
+    }
+
+    @PostMapping("/home")
+    public BaseResponse add2Home(@RequestBody IdRequest request) {
+        return this.commodityService.add2Home(request.getId());
+    }
+
+    @PostMapping("/images")
+    public CommodityImageListResponse listCommodityImage(@RequestBody IdRequest request) {
+        return this.commodityService.listCommodityImage(request.getId());
     }
 }

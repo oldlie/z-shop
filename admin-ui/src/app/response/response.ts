@@ -17,7 +17,7 @@ export interface ValidateResult {
     message?: string;
 }
 
-export interface List extends Base {
+export interface Page extends Base {
     total: number;
     pages: number;
     orderBy?: string;

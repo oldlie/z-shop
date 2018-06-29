@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommodityService } from '../../../services/commodity.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { CommodityMenu } from '../../../response/commodity';
+import { CommodityMenu } from '../../../response/commodity.response';
 
 @Component({
   selector: 'app-menu',

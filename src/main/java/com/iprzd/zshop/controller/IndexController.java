@@ -32,6 +32,9 @@ public class IndexController {
     @Value("${zs.upload}")
     private String uploadDirectory;
 
+    @Value("${zs.version}")
+    private String appVersion;
+
     public IndexController(AuthorityRepository authorityRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            UploadFileRepository uploadFileRepository,
@@ -44,7 +47,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "当前版本：v1.0.4";
+        return "当前版本：v" + appVersion;
     }
 
     @GetMapping("/init")

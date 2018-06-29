@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommodityStatus, CommodityVI, CommoditySpecVI } from '../commodity-vi';
-import { NzMessageService } from 'ng-zorro-antd';
-import { CommoditySpec, CommodityMenu, Commodity } from '../../../response/commodity';
+import { NzMessageService, UploadFile } from 'ng-zorro-antd';
+import { CommoditySpec, CommodityMenu, Commodity } from '../../../response/commodity.response';
 import { Tag, TagList } from '../../../response/tag';
 import { CommodityService } from '../../../services/commodity.service';
 import { TagService } from '../../../services/tag.service';
+import { CoreService } from '../../../services/core.service';
+import { FileResponse } from '../../../response/response';
 
 @Component({
   selector: 'app-add-commodity',
@@ -31,6 +33,12 @@ export class AddCommodityComponent implements OnInit {
   menuLoading = false;
   showTagDialog = false;
 
+  activeImageFile: UploadFile;
+  uploadUrl = '';
+  fileList = [];
+  previewImage = '';
+  previewVisible = false;
+
   specifciationFlag = 1;
   specificationList = new Array<CommoditySpecVI>();
   tagList = new Array<Tag>();
@@ -45,10 +53,12 @@ export class AddCommodityComponent implements OnInit {
   tagCheckedList = new Array<Tag>();
 
   constructor(private commodity: CommodityService,
+    private core: CoreService,
     private message: NzMessageService,
     private tag: TagService) { }
 
   ngOnInit() {
+    this.uploadUrl = this.core.UrlPrefix + '/upload';
     if (!this.commodityVI) {
       this.commodityVI = {
         id: 0,
@@ -70,7 +80,25 @@ export class AddCommodityComponent implements OnInit {
       this.menuList = this.commodityVI.menus;
       this.tagCheckedList = this.commodityVI.tags;
       this.refreshMenu = true;
+      this.loadImages(this.commodityVI.id);
     }
+  }
+
+  uploadChange(change: any) {
+    if (change['type'] === 'success') {
+      const response = change['file']['response'] as FileResponse;
+      const length = this.fileList.length;
+      if (length > 0) {
+        this.fileList[length - 1]['id'] = response.list[0].id;
+      }
+      console.log('uploaded list', this.fileList);
+    }
+  }
+
+  handlePreview = (file: UploadFile) => {
+    console.log('file list:', file);
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
   }
 
   addSpec() {
@@ -235,11 +263,37 @@ export class AddCommodityComponent implements OnInit {
       return;
     }
 
-    this.commodity.save(this.commodityVI, this.menuList, this.tagCheckedList, this.specificationList).then(res => {
+    const imageList = [];
+    for (let file of this.fileList) {
+      imageList.push(file['id']);
+    }
+
+    this.commodity.save(this.commodityVI, 
+      imageList,
+      this.menuList, 
+      this.tagCheckedList, 
+      this.specificationList).then(res => {
       if (res.status === 0) {
         this.message.success('已保存');
       } else {
         this.message.warning(res.message);
+      }
+    });
+  }
+
+  private loadImages(id: number) {
+    this.commodity.listImages(id).then(x => {
+      console.log(x);
+      if (x.status === 0 && x.list !== null) {
+        for (let image of x.list) {
+          this.fileList.push({
+            uid: image.id,
+            name: 'xxx.png',
+            status: 'done',
+            url: `${this.core.ResourceURI}/${image.imagePath.replace(/\\/g, '/')}`,
+            id: image.id
+          });
+        }
       }
     });
   }

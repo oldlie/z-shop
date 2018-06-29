@@ -30,6 +30,8 @@ import { IndexComponent as ArticleIndexComponent } from './pages/article/index/i
 import { ArticleMenuComponent } from './pages/article/menu/menu.component';
 import { TagActiveDirective } from './directive/tag-active.directive';
 import { CarouselComponent } from './pages/home/carousel/carousel.component';
+import { CommodityComponent as HomeCommodityComponent } from './pages/home/commodity/commodity.component';
+import { ColorSquareDirective } from './directive/color-square.directive';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { CarouselComponent } from './pages/home/carousel/carousel.component';
     ArticleMenuComponent,
     TagActiveDirective,
     CarouselComponent,
+    HomeCommodityComponent,
+    ColorSquareDirective,
   ],
   imports: [
     BrowserModule,

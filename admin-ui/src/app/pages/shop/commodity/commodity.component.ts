@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Commodity } from '../../../response/commodity';
+import { Commodity } from '../../../response/commodity.response';
 import { CommodityService } from '../../../services/commodity.service';
 import { NzNotificationService } from 'ng-zorro-antd';
 

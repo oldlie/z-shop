@@ -1,5 +1,5 @@
 /*
-Commodity View Interface
+HomeCommodity View Interface
 */
 
 export interface CommodityVI {

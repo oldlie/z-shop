@@ -1,4 +1,4 @@
-import { Base, List } from './response';
+import { Base, Page } from './response';
 import { Tag } from './tag';
 
 export interface CommodityMenu {
@@ -27,7 +27,7 @@ export interface CommoditySpec {
     inventory: number;
 }
 
-export interface CommoditySpecListResponse extends List {
+export interface CommoditySpecListResponse extends Page {
     list: Array<CommoditySpec>;
 }
 
@@ -50,6 +50,16 @@ export interface Commodity {
     menus?: Array<CommodityMenu>;
 }
 
-export interface CommodityListResponse extends List {
+export interface CommodityListResponse extends Page {
     list: Array<Commodity>;
+}
+
+export interface CommodityImage {
+    id: number;
+    commodityId: number;
+    imagePath: string;
+}
+
+export interface CommodityImageListResponse extends Base {
+    list: Array<CommodityImage>;
 }

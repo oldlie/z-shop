@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { CommodityService } from '../../../../services/commodity.service';
-import { CommoditySpec } from '../../../../response/commodity';
+import { CommoditySpec } from '../../../../response/commodity.response';
 import { CommoditySpecVI } from '../../commodity-vi';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
   constructor(private commodity: CommodityService, private message: NzMessageService) { }
 
   ngOnInit() {
-    console.log('commodity list', this.commodityId);
+    console.log('HomeCommodity listCarousel', this.commodityId);
     this.tableData = [];
     this.commodity.listSpec(0, this.size).then(res => {
       if (res.status === 0) {

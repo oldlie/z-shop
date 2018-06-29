@@ -24,6 +24,23 @@
 </div>
 
 <div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+      <nz-form-control nzValidateStatus="default" nzHasFeedback>
+        <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 5"
+          [nzPreview]="handlePreview" (nzChange)="uploadChange($event)">
+          <i class="anticon anticon-plus"></i>
+          <div class="ant-upload-text">上传</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+          </ng-template>
+        </nz-modal>
+      </nz-form-control>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
   <div nz-col nzSm="24" nzMd="16">
     <textarea nz-input placeholder="注意事项，用于提示特殊情况,可以不填写" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
   </div>

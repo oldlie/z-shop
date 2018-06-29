@@ -1,5 +1,5 @@
 import { Tag } from './tag';
-import { List } from './response';
+import { Page } from './response';
 
 /**
  * 遇到了一个文件命名的问题
@@ -36,7 +36,7 @@ export enum ArticleStatus {
     private = 2
 }
 
-export interface ArticleListResponse extends List {
+export interface ArticleListResponse extends Page {
     list: Array<Article>;
 }
 
@@ -49,6 +49,6 @@ export interface ArticleMenu {
     children?: number;
 }
 
-export interface ArticleMenuListResponse extends List {
+export interface ArticleMenuListResponse extends Page {
     list: Array<ArticleMenu>;
 }
