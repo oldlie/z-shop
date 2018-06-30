@@ -31,7 +31,13 @@ export class CommodityComponent implements OnInit {
   }
 
   add2Home(item: Commodity) {
-
+    this.commodity.add2Home(item.id).then(x => {
+      if (x.status === 0) {
+        this.notify.success('成功', '已添加到首页');
+      } else {
+        this.notify.error('错误', x.message);
+      }
+    });
   }
 
   edit(item: Commodity) {

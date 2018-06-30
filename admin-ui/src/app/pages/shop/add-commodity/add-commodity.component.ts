@@ -263,30 +263,36 @@ export class AddCommodityComponent implements OnInit {
       return;
     }
 
+    if (this.tagCheckedList.length === 0) {
+      this.message.warning('至少选择一个标签');
+      return;
+    }
+
     const imageList = [];
-    for (let file of this.fileList) {
+    for (const file of this.fileList) {
       imageList.push(file['id']);
     }
 
-    this.commodity.save(this.commodityVI, 
+    this.commodity.save(this.commodityVI,
       imageList,
-      this.menuList, 
-      this.tagCheckedList, 
+      this.menuList,
+      this.tagCheckedList,
       this.specificationList).then(res => {
-      if (res.status === 0) {
-        this.message.success('已保存');
-      } else {
-        this.message.warning(res.message);
-      }
-    });
+        if (res.status === 0) {
+          this.message.success('已保存');
+        } else {
+          this.message.warning(res.message);
+        }
+      });
   }
 
   private loadImages(id: number) {
     this.commodity.listImages(id).then(x => {
       console.log(x);
       if (x.status === 0 && x.list !== null) {
-        for (let image of x.list) {
-          this.fileList.push({
+        const temp = [];
+        for (const image of x.list) {
+          temp.push({
             uid: image.id,
             name: 'xxx.png',
             status: 'done',
@@ -294,6 +300,7 @@ export class AddCommodityComponent implements OnInit {
             id: image.id
           });
         }
+        this.fileList = temp;
       }
     });
   }

@@ -13,6 +13,7 @@ import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CommodityImageListResponse;
+import com.iprzd.zshop.http.response.CommodityImageResponse;
 import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
 import com.iprzd.zshop.repository.TagRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
@@ -197,6 +198,13 @@ public class CommodityService {
         CommodityImageListResponse response = new CommodityImageListResponse();
         List<CommodityImage> list = this.commodityImageRepository.findAllByCommodityIdOrderById(commodityId);
         response.setList(list);
+        return response;
+    }
+
+    public CommodityImageResponse findCommodityImage(Long commodityId) {
+        CommodityImageResponse response = new CommodityImageResponse();
+        CommodityImage image = this.commodityImageRepository.findFirstByCommodityIdOrderByIdAsc(commodityId);
+        response.setImage(image);
         return response;
     }
 }

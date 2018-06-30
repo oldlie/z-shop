@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Base } from '../response/response';
 import { CoreService } from './core.service';
-import { CommodityMenuListResponse, CommoditySpecListResponse, CommodityMenu, CommodityListResponse, CommodityImageListResponse } from '../response/commodity.response';
+import {
+  CommodityMenuListResponse,
+  CommoditySpecListResponse,
+  CommodityMenu,
+  CommodityListResponse,
+  CommodityImageListResponse
+} from '../response/commodity.response';
 import { CommoditySpecVI, CommodityVI } from '../pages/shop/commodity-vi';
 import { Tag } from '../response/tag';
+import { HomeCommodityListReponse } from '../response/home.response';
 
 @Injectable()
 export class CommodityService {
@@ -50,9 +57,14 @@ export class CommodityService {
 
   deleteSpec(id: number): Promise<Base> {
     const url = `${this.core.UrlPrefix}/admin/commodity/spec/delete`;
-    return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
+    return this.core.post(url, { id: id }).toPromise().then(res => res as Base);
   }
   // endregion
+
+  add2Home(id: number): Promise<Base> {
+    const url = `${this.core.UrlPrefix}/admin/commodity/home`;
+    return this.core.post(url, {id: id}).toPromise().then(x => x as Base);
+  }
 
   save(model: CommodityVI,
     imageList: Array<string>,
@@ -102,11 +114,11 @@ export class CommodityService {
 
   delete(id: number): Promise<Base> {
     const url = `${this.core.UrlPrefix}/admin/commodity/delete`;
-    return this.core.post(url, {id: id}).toPromise().then(res => res as Base);
+    return this.core.post(url, { id: id }).toPromise().then(res => res as Base);
   }
 
   listImages(id: number): Promise<CommodityImageListResponse> {
     const url = `${this.core.UrlPrefix}/admin/commodity/images`;
-    return this.core.post(url, {id: id}).toPromise().then(x => x as CommodityImageListResponse);
+    return this.core.post(url, { id: id }).toPromise().then(x => x as CommodityImageListResponse);
   }
 }

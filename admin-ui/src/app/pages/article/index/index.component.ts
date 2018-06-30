@@ -26,6 +26,6 @@ export class IndexComponent implements OnInit {
 
   onEditArticleEvent(item: Article) {
     this.editArticle = item;
-    this.index =1;
+    this.index = 1;
   }
 }

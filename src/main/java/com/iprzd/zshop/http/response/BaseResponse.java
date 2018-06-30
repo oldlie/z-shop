@@ -1,6 +1,8 @@
 package com.iprzd.zshop.http.response;
 
-public class BaseResponse {
+import java.io.Serializable;
+
+public class BaseResponse implements Serializable {
     private int status = 0;
     private String message = "SUCCESS";
 

@@ -8,4 +8,6 @@ import java.util.List;
 public interface CommodityImageRepository extends JpaRepository<CommodityImage, Long> {
 
     List<CommodityImage> findAllByCommodityIdOrderById(final Long id);
+
+    CommodityImage findFirstByCommodityIdOrderByIdAsc(final Long id);
 }

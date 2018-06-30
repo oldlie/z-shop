@@ -8,7 +8,7 @@ import { Commodity } from '../../../response/commodity.response';
 })
 export class IndexComponent implements OnInit {
 
-  index = 1;
+  index = 0;
   model: Commodity;
 
   constructor() { }
