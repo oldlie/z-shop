@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "t_home_carousel")
 @NoArgsConstructor
@@ -15,7 +17,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Carousel {
+public class Carousel implements Serializable {
 
     @Id
     @GeneratedValue

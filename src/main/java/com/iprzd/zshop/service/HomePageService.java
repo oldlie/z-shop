@@ -1,13 +1,17 @@
 package com.iprzd.zshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.iprzd.zshop.entity.commodity.Commodity;
+import com.iprzd.zshop.entity.commodity.CommodityImage;
+import com.iprzd.zshop.entity.commodity.CommodityInfo;
 import com.iprzd.zshop.entity.home.Carousel;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
+import com.iprzd.zshop.repository.commodity.CommodityImageRepository;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import com.iprzd.zshop.repository.home.HomeCarouselRepository;
 
@@ -18,13 +22,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class HomePageService {
 
+    private CommodityImageRepository commodityImageRepository;
     private CommodityRepository commodityRepository;
     private HomeCarouselRepository homeCarouselRepository;
     private HomeCommodityRepository homeCommodityRepository;
 
-    public HomePageService(CommodityRepository commodityRepository,
+    public HomePageService(CommodityImageRepository commodityImageRepository,
+                           CommodityRepository commodityRepository,
                            HomeCarouselRepository homeCarouselRepository,
                            HomeCommodityRepository homeCommodityRepository) {
+        this.commodityImageRepository = commodityImageRepository;
         this.commodityRepository = commodityRepository;
         this.homeCarouselRepository = homeCarouselRepository;
         this.homeCommodityRepository = homeCommodityRepository;
@@ -61,7 +68,16 @@ public class HomePageService {
     // region commodity
     public HomeCommodityListResponse listCommodity() {
         HomeCommodityListResponse response = new HomeCommodityListResponse();
-        List<Commodity> list = this.commodityRepository.findAllHomePageCommodities();
+        List<CommodityInfo> list = new ArrayList<>();
+        List<Commodity> commodities = this.commodityRepository.findAllHomePageCommodities();
+        for (Commodity commodity : commodities) {
+            List<CommodityImage> images =
+                    this.commodityImageRepository.findAllByCommodityIdOrderById(commodity.getId());
+            CommodityInfo info = new CommodityInfo();
+            info.setCommodity(commodity);
+            info.setImages(images);
+            list.add(info);
+        }
         response.setList(list);
         return response;
     }
