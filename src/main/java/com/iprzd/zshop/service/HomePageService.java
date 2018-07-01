@@ -18,6 +18,7 @@ import com.iprzd.zshop.repository.home.HomeCarouselRepository;
 import com.iprzd.zshop.repository.home.HomeCommodityRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class HomePageService {
@@ -82,8 +83,9 @@ public class HomePageService {
         return response;
     }
 
+    @Transactional
     public BaseResponse deleteCommodity(Long id) {
-        this.homeCommodityRepository.deleteById(id);
+        this.homeCommodityRepository.deleteByCommodityId(id);
         return new BaseResponse();
     }
     // endregion

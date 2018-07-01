@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Commodity } from '../../../response/commodity.response';
+import { Commodity, CommodityInfo } from '../../../response/commodity.response';
 import { CommodityService } from '../../../services/commodity.service';
 import { HomeService } from '../../../services/home.service';
+import { CoreService } from '../../../services/core.service';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home-commodity',
@@ -14,20 +16,51 @@ import { HomeService } from '../../../services/home.service';
 })
 export class CommodityComponent implements OnInit {
 
-  list = new Array<Commodity>();
+  list = new Array<HomeCommodityInfoVI>();
 
-  constructor(private commodity: CommodityService, private home: HomeService) { }
+  constructor(private core: CoreService, private home: HomeService, private notify: NzNotificationService) { }
 
   ngOnInit() {
+    this.loadCommodity();
   }
 
   loadCommodity() {
     this.home.listHomeCommodity().then(x => {
       if (x.status === 0) {
+        console.log(x);
         if (x.list && x.list.length > 0) {
-          this.list = x.list;
+          const temp = new Array<HomeCommodityInfoVI>();
+          for (const item of x.list) {
+            const image = item.images[0].imagePath.replace(/\\/g, '/');
+            temp.push({
+              id: item.commodity.id,
+              title: item.commodity.title,
+              desc: item.commodity.description,
+              image: `${this.core.ResourceURI}/${image}`
+            });
+          }
+          this.list = temp;
         }
       }
     });
   }
+
+  cancelShowOnHomePage(item: HomeCommodityInfoVI) {
+    this.home.deleteHomeCommodity(item.id).then(x => {
+      if (x.status === 0) {
+        const temp = this.list.filter(y => y.id !== item.id);
+        this.list = temp;
+        this.notify.success('成功', '已经从首页取消。');
+      } else {
+        this.notify.error('注意', x.message);
+      }
+    });
+  }
+}
+
+export interface HomeCommodityInfoVI {
+  id: number;
+  title: string;
+  desc: string;
+  image: string;
 }

@@ -50,6 +50,15 @@ export interface Commodity {
     menus?: Array<CommodityMenu>;
 }
 
+export interface CommodityInfo {
+    commodity: Commodity;
+    images?: Array<CommodityImage>;
+}
+
+export interface CommodityInfoListResponse extends Base {
+    list: Array<CommodityInfo>;
+}
+
 export interface CommodityListResponse extends Page {
     list: Array<Commodity>;
 }

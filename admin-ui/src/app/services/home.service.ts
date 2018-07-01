@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
-import { CarouselListResponse, HomeCommodityListReponse } from '../response/home.response';
+import { CarouselListResponse } from '../response/home.response';
 import { Base } from '../response/response';
+import { CommodityInfoListResponse } from '../response/commodity.response';
 
 
 @Injectable()
@@ -36,8 +37,13 @@ export class HomeService {
 
     // endregion
 
-    listHomeCommodity(): Promise<HomeCommodityListReponse> {
+    listHomeCommodity(): Promise<CommodityInfoListResponse> {
         const url = `${this.core.UrlPrefix}/admin/home-setting/commodity/list`;
-        return this.core.get(url, null).toPromise().then(x => x as HomeCommodityListReponse);
+        return this.core.get(url, null).toPromise().then(x => x as CommodityInfoListResponse);
+    }
+
+    deleteHomeCommodity(id: number): Promise<Base> {
+        const url = `${this.core.UrlPrefix}/admin/home-setting/commodity/delete`;
+        return this.core.post(url, {id: id}).toPromise().then(x => x as Base);
     }
 }
