@@ -46,6 +46,8 @@ public class ZShopApplication {
         List<String> origins = new ArrayList<>();
         origins.add("http://localhost:4200");
         origins.add("http://localhost:4200/**");
+        origins.add("http://localhost:4201");
+        origins.add("http://localhost:4201/**");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);

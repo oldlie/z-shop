@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Carousel, CommodityInfo, Article } from '../../model/response';
 import { HomeService } from '../../service/home.service';
+import { CarouselVI, CommodityVI } from '../../model/vi';
+import { CoreService } from '../../service/core.service';
 
 @Component({
   selector: 'app-home',
@@ -24,22 +26,35 @@ export class HomeComponent implements OnInit {
     };
   });
 
-  carouselItemList: Array<Carousel>;
-  commodityInfoList: Array<CommodityInfo>;
+  carouselItemList: Array<CarouselVI>;
+  commodityList: Array<CommodityVI>;
   artileList: Array<Article>;
 
   articleIndex = 0;
   articleSize = 10;
 
-  constructor(private homeService: HomeService) { }
+  constructor(private coreService: CoreService,
+    private homeService: HomeService) { }
 
   ngOnInit() {
+    this.initCarousel();
+    this.initCommodity();
+    this.initArticle();
   }
 
   initCarousel() {
     this.homeService.initCarousel().then(x => {
       if (x.status === 0) {
-        this.carouselItemList = x.list;
+        const temp = new Array<CarouselVI>();
+        for (const item of x.list) {
+          const url = item.image.replace(/\\/g, '/');
+          temp.push({
+            title: item.title,
+            image: `${this.coreService.Config.resourceURI}/${url}`,
+            url: item.url
+          });
+        }
+        this.carouselItemList = temp;
       } else {
         console.log(x);
       }
@@ -49,7 +64,18 @@ export class HomeComponent implements OnInit {
   initCommodity() {
     this.homeService.initCommodity().then(x => {
       if (x.status === 0) {
-        this.commodityInfoList = x.list;
+        const temp = [] as Array<CommodityVI>;
+        for (const item of x.list) {
+          const image = item.images[0].imagePath.replace(/\\/g, '/');
+          temp.push({
+            id: item.commodity.id,
+            title: item.commodity.title,
+            desc: item.commodity.description,
+            image: `${this.coreService.Config.resourceURI}/${image}`,
+            info: item
+          });
+        }
+        this.commodityList = temp;
       } else {
         console.log(x);
       }
@@ -58,6 +84,7 @@ export class HomeComponent implements OnInit {
 
   initArticle() {
     this.homeService.initArticle(this.articleIndex, this.articleSize).then(x => {
+      console.log(x);
       if (x.status === 0) {
         this.artileList = x.list;
       } else {

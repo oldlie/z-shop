@@ -5,14 +5,14 @@
 }
 
 .ray-nz-carousel {
-    box-sizing: border-box; height: 400px;
+    box-sizing: border-box; 
+    height: 400px;
 }
 
 .ray-nz-carousel [nz-carousel-content] {
     text-align: center;
       height: 400px;
       line-height: 400px;
-      background: #364d79;
-      color: #fff;
+      color: #111111;
       overflow: hidden;
   }

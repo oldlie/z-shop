@@ -8,12 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class CoreService {
 
-  private loginInfo: LoginVI;
+  private loginInfo: LoginVI = {
+    token: '',
+    isLogin: false
+  };
   get LoginInfo() {
     return this.loginInfo;
   }
 
-  private config: ConfigVI;
+  private config: ConfigVI = {
+    apiURI: 'http://localhost:8080',
+    resourceURI: 'http://localhost:80/zs/resource'
+  };
   get Config() {
     return this.config;
   }
