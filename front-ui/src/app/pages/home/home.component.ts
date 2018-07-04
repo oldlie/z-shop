@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Carousel, CommodityInfo, Article } from '../../model/response';
 import { HomeService } from '../../service/home.service';
-import { CarouselVI, CommodityVI } from '../../model/vi';
+import { CarouselVI, CommodityVI, ArticleVI } from '../../model/vi';
 import { CoreService } from '../../service/core.service';
 
 @Component({
@@ -14,24 +13,13 @@ import { CoreService } from '../../service/core.service';
 })
 export class HomeComponent implements OnInit {
 
-  array = [1, 2, 3, 4];
-  data = new Array(5).fill({}).map((i, index) => {
-    return {
-      href: 'http://ant.design',
-      title: `ant design part ${index}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-      content: `We supply a series of design principles, practical patterns and high quality design resources\
-(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.`
-    };
-  });
-
   carouselItemList: Array<CarouselVI>;
   commodityList: Array<CommodityVI>;
-  artileList: Array<Article>;
+  artileList: Array<ArticleVI>;
 
   articleIndex = 0;
   articleSize = 10;
+  articleTotal = 1;
 
   constructor(private coreService: CoreService,
     private homeService: HomeService) { }
@@ -86,7 +74,23 @@ export class HomeComponent implements OnInit {
     this.homeService.initArticle(this.articleIndex, this.articleSize).then(x => {
       console.log(x);
       if (x.status === 0) {
-        this.artileList = x.list;
+        const temp = [] as Array<ArticleVI>;
+        this.articleTotal = x.total;
+        for (const item of x.list) {
+          const image = item.imageUrl ?
+            item.imageUrl.replace(/\\/g, '/') : '';
+            console.log(image);
+          temp.push({
+            id: item.id,
+            title: item.title,
+            summary: item.summary,
+            viewCount: item.viewCount,
+            agreeCount: item.agreeCount,
+            image: `${this.coreService.Config.resourceURI}/${image}`,
+            commentCount: 0
+          });
+        }
+        this.artileList = temp;
       } else {
         console.log(x);
       }

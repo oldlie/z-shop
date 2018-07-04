@@ -4,7 +4,7 @@
     <nz-carousel class="ray-nz-carousel" nzAutoPlay>
       <div nz-carousel-content *ngFor="let item of list">
         <a href="{{item.url}}" target="_blank">
-          <img src="{{formatURI(item.image)}}" alt="{{item.title}}">
+          <img style="width: 100%;" src="{{formatURI(item.image)}}" alt="{{item.title}}">
         </a>
         {{item.title}}
       </div>
@@ -34,15 +34,21 @@
             <tr *ngFor="let item of table.data">
               <td>{{item.sequence}}</td>
               <td>{{item.title}}</td>
-              <td><a href="http://{{item.url}}" target="_blank">{{item.url}}</a></td>
               <td>
-                  <img width="64px" src="{{formatURI(item.image)}}" alt="{{item.title}}">
+                <a href="http://{{item.url}}" target="_blank">{{item.url}}</a>
+              </td>
+              <td>
+                <img width="64px" src="{{formatURI(item.image)}}" alt="{{item.title}}">
               </td>
               <td>
                 <div style="border: 5px solid;" [colorSquare]="item.color"></div>
               </td>
               <td>
-                <a ><i class="anticon anticon-delete"></i></a>
+                <nz-popconfirm [nzTitle]="'从轮播图中删除？'" (nzOnConfirm)="deleteCarousel(item)">
+                  <a nz-popconfirm>
+                    <i class="anticon anticon-delete"></i>
+                  </a>
+                </nz-popconfirm>
               </td>
             </tr>
           </tbody>

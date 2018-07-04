@@ -25,3 +25,13 @@ export interface CommodityVI {
     image: string;
     info: CommodityInfo;
 }
+
+export interface ArticleVI {
+    id: number;
+    title: string;
+    summary: string;
+    viewCount: number;
+    agreeCount: number;
+    commentCount: number;
+    image: string;
+}

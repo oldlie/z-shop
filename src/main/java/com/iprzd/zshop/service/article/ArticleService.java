@@ -113,6 +113,7 @@ public class ArticleService {
         );
         response.setList(page.getContent());
         response.setPages(page.getTotalPages());
+        response.setTotal(page.getTotalElements());
         return response;
     }
     // endregion

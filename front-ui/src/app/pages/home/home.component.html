@@ -1,29 +1,44 @@
-<div style="margin:auto; background:#fff; padding: 24px; min-height: 280px; width: 960px;">
+<div style="margin:auto; background:#fff; padding: 24px; margin-top: 5px; min-height: 280px; width: 960px;">
 
   <nz-carousel class="ray-nz-carousel" nzAutoPlay>
     <div nz-carousel-content *ngFor="let item of carouselItemList">
-      <img width="100%" src="{{item.image}}">
-      <a href="{{item.url}}">{{item.title}}</a>
+      <div>
+        <img width="100%" src="{{item.image}}">
+        <a href="{{item.url}}">{{item.title}}</a>
+      </div>
     </div>
   </nz-carousel>
 
   <div nz-row [nzGutter]="8" class="ray-row">
+
+    <nz-divider [nzText]="commodityTxt" nzOrientation="left">
+      <ng-template #commodityTxt>甄选</ng-template>
+    </nz-divider>
+
     <div nz-col [nzSpan]="6" *ngFor="let commodity of commodityList">
-      <nz-card nzHoverable [nzCover]="coverTemplate">
+      <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting]">
         <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>
         <p>{{commodity.desc}}</p>
       </nz-card>
       <ng-template #coverTemplate>
         <img alt="{{commodity.title}}" src="{{commodity.image}}" />
       </ng-template>
+      <ng-template #actionSetting>
+        <i class="anticon anticon-shopping-cart buy-color"></i>
+      </ng-template>
     </div>
   </div>
 
   <div nz-row>
     <div nz-col nzSpan="24">
+
+      <nz-divider [nzText]="text" nzOrientation="left">
+        <ng-template #text>资讯</ng-template>
+      </nz-divider>
+
       <nz-list [nzDataSource]="artileList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
         <ng-template #item let-item>
-          <nz-list-item [nzContent]="item.content" [nzActions]="[starAction,likeAction,msgAction]" [nzExtra]="extra">
+          <nz-list-item [nzContent]="item.summary" [nzActions]="[starAction,likeAction,msgAction]" [nzExtra]="extra">
             <ng-template #starAction>
               <i class="anticon anticon-star-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
             <ng-template #likeAction>
@@ -36,12 +51,12 @@
               </ng-template>
             </nz-list-item-meta>
             <ng-template #extra>
-              <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png">
+              <img width="272" alt="logo" src="{{item.image}}">
             </ng-template>
           </nz-list-item>
         </ng-template>
         <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="1" [nzTotal]="50"></nz-pagination>
+          <nz-pagination [nzPageIndex]="articleIndex" [nzTotal]="articleTotal"></nz-pagination>
         </ng-template>
       </nz-list>
     </div>
