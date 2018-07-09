@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../service/home.service';
 import { CarouselVI, CommodityVI, ArticleVI } from '../../model/vi';
 import { CoreService } from '../../service/core.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,8 @@ export class HomeComponent implements OnInit {
   articleTotal = 1;
 
   constructor(private coreService: CoreService,
-    private homeService: HomeService) { }
+    private homeService: HomeService, 
+    private router: Router) { }
 
   ngOnInit() {
     this.initCarousel();
@@ -94,6 +96,12 @@ export class HomeComponent implements OnInit {
       } else {
         console.log(x);
       }
+    });
+  }
+
+  gotoCommodityPage(id: number) {
+    this.router.navigate(['commodity', id]).catch(err => {
+      console.log(err);
     });
   }
 }
