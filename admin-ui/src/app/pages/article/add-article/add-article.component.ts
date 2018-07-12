@@ -22,21 +22,14 @@ export class AddArticleComponent implements OnInit {
   @Input() editArticle: Article;
   model: ArticleVI;
   uploadUrl: string;
-  fileList = [
-    {
-      uid: -1,
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }
-  ];
+  fileList = [];
   previewImage = '';
   previewVisible = false;
   uploadFileList = new Array<File>();
 
   refreshMenu = false;
   menuList = [];
-  menuTempList =[];
+  menuTempList = [];
   menuCheckedList = [];
   tagList = new Array<TagVI>();
   tagTempList = new Array<Tag>();
@@ -51,6 +44,7 @@ export class AddArticleComponent implements OnInit {
   tagPages = 2;
   flag = true;
 
+  options: Object = {};
 
   constructor(private article: ArticleService,
     private core: CoreService,
@@ -60,6 +54,11 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit() {
     this.uploadUrl = this.core.UrlPrefix + '/upload';
+    this.options = {
+      placeholder: '写文章',
+      imageUploadMethod: 'POST',
+      imageUploadURL: this.core.UrlPrefix + '/image',
+    };
     console.log(this.editArticle);
     if (this.editArticle) {
       console.log('inited');
@@ -78,8 +77,7 @@ export class AddArticleComponent implements OnInit {
       this.menuCheckedList = this.editArticle.menus;
       console.log(this.menuCheckedList);
       this.tagCheckedList = this.editArticle.tags;
-    }
-    else {
+    } else {
       console.log('no init');
       this.model = {
         title: '',
@@ -145,7 +143,7 @@ export class AddArticleComponent implements OnInit {
       }
     });
   }
-  
+
   addTag() {
     this.isTagVisible = true;
     this.tagPage = 0;
@@ -200,7 +198,7 @@ export class AddArticleComponent implements OnInit {
   }
 
   handleTagCancel() {
-    this.isTagVisible = false
+    this.isTagVisible = false;
   }
 
   store() {
@@ -222,7 +220,7 @@ export class AddArticleComponent implements OnInit {
     } else {
       this.model.menus = '';
     }
-    
+
     if (this.tagCheckedList.length > 0) {
       const tagIds = [];
       this.tagCheckedList.forEach(x => {
@@ -235,7 +233,7 @@ export class AddArticleComponent implements OnInit {
 
     this.model.status = this.saveAsDraft ? 0 : 1;
     this.model.author = this.core.account;
-    
+
     console.log('save:', this.model);
 
     this.article.save(this.model).then(x => {
@@ -245,7 +243,7 @@ export class AddArticleComponent implements OnInit {
         this.msg.error(x.message);
       }
     });
-    
+
   }
 }
 

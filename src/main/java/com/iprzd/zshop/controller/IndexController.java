@@ -7,6 +7,7 @@ import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.http.response.FileResponse;
+import com.iprzd.zshop.http.response.ImageResponse;
 import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
 import com.iprzd.zshop.repository.UserRepository;
@@ -34,6 +35,9 @@ public class IndexController {
 
     @Value("${zs.version}")
     private String appVersion;
+
+    @Value("${zs.uploadUrl}")
+    private String uploadURL;
 
     public IndexController(AuthorityRepository authorityRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -131,6 +135,52 @@ public class IndexController {
         }
 
         response.setList(uploadFileList);
+        return response;
+    }
+
+    @PostMapping("/image")
+    public ImageResponse uploadImage(@RequestBody MultipartFile file) {
+        ImageResponse response = new ImageResponse();
+        if (file.isEmpty()) {
+            response.setStatus(StatusCode.UPLOAD_FILE_FAILED);
+            response.setMessage("选择需要上传的文件");
+            return response;
+        }
+        Calendar calendar = Calendar.getInstance();
+        String fileName = file.getOriginalFilename();
+        int length = fileName.length();
+        if (fileName.length() > 15) {
+            fileName = fileName.substring(length - 10, length);
+        }
+        StringBuilder fileNameBuilder = new StringBuilder(64);
+        fileNameBuilder.append(calendar.getTime().getTime()).append("_")
+                .append(fileName);
+
+        StringBuilder path = new StringBuilder(128);
+        path.append(calendar.get(Calendar.YEAR)).append(File.separator) // 上传年
+                .append(calendar.get(Calendar.MONTH)).append(File.separator) // 上传月
+                .append(fileNameBuilder.toString());
+
+        File savedFile = new File(this.uploadDirectory + File.separator + path.toString());
+        if (!savedFile.getParentFile().exists()) {
+            savedFile.getParentFile().mkdirs();
+        }
+
+        UploadFile uploadFile = new UploadFile();
+        try {
+            file.transferTo(savedFile);
+
+            uploadFile.setPath(path.toString());
+            uploadFile.setName(fileNameBuilder.toString());
+            uploadFile.setCreateAt(calendar.getTime());
+
+            uploadFile = this.uploadFileRepository.save(uploadFile);
+            response.setLink(this.uploadURL + "/" + uploadFile.getPath().replace("\\", "/"));
+        } catch (IOException e) {
+            response.setStatus(StatusCode.UPLOAD_FILE_FAILED);
+            response.setMessage(e.getLocalizedMessage());
+        }
+
         return response;
     }
 

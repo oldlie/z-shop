@@ -32,6 +32,7 @@ import { TagActiveDirective } from './directive/tag-active.directive';
 import { CarouselComponent } from './pages/home/carousel/carousel.component';
 import { CommodityComponent as HomeCommodityComponent } from './pages/home/commodity/commodity.component';
 import { ColorSquareDirective } from './directive/color-square.directive';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { ColorSquareDirective } from './directive/color-square.directive';
     AppRoutingModule,
     NgZorroAntdModule.forRoot(),
     HttpClientModule,
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
   ],
   providers: [
     CoreService,

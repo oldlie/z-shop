@@ -8,6 +8,8 @@ import { TagService } from '../../../services/tag.service';
 import { CoreService } from '../../../services/core.service';
 import { FileResponse } from '../../../response/response';
 
+declare var $: any;
+
 @Component({
   selector: 'app-add-commodity',
   templateUrl: './add-commodity.component.html',
@@ -52,6 +54,8 @@ export class AddCommodityComponent implements OnInit {
   tagPages = 0;
   tagCheckedList = new Array<Tag>();
 
+  options: Object = {};
+
   constructor(private commodity: CommodityService,
     private core: CoreService,
     private message: NzMessageService,
@@ -59,6 +63,16 @@ export class AddCommodityComponent implements OnInit {
 
   ngOnInit() {
     this.uploadUrl = this.core.UrlPrefix + '/upload';
+    this.options = {
+      placeholder: '商品详情',
+      imageUploadMethod: 'POST',
+      imageUploadURL: this.core.UrlPrefix + '/image',
+      events: {
+        'froalaEditor.focus': function (e, editor) {
+          console.log(editor.selection.get());
+        }
+      }
+    };
     if (!this.commodityVI) {
       this.commodityVI = {
         id: 0,

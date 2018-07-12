@@ -48,7 +48,7 @@
 
 <div nz-row class="ray-row">
   <div nz-col nzSm="24">
-    <textarea nz-input placeholder="内容" [nzAutosize]="{ minRows: 8, maxRows: 16 }" [(ngModel)]="commodityVI.description"></textarea>
+    <div [froalaEditor]="options" [(froalaModel)]="commodityVI.description">Hello, Froala!</div>
   </div>
 </div>
 
