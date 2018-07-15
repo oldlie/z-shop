@@ -104,4 +104,10 @@ export class HomeComponent implements OnInit {
       console.log(err);
     });
   }
+
+  gotoArticle(article: ArticleVI) {
+    this.router.navigate(['/article', article.id]).then(err => {
+      console.log(err);
+    });
+  }
 }

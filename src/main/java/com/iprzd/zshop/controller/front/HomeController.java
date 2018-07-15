@@ -4,12 +4,10 @@ import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
 import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.http.response.article.ArticleResponse;
 import com.iprzd.zshop.service.HomePageService;
 import com.iprzd.zshop.service.article.ArticleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/home")
@@ -38,5 +36,10 @@ public class HomeController {
     public ArticleListResponse listArticle(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
                                            @RequestParam int order) {
         return this.articleService.findAll(new ListRequest(page, size, orderBy, order));
+    }
+
+    @GetMapping("/article/detail")
+    public ArticleResponse article(@RequestParam long articleId) {
+        return this.articleService.findById(articleId);
     }
 }

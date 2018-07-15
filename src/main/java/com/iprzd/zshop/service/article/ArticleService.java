@@ -12,6 +12,7 @@ import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.article.ArticleListResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.request.admin.ArticleRequest;
+import com.iprzd.zshop.http.response.article.ArticleResponse;
 import com.iprzd.zshop.repository.ArticleMenuRepository;
 import com.iprzd.zshop.repository.ArticleRepository;
 import com.iprzd.zshop.repository.TagRepository;
@@ -114,6 +115,19 @@ public class ArticleService {
         response.setList(page.getContent());
         response.setPages(page.getTotalPages());
         response.setTotal(page.getTotalElements());
+        return response;
+    }
+
+    public ArticleResponse findById(final Long id) {
+        ArticleResponse response = new ArticleResponse();
+        Optional<Article> optional = this.articleRepository.findById(id);
+        if (optional.isPresent()) {
+            Article article = optional.get();
+            response.setArticle(article);
+        } else {
+            response.setStatus(1);
+            response.setMessage("文章已经不存在");
+        }
         return response;
     }
     // endregion

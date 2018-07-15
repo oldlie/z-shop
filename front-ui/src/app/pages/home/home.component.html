@@ -46,7 +46,7 @@
               <i class="anticon anticon-message" style="margin-right: 8px;"></i> 2</ng-template>
             <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzTitle" [nzDescription]="item.description">
               <ng-template #nzTitle>
-                <a>{{item.title}}</a>
+                <a (click)="gotoArticle(item)">{{item.title}}</a>
               </ng-template>
             </nz-list-item-meta>
             <ng-template #extra>

@@ -13,6 +13,7 @@ import { PageNoteFoundComponent } from './pages/page-note-found/page-note-found.
 import { AppRoutingModule } from './app-routing.module';
 import { CoreService } from './service/core.service';
 import { CommodityComponent } from './pages/commodity/commodity.component';
+import { ArticleComponent } from './pages/article/article.component';
 
 registerLocaleData(zh);
 
@@ -21,7 +22,8 @@ registerLocaleData(zh);
     AppComponent,
     HomeComponent,
     PageNoteFoundComponent,
-    CommodityComponent
+    CommodityComponent,
+    ArticleComponent
   ],
   imports: [
     AppRoutingModule,

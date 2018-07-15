@@ -128,3 +128,7 @@ export interface ArticleMenuListResponse extends PageResponse {
 export interface ArticleListResponse extends PageResponse {
     list: Array<Article>;
 }
+
+export interface ArtilceResponse extends BaseResponse {
+    article: Article;
+}
