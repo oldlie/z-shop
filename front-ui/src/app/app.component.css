@@ -7,3 +7,14 @@
   .zs-header {
     background-color: #fff;
   }
+
+  .zs-header a {
+    text-decoration: none;
+  }
+
+  .logo {
+    width: 160px;
+    background: rgba(0,0,0,.2);
+    float: left;
+    padding: 0 3px;
+  }

@@ -39,7 +39,7 @@
         <ng-template #item let-item>
           <nz-list-item [nzContent]="item.summary" [nzActions]="[starAction,likeAction,msgAction]" [nzExtra]="extra">
             <ng-template #starAction>
-              <i class="anticon anticon-star-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
+              <i class="anticon anticon-eye-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
             <ng-template #likeAction>
               <i class="anticon anticon-like-o" style="margin-right: 8px;"></i> {{item.agreeCount}}</ng-template>
             <ng-template #msgAction>

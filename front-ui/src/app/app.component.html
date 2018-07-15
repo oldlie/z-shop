@@ -1,6 +1,24 @@
 <nz-layout>
 
-  <nz-header class="zs-header">Header</nz-header>
+  <nz-header class="zs-header">
+    <div class="logo">
+      <img alt="Home" 
+      height="40" 
+      src="https://angular.io/assets/images/logos/angular/logo-nav@2x.png" 
+      title="Home" 
+      width="150" 
+      class="ng-star-inserted">
+    </div>
+    <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
+      <li nz-menu-item>
+        <a [routerLink]="['/home']">首页</a>
+      </li>
+      <li nz-menu-item>
+        <a href="http://zx.wipren.com" target="_blank">兑换</a>
+      </li>
+      <li nz-menu-item><a href="http://iprzd.com" target="_blank">问答</a></li>
+    </ul>
+  </nz-header>
 
   <nz-content>
     <div style="margin:auto; background:#fff; padding: 24px; margin-top: 5px; min-height: 280px; width: 960px;">

@@ -132,3 +132,7 @@ export interface ArticleListResponse extends PageResponse {
 export interface ArtilceResponse extends BaseResponse {
     article: Article;
 }
+
+export interface CountResponse extends BaseResponse {
+    count: number;
+}

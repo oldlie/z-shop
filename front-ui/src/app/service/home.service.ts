@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
-import { CarouselListResponse, CommodityInfoListResponse, ArticleListResponse, ArtilceResponse } from '../model/response';
+import { CarouselListResponse, CommodityInfoListResponse, ArticleListResponse, ArtilceResponse, CountResponse } from '../model/response';
 
 @Injectable()
 export class HomeService {
@@ -25,7 +25,12 @@ export class HomeService {
   }
 
   articleDetail(id: number): Promise<ArtilceResponse> {
-    const url = `${this.coreService.Config.apiURI}/home/article/detail`;
+    const url = `${this.coreService.Config.apiURI}/article/detail`;
     return this.coreService.get(url, {articleId: id}).toPromise().then(x => x as ArtilceResponse);
+  }
+
+  articleAgree(id: number): Promise<CountResponse> {
+    const url = `${this.coreService.Config.apiURI}/article/agree`;
+    return this.coreService.post(url, {id: id}).toPromise().then(x => x as CountResponse);
   }
 }

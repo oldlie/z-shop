@@ -7,12 +7,23 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css']
+  styleUrls: ['./article.component.css'],
+  providers: [
+    HomeService
+  ]
 })
 export class ArticleComponent implements OnInit {
 
   articleId = 0;
-  article: Article;
+  article: Article = {
+    title: '',
+    summary: '',
+    author: '',
+    imageUrl: '',
+    content: '',
+    status: 1,
+    tags: []
+  };
 
   constructor(private route: ActivatedRoute, 
     private message: NzMessageService,
@@ -21,6 +32,7 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
     this.articleId = Number(this.route.snapshot.paramMap.get('id'));
     this.homeService.articleDetail(this.articleId).then(x => {
+      console.log('article:', x);
       if (x.status === 0) {
         this.article = x.article;
       } else {
@@ -29,4 +41,13 @@ export class ArticleComponent implements OnInit {
     });
   }
 
+  agree(id: number) {
+    this.homeService.articleAgree(id).then(x => {
+      if (x.status === 0) {
+        this.article.agreeCount = x.count;
+      } else {
+        this.message.error(x.message);
+      }
+    });
+  }
 }

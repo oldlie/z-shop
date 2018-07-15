@@ -1,4 +1,52 @@
+<div class="ray-row" nz-row>
+  <div nz-col nzSpan="24">
+    <div style="float: left; margin: 22px 10px 0 0;">
+      <button nz-button nzType="default" style="height: 36px;" (click)="agree(article.id)">
+        <i class="anticon anticon-like-o"></i> {{article.agreeCount}}
+      </button>
+    </div>
+    <h1>
+      {{article.title}}</h1>
+  </div>
+</div>
 
-<div>
-  <h1>{{article.title}}</h1>
+<div class="ray-row" nz-row>
+  <div nz-col nzSpan="18">
+
+    <nz-tag [nzColor]="'#108ee9'" *ngFor="let tag of article.tags">{{tag.title}}</nz-tag>
+  </div>
+  <div nz-col nzSpan="6">
+    <span style="margin-right: 5px;">
+      <i class="anticon anticon-eye-o"></i> {{article.viewCount}}
+    </span>
+    <span>
+      <i class="anticon anticon-user"></i> {{article.author}}
+    </span>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <blockquote>
+      <p>{{article.summary}}</p>
+    </blockquote>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    {{article.content}}
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+
+  </div>
 </div>

@@ -37,9 +37,4 @@ public class HomeController {
                                            @RequestParam int order) {
         return this.articleService.findAll(new ListRequest(page, size, orderBy, order));
     }
-
-    @GetMapping("/article/detail")
-    public ArticleResponse article(@RequestParam long articleId) {
-        return this.articleService.findById(articleId);
-    }
 }

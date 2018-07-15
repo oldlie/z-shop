@@ -9,6 +9,7 @@ import com.iprzd.zshop.entity.article.Menu;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
+import com.iprzd.zshop.http.response.CountResponse;
 import com.iprzd.zshop.http.response.article.ArticleListResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.request.admin.ArticleRequest;
@@ -124,6 +125,25 @@ public class ArticleService {
         if (optional.isPresent()) {
             Article article = optional.get();
             response.setArticle(article);
+            int count = article.getViewCount();
+            article.setViewCount(count + 1);
+            this.articleRepository.save(article);
+        } else {
+            response.setStatus(1);
+            response.setMessage("文章已经不存在");
+        }
+        return response;
+    }
+
+    public CountResponse agree(final Long id) {
+        CountResponse response = new CountResponse();
+        Optional<Article> optional = this.articleRepository.findById(id);
+        if (optional.isPresent()) {
+            Article article = optional.get();
+            int count = article.getAgreeCount();
+            article.setAgreeCount(count + 1);
+            article = this.articleRepository.save(article);
+            response.setCount(article.getAgreeCount());
         } else {
             response.setStatus(1);
             response.setMessage("文章已经不存在");
