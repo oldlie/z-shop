@@ -21,6 +21,7 @@ public class Commodity {
     private String title;
     private String summary;
     private String comment;
+    @Column(columnDefinition="text")
     private String description;
     @Column(columnDefinition="tinyint default 0")
     private int status;

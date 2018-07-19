@@ -80,6 +80,10 @@ export interface CommodityInfo {
     images?: Array<CommodityImage>;
 }
 
+export interface CommodityInfoResponse extends BaseResponse {
+    commodityInfo: CommodityInfo;
+}
+
 export interface CommodityInfoListResponse extends BaseResponse {
     list: Array<CommodityInfo>;
 }
@@ -135,4 +139,18 @@ export interface ArtilceResponse extends BaseResponse {
 
 export interface CountResponse extends BaseResponse {
     count: number;
+}
+
+export interface Specification {
+    id?: number;
+    title: string;
+    commodityId?: number;
+    breed?: string;
+    origin?: string;
+    feature?: string;
+    spec?: string;
+    store?: string;
+    productDatetime?: string;
+    price?: number;
+    inventory?: number;
 }

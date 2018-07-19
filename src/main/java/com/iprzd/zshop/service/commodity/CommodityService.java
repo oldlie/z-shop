@@ -2,10 +2,7 @@ package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.entity.UploadFile;
-import com.iprzd.zshop.entity.commodity.Commodity;
-import com.iprzd.zshop.entity.commodity.CommodityImage;
-import com.iprzd.zshop.entity.commodity.Menu;
-import com.iprzd.zshop.entity.commodity.Specification;
+import com.iprzd.zshop.entity.commodity.*;
 import com.iprzd.zshop.entity.home.HomeCommodity;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.IdRequest;
@@ -14,6 +11,7 @@ import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CommodityImageListResponse;
 import com.iprzd.zshop.http.response.CommodityImageResponse;
+import com.iprzd.zshop.http.response.CommodityInfoResponse;
 import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
 import com.iprzd.zshop.repository.TagRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
@@ -164,6 +162,22 @@ public class CommodityService {
         response.setStatus(StatusCode.SUCCESS);
         response.setList(page.getContent());
         response.setPages(page.getTotalPages());
+        return response;
+    }
+
+    public CommodityInfoResponse findOneById(final Long id) {
+        CommodityInfoResponse response = new CommodityInfoResponse();
+        Optional<Commodity> optional = this.commodityRepository.findById(id);
+        if (optional.isPresent()) {
+            CommodityInfo info = new CommodityInfo();
+            info.setCommodity(optional.get());
+            List<CommodityImage> images = this.commodityImageRepository.findAllByCommodityIdOrderById(id);
+            info.setImages(images);
+            response.setCommodityInfo(info);
+        } else {
+            response.setStatus(1);
+            response.setMessage("这件商品找不到了");
+        }
         return response;
     }
 

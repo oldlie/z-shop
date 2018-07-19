@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   articleTotal = 1;
 
   constructor(private coreService: CoreService,
-    private homeService: HomeService, 
+    private homeService: HomeService,
     private router: Router) { }
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
           temp.push({
             id: item.commodity.id,
             title: item.commodity.title,
-            desc: item.commodity.description,
+            desc: item.commodity.summary,
             image: `${this.coreService.Config.resourceURI}/${image}`,
             info: item
           });

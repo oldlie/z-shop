@@ -1,1 +1,88 @@
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-breadcrumb>
+            <nz-breadcrumb-item>
+                首页
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                {{commodityInfo.commodity.title}}
+            </nz-breadcrumb-item>
+        </nz-breadcrumb>
+    </div>
+</div>
+<br>
+<div nz-row nzGutter="16">
+    <div nz-col nzSpan="10">
+        <nz-carousel [nzEffect]="effect" nzAutoPlay>
+            <div nz-carousel-content *ngFor="let index of images">
+                <div>
+                    <img src="{{index}}" class="img-responsive" alt="Responsive image">
+                </div>
+            </div>
+        </nz-carousel>
 
+    </div>
+    <div nz-col nzSpan="14">
+        <h3>{{commodityInfo.commodity.title}}</h3>
+        <blockquote>
+            <p>{{commodityInfo.commodity.summary}}</p>
+        </blockquote>
+        <br>
+        <h4>选择规格</h4>
+        <div style="clear:both;">
+            <div nz-row>
+                <div nz-col nzSpan="12" *ngFor="let spec of commodityInfo.commodity.specifications">
+                    <div (click)="checkSpec(spec)" [class.active]="spec.id === specification.id" class="spec-button">{{spec.title}}
+                        <span style="float: right;">{{spec.price}}元</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <nz-input-number [(ngModel)]="count" [nzMin]="1" [nzMax]="100" [nzStep]="1"></nz-input-number>&nbsp;
+            <button nz-button class="buy-button"><i class="anticon anticon-shopping-cart"></i> 购买</button>&nbsp;
+            (总计：{{specification.price * count}}元)
+        </div>
+        
+    </div>
+</div>
+<br>
+<div nz-row nzGutter="16">
+
+    <nz-divider [nzText]="textSpec" nzOrientation="left">
+        <ng-template #textSpec>当前规格</ng-template>
+    </nz-divider>
+
+    <div nz-col nzSpan="8" *ngIf="specification.breed" class="specification">
+        <label>品种：</label>{{specification.breed}}
+    </div>
+
+    <div nz-col nzSpan="8" *ngIf="specification.feature" class="specification">
+        <label>特征：</label>{{specification.feature}}
+    </div>
+
+    <div nz-col nzSpan="8" *ngIf="specification.origin" class="specification">
+        <label>原产地：</label>{{specification.origin}}
+    </div>
+
+    <div nz-col nzSpan="8" *ngIf="specification.productDatetime" class="specification">
+        <label>生产日期：</label>{{specification.productDatetime}}
+    </div>
+
+    <div nz-col nzSpan="8" *ngIf="specification.spec" class="specification">
+        <label>规格：</label>{{specification.spec}}
+    </div>
+
+    <div nz-col nzSpan="8" *ngIf="specification.store" class="specification">
+        <label>存储方式：</label>{{specification.store}}
+    </div>
+</div>
+<br>
+<div nz-row>
+    <nz-divider [nzText]="textContent" nzOrientation="left">
+        <ng-template #textContent>商品详情</ng-template>
+    </nz-divider>
+
+    <div nz-col nzSpan="24" [innerHTML]="content"></div>
+</div>

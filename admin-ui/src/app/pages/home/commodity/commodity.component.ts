@@ -35,7 +35,7 @@ export class CommodityComponent implements OnInit {
             temp.push({
               id: item.commodity.id,
               title: item.commodity.title,
-              desc: item.commodity.description,
+              desc: item.commodity.summary,
               image: `${this.core.ResourceURI}/${image}`
             });
           }

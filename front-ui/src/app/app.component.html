@@ -1,31 +1,102 @@
 <nz-layout>
 
-  <nz-header class="zs-header">
-    <div class="logo">
-      <img alt="Home" 
-      height="40" 
-      src="https://angular.io/assets/images/logos/angular/logo-nav@2x.png" 
-      title="Home" 
-      width="150" 
-      class="ng-star-inserted">
-    </div>
-    <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
-      <li nz-menu-item>
-        <a [routerLink]="['/home']">首页</a>
-      </li>
-      <li nz-menu-item>
-        <a href="http://zx.wipren.com" target="_blank">兑换</a>
-      </li>
-      <li nz-menu-item><a href="http://iprzd.com" target="_blank">问答</a></li>
-    </ul>
-  </nz-header>
+  <nz-affix>
+    <nz-header class="zs-header" style="height: 66px;">
+
+      <div style="margin:0 auto;width: 960px;">
+        <div class="logo">
+          <img alt="Home" height="40" src="http://zx.wipren.com/images/logo_2.jpg" title="Home" width="150" class="ng-star-inserted">
+        </div>
+        <ul nz-menu [nzTheme]="'light'" [nzMode]="'horizontal'" style="line-height: 64px;">
+          <li nz-menu-item>
+            <a [routerLink]="['/home']">首页</a>
+          </li>
+          <li nz-menu-item>
+            <a href="http://zx.wipren.com" target="_blank">兑换</a>
+          </li>
+          <li nz-menu-item>
+            <a href="http://iprzd.com" target="_blank">问答</a>
+          </li>
+        </ul>
+      </div>
+    </nz-header>
+  </nz-affix>
 
   <nz-content>
     <div style="margin:auto; background:#fff; padding: 24px; margin-top: 5px; min-height: 280px; width: 960px;">
       <router-outlet></router-outlet>
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+
+          <nz-divider [nzText]="text" nzOrientation="left">
+            <ng-template #text>合作伙伴</ng-template>
+          </nz-divider>
+
+          <div style="text-align: center">
+            <span>
+              <a href="#">国家知识产权局</a>
+            </span>
+            <nz-divider nzType="vertical"></nz-divider>
+            <span>
+              <a href="#">商标局</a>
+            </span>
+            <nz-divider nzType="vertical"></nz-divider>
+            <span>
+              <a href="#">农业部</a>
+            </span>
+            <nz-divider nzType="vertical"></nz-divider>
+            <span>
+              <a href="#">知识产权出版社</a>
+            </span>
+            <nz-divider nzType="vertical"></nz-divider>
+            <span>
+              <a href="#">海中地标平台</a>
+            </span>
+          </div>
+
+        </div>
+      </div>
     </div>
   </nz-content>
 
-  <nz-footer>Footer</nz-footer>
+  <nz-footer class="footer">
+    <div class="foot-content">
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <h3>主办单位</h3>
+          <p>知人甄选</p>
+          <p>地址：北京市海淀区气象路50号</p>
+        </div>
+        <div nz-col nzSpan="8">
+          <h3>微信公众号</h3>
+          <p>
+            <img width="128px" height="128px" src="http://zx.wipren.com/images/gzh.jpg" alt="知人甄选">
+          </p>
+        </div>
+        <div nz-col nzSpan="8">
+          <h3>联系方式</h3>
+          <p>QQ：16859307</p>
+          <p>email：16859307@qq.com</p>
+          <p>微信号：cnipren</p>
+          <p>微信公众号：zhirenzx</p>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="8" nzOffset="8">
+          <p>Copyright © 2018 知人甄选 京ICP备14020289号</p>
+        </div>
+      </div>
+    </div>
+    <!--./foot-content-->
+
+  </nz-footer>
 
 </nz-layout>
+
+<nz-back-top [nzTemplate]="tpl" [nzVisibilityHeight]="100" (nzOnClick)="notify()">
+  <ng-template #tpl>
+    <div class="ant-back-top-inner"><i class="anticon anticon-up-circle"></i> UP</div>
+  </ng-template>
+</nz-back-top>

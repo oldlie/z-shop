@@ -1,4 +1,4 @@
-import { CommodityInfo } from "./response";
+import { CommodityInfo } from './response';
 
 export interface LoginVI {
     id?: number;

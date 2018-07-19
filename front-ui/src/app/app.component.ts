@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.router.navigate(['/article', 45]).catch(err => { console.log(err); });
+    this.router.navigate(['/commodity/17']).catch(err => { console.log(err); });
   }
 
 }

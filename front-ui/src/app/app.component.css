@@ -14,7 +14,20 @@
 
   .logo {
     width: 160px;
-    background: rgba(0,0,0,.2);
+   /*background: rgba(0,0,0,.2);*/
     float: left;
     padding: 0 3px;
+  }
+
+  .footer {
+    background:#2F4056; color: #ffffff; margin-top: 5px; bottom: 0;
+  }
+
+  .footer a {
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .footer .foot-content{
+    margin:auto; padding: 24px; min-height: 280px; width: 960px; 
   }
