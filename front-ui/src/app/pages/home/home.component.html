@@ -1,9 +1,8 @@
 
   <nz-carousel class="ray-nz-carousel" nzAutoPlay>
     <div nz-carousel-content *ngFor="let item of carouselItemList">
-      <div>
-        <img width="100%" src="{{item.image}}">
-        <a href="{{item.url}}">{{item.title}}</a>
+      <div style="text-align: center;">
+        <img src="{{item.image}}" class="img-responsive">
       </div>
     </div>
   </nz-carousel>

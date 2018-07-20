@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/init",
                         "/static/**",
                         "/home/**",
+                        "/front/**",
                         "/article/**",
                         "/commodity/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup", "/login").permitAll()

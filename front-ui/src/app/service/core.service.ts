@@ -26,8 +26,10 @@ export class CoreService {
 
   private header;
   get Header() {
-    return this.header = {'Authorization': `ZShop ${this.loginInfo.token}`, 
-    'Content-Type': 'application/json'};
+    return this.header = {
+      'Authorization': `ZShop ${this.loginInfo.token}`,
+      'Content-Type': 'application/json'
+    };
   }
 
   constructor(private http: HttpClient) { }
@@ -39,7 +41,7 @@ export class CoreService {
     });
   }
 
-  post(url: string, body: any):  Observable<Object> {
-    return this.http.post(url, body, {headers: this.Header});
+  post(url: string, body: any): Observable<Object> {
+    return this.http.post(url, body, { headers: this.Header });
   }
 }

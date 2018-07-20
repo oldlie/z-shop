@@ -12,20 +12,20 @@
 </div>
 <br>
 
-<div nz-row class="ray-row" nzGutter="40">
-  <div nz-col nzSpan="16" >
-
-    <div class="ray-row" nz-row>
-      <div nz-col nzSpan="24">
-        <div style="float: left; margin: 22px 10px 0 0;">
-          <button nz-button nzType="default" style="height: 36px;" (click)="agree(article.id)">
-            <i class="anticon anticon-like-o"></i> {{article.agreeCount}}
-          </button>
-        </div>
-        <h1>
-          {{article.title}}</h1>
-      </div>
+<div class="ray-row" nz-row>
+  <div nz-col nzSpan="24">
+    <div style="float: left; margin: 22px 10px 0 0;">
+      <button nz-button nzType="default" style="height: 36px;" (click)="agree(article.id)">
+        <i class="anticon anticon-like-o"></i> {{article.agreeCount}}
+      </button>
     </div>
+    <h1>
+      {{article.title}}</h1>
+  </div>
+</div>
+
+<div nz-row class="ray-row" nzGutter="40">
+  <div nz-col nzSpan="16">
 
     <div class="ray-row" nz-row>
       <div nz-col nzSpan="18">
@@ -50,13 +50,13 @@
       </div>
     </div>
     <div nz-row class="ray-row">
-      <div nz-col nzSpan="24" [innerHTML]="content"  style="font-size: 1.2em;">
+      <div nz-col nzSpan="24" [innerHTML]="content">
       </div>
     </div>
     <!-- endregion article -->
   </div>
 
-  <div nz-col nzSpan="8" >
+  <div nz-col nzSpan="8">
 
     <nz-divider [nzText]="commodityTxt" nzOrientation="left">
       <ng-template #commodityTxt>甄选</ng-template>
@@ -64,14 +64,16 @@
 
     <nz-carousel [nzEffect]="effect" nzAutoPlay>
       <div nz-carousel-content *ngFor="let commodity of commodityList">
-        <nz-card nzHoverable [nzCover]="coverTemplate" (click)="gotoCommodityPage(commodity.id)">
+        <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting]" (click)="gotoCommodityPage(commodity.id)">
           <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>
           <p>{{commodity.desc}}</p>
         </nz-card>
         <ng-template #coverTemplate>
           <img alt="{{commodity.title}}" src="{{commodity.image}}" class="img-responsive" />
         </ng-template>
-        
+        <ng-template #actionSetting>
+          <i class="anticon anticon-shopping-cart buy-color"></i>
+        </ng-template>
       </div>
     </nz-carousel>
 
@@ -84,5 +86,13 @@
         <a>{{tag.title}}</a>
       </nz-tag>
     </span>
+  </div>
+</div>
+
+
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+
   </div>
 </div>

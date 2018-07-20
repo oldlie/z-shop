@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../service/home.service';
 import { Article } from '../../model/response';
 import { NzMessageService } from 'ng-zorro-antd';
+import { CommodityVI } from '../../model/vi';
+import { CoreService } from '../../service/core.service';
 
 @Component({
   selector: 'app-article',
@@ -24,8 +26,14 @@ export class ArticleComponent implements OnInit {
     status: 1,
     tags: []
   };
+  content = '';
+  allTags = [];
+  commodityList: Array<CommodityVI>;
+  effect = 'scrollx';
 
-  constructor(private route: ActivatedRoute, 
+  constructor(private coreService: CoreService,
+    private router: Router,
+    private route: ActivatedRoute,
     private message: NzMessageService,
     private homeService: HomeService) { }
 
@@ -35,10 +43,20 @@ export class ArticleComponent implements OnInit {
       console.log('article:', x);
       if (x.status === 0) {
         this.article = x.article;
+        this.content = this.article.content.replace(/\<img/g, '<img class="img-responsive"');
       } else {
         this.message.error(x.message);
       }
     });
+    this.homeService.tagAll().then(x => {
+      console.log('load tags', x);
+      if (x.status === 0) {
+        this.allTags = x.tagList;
+      } else {
+        console.log(x.message);
+      }
+    });
+    this.initCommodity();
   }
 
   agree(id: number) {
@@ -48,6 +66,33 @@ export class ArticleComponent implements OnInit {
       } else {
         this.message.error(x.message);
       }
+    });
+  }
+
+  initCommodity() {
+    this.homeService.initCommodity().then(x => {
+      if (x.status === 0) {
+        const temp = [] as Array<CommodityVI>;
+        for (const item of x.list) {
+          const image = item.images[0].imagePath.replace(/\\/g, '/');
+          temp.push({
+            id: item.commodity.id,
+            title: item.commodity.title,
+            desc: item.commodity.summary,
+            image: `${this.coreService.Config.resourceURI}/${image}`,
+            info: item
+          });
+        }
+        this.commodityList = temp;
+      } else {
+        console.log(x);
+      }
+    });
+  }
+
+  gotoCommodityPage(id: number) {
+    this.router.navigate(['commodity', id]).catch(err => {
+      console.log(err);
     });
   }
 }

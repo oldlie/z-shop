@@ -12,6 +12,14 @@
     text-decoration: none;
   }
 
+  .zs-header .content  {
+    margin:0 auto; width: 960px;
+  }
+
+  .zs-body {
+    margin:auto;background:#fff; padding: 24px; margin-top: 5px; min-height: 280px; width: 960px;
+  }
+
   .logo {
     width: 160px;
    /*background: rgba(0,0,0,.2);*/

@@ -10,6 +10,55 @@ export interface PageResponse extends BaseResponse {
     order?: number;
 }
 
+export interface Article {
+    id?: number;
+    title: string;
+    summary: string;
+    imageUrl: string;
+    author: string;
+    authorId?: number;
+    content: string;
+    status: number;
+    viewCount?: number;
+    agreeCount?: number;
+    shareCount?: number;
+    allowComment?: boolean;
+    ranking?: number;
+    rankingCount?: number;
+    createAt?: Date;
+    updateAt?: Date;
+    publishAt?: Date;
+    tags?: Array<Tag>;
+    menus?: Array<ArticleMenu>;
+}
+
+export interface ArticleListResponse extends PageResponse {
+    list: Array<Article>;
+}
+
+export interface ArticleMenu {
+    id?: number;
+    title: string;
+    parentId: number;
+    comment?: string;
+    sequence?: number;
+    children?: number;
+}
+
+export interface ArticleMenuListResponse extends PageResponse {
+    list: Array<ArticleMenu>;
+}
+
+export interface ArtilceResponse extends BaseResponse {
+    article: Article;
+}
+
+export enum ArticleStatus {
+    draft = 0,
+    public = 1,
+    private = 2
+}
+
 export interface Carousel {
     id: number;
     title: string;
@@ -21,12 +70,6 @@ export interface Carousel {
 
 export interface CarouselListResponse extends BaseResponse {
     list: Array<Carousel>;
-}
-
-export interface Tag {
-    id: number;
-    title: string;
-    parentId: number;
 }
 
 export interface CommoditySpec {
@@ -88,55 +131,6 @@ export interface CommodityInfoListResponse extends BaseResponse {
     list: Array<CommodityInfo>;
 }
 
-export enum ArticleStatus {
-    draft = 0,
-    public = 1,
-    private = 2
-}
-
-export interface ArticleMenu {
-    id?: number;
-    title: string;
-    parentId: number;
-    comment?: string;
-    sequence?: number;
-    children?: number;
-}
-
-export interface Article {
-    id?: number;
-    title: string;
-    summary: string;
-    imageUrl: string;
-    author: string;
-    authorId?: number;
-    content: string;
-    status: number;
-    viewCount?: number;
-    agreeCount?: number;
-    shareCount?: number;
-    allowComment?: boolean;
-    ranking?: number;
-    rankingCount?: number;
-    createAt?: Date;
-    updateAt?: Date;
-    publishAt?: Date;
-    tags?: Array<Tag>;
-    menus?: Array<ArticleMenu>;
-}
-
-export interface ArticleMenuListResponse extends PageResponse {
-    list: Array<ArticleMenu>;
-}
-
-export interface ArticleListResponse extends PageResponse {
-    list: Array<Article>;
-}
-
-export interface ArtilceResponse extends BaseResponse {
-    article: Article;
-}
-
 export interface CountResponse extends BaseResponse {
     count: number;
 }
@@ -153,4 +147,14 @@ export interface Specification {
     productDatetime?: string;
     price?: number;
     inventory?: number;
+}
+
+export interface Tag {
+    id: number;
+    title: string;
+    parentId: number;
+}
+
+export interface TagPageResponse extends PageResponse {
+    tagList: Array<Tag>;
 }

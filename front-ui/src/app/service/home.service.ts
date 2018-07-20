@@ -6,7 +6,8 @@ import {
   ArticleListResponse,
   ArtilceResponse,
   CountResponse,
-  CommodityInfoResponse
+  CommodityInfoResponse,
+  TagPageResponse
 } from '../model/response';
 
 @Injectable()
@@ -44,5 +45,11 @@ export class HomeService {
   commodityDetail(id: number): Promise<CommodityInfoResponse> {
     const url = `${this.coreService.Config.apiURI}/commodity/detail`;
     return this.coreService.get(url, { id: id }).toPromise().then(x => x as CommodityInfoResponse);
+  }
+
+  tagAll(): Promise<TagPageResponse> {
+    const url = `${this.coreService.Config.apiURI}/front/tag/list`;
+    return this.coreService.get(url, { page: 0, size: 10, orderBy: 'id', order: 0 }).toPromise()
+      .then(x => x as TagPageResponse);
   }
 }
