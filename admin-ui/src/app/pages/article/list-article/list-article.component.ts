@@ -39,7 +39,7 @@ export class ListArticleComponent implements OnInit {
   delete(item: Article) {
     this.article.delete(item.id).then(x => {
       if (x.status === 0) {
-        const temp = this.list.filter(x => x.id !== item.id);
+        const temp = this.list.filter(y => y.id !== item.id);
         this.list = temp;
         this.msg.success('已删除');
       } else {
@@ -50,5 +50,15 @@ export class ListArticleComponent implements OnInit {
 
   edit(item: Article) {
     this.editArticeEvent.emit(item);
+  }
+
+  add2Home(item: Article) {
+    this.article.add2Home(item.id).then(x => {
+      if (x.status === 0) {
+        this.msg.success('已置顶');
+      } else {
+        this.msg.error(x.message);
+      }
+    });
   }
 }

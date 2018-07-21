@@ -26,9 +26,15 @@ export class HomeService {
   }
 
   initArticle(page: number, size: number, orderBy: string = 'id',
-    order: number = 0): Promise<ArticleListResponse> {
+    order: number = 1): Promise<ArticleListResponse> {
     const url = `${this.coreService.Config.apiURI}/home/article`;
     return this.coreService.get(url, { page: page, size: size, orderBy: orderBy, order: order })
+      .toPromise().then(x => x as ArticleListResponse);
+  }
+
+  initNotify(): Promise<ArticleListResponse> {
+    const url = `${this.coreService.Config.apiURI}/home/notify`;
+    return this.coreService.get(url, null)
       .toPromise().then(x => x as ArticleListResponse);
   }
 

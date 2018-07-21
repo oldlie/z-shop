@@ -39,4 +39,9 @@ public class ArticleController {
             @RequestParam int order) {
         return this.articleService.findAll(new ListRequest(page, size, orderBy, order));
     }
+
+    @PostMapping("/home")
+    public BaseResponse home(@RequestBody IdRequest request) {
+        return this.articleService.add2Home(request.getId());
+    }
 }

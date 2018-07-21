@@ -2,7 +2,10 @@
     <div nz-col nzSpan="24">
         <nz-breadcrumb>
             <nz-breadcrumb-item>
-                首页
+                <a routerLink="/home">首页</a> 
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>
+                <a routerLink="/commodity/list">甄选</a> 
             </nz-breadcrumb-item>
             <nz-breadcrumb-item>
                 {{commodityInfo.commodity.title}}

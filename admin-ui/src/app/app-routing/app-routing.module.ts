@@ -14,10 +14,12 @@ import { IndexComponent as ArticleIndexComponent } from '../pages/article/index/
 import { ArticleMenuComponent } from '../pages/article/menu/menu.component';
 import { CarouselComponent } from '../pages/home/carousel/carousel.component';
 import { CommodityComponent as HomeCommodityComponent } from '../pages/home/commodity/commodity.component';
+import { HomeArticleComponent } from '../pages/home/home-article/home-article.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'home/article', component: HomeArticleComponent},
   {path: 'home/carousel', component: CarouselComponent},
   {path: 'home/commodity', component: HomeCommodityComponent},
   {path: 'article/index', component: ArticleIndexComponent},

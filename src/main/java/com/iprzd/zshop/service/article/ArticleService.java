@@ -6,6 +6,7 @@ import com.iprzd.zshop.core.verify.Verify;
 import com.iprzd.zshop.entity.Tag;
 import com.iprzd.zshop.entity.article.Article;
 import com.iprzd.zshop.entity.article.Menu;
+import com.iprzd.zshop.entity.home.HomeArticle;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
@@ -17,6 +18,7 @@ import com.iprzd.zshop.http.response.article.ArticleResponse;
 import com.iprzd.zshop.repository.ArticleMenuRepository;
 import com.iprzd.zshop.repository.ArticleRepository;
 import com.iprzd.zshop.repository.TagRepository;
+import com.iprzd.zshop.repository.home.HomeArticleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,18 +33,19 @@ public class ArticleService {
 
     private ArticleRepository articleRepository;
     private ArticleMenuRepository articleMenuRepository;
+    private HomeArticleRepository homeArticleRepository;
     private TagRepository tagRepository;
-
 
     public ArticleService(ArticleRepository articleRepository,
                           ArticleMenuRepository articleMenuRepository,
+                          HomeArticleRepository homeArticleRepository,
                           TagRepository tagRepository) {
         this.articleRepository = articleRepository;
         this.articleMenuRepository = articleMenuRepository;
+        this.homeArticleRepository = homeArticleRepository;
         this.tagRepository = tagRepository;
     }
 
-    // region Article
     public BaseResponse store(ArticleRequest request) {
         BaseResponse response = new BaseResponse();
         Verify verify = new Verify(new LengthVerifier(request.getTitle(), 1, 32,
@@ -150,5 +153,19 @@ public class ArticleService {
         }
         return response;
     }
-    // endregion
+
+    public BaseResponse add2Home(final Long id) {
+        BaseResponse response = new BaseResponse();
+        Optional<Article> optional = this.articleRepository.findById(id);
+        if (optional.isPresent()) {
+            HomeArticle homeArticle = new HomeArticle();
+            homeArticle.setArticleId(optional.get().getId());
+            homeArticle.setSequence(0);
+            this.homeArticleRepository.save(homeArticle);
+        } else {
+            response.setStatus(1);
+            response.setMessage("文章似乎已经不存在了，请刷新页面");
+        }
+        return response;
+    }
 }

@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.iprzd.zshop.entity.article.Article;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.entity.commodity.CommodityImage;
 import com.iprzd.zshop.entity.commodity.CommodityInfo;
 import com.iprzd.zshop.entity.home.Carousel;
+import com.iprzd.zshop.entity.home.HomeArticle;
+import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.repository.ArticleRepository;
 import com.iprzd.zshop.repository.commodity.CommodityImageRepository;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
+import com.iprzd.zshop.repository.home.HomeArticleRepository;
 import com.iprzd.zshop.repository.home.HomeCarouselRepository;
 
 import com.iprzd.zshop.repository.home.HomeCommodityRepository;
+import com.iprzd.zshop.service.article.ArticleService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,17 +30,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HomePageService {
 
+    private ArticleRepository articleRepository;
     private CommodityImageRepository commodityImageRepository;
     private CommodityRepository commodityRepository;
+    private HomeArticleRepository homeArticleRepository;
     private HomeCarouselRepository homeCarouselRepository;
     private HomeCommodityRepository homeCommodityRepository;
 
-    public HomePageService(CommodityImageRepository commodityImageRepository,
+    public HomePageService(ArticleRepository articleRepository,
+                           CommodityImageRepository commodityImageRepository,
                            CommodityRepository commodityRepository,
+                           HomeArticleRepository homeArticleRepository,
                            HomeCarouselRepository homeCarouselRepository,
                            HomeCommodityRepository homeCommodityRepository) {
+        this.articleRepository = articleRepository;
         this.commodityImageRepository = commodityImageRepository;
         this.commodityRepository = commodityRepository;
+        this.homeArticleRepository = homeArticleRepository;
         this.homeCarouselRepository = homeCarouselRepository;
         this.homeCommodityRepository = homeCommodityRepository;
     }
@@ -87,6 +100,24 @@ public class HomePageService {
     public BaseResponse deleteCommodity(Long id) {
         this.homeCommodityRepository.deleteByCommodityId(id);
         return new BaseResponse();
+    }
+    // endregion
+
+    // region article
+    public ArticleListResponse listArticle() {
+        ArticleListResponse response = new ArticleListResponse();
+        List<Article> list = this.articleRepository.findAllHomeArticles();
+        response.setList(list);
+        return response;
+    }
+
+    public BaseResponse deleteArticle(final Long id) {
+        BaseResponse response = new BaseResponse();
+        HomeArticle homeArticle = this.homeArticleRepository.findFirstByArticleId(id);
+        if (homeArticle != null) {
+            this.homeArticleRepository.delete(homeArticle);
+        }
+        return response;
     }
     // endregion
 }

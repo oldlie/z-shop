@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Article {
+public class HomeArticle {
     @Id @GeneratedValue
     private long id;
     private long articleId;

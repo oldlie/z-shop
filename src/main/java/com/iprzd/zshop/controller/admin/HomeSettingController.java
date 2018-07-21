@@ -2,9 +2,11 @@ package com.iprzd.zshop.controller.admin;
 
 import com.iprzd.zshop.entity.home.Carousel;
 import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponse;
 import com.iprzd.zshop.service.HomePageService;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,4 +50,14 @@ public class HomeSettingController {
         return this.homePageService.deleteCommodity(request.getId());
     }
     // endregion
+
+    @GetMapping("/article/list")
+    public ArticleListResponse listArticle() {
+        return this.homePageService.listArticle();
+    }
+
+    @PostMapping("/article/delete")
+    public BaseResponse deleteArticle(@RequestBody IdRequest request) {
+        return this.homePageService.deleteArticle(request.getId());
+    }
 }

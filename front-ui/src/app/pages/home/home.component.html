@@ -1,61 +1,92 @@
-
-  <nz-carousel class="ray-nz-carousel" nzAutoPlay>
-    <div nz-carousel-content *ngFor="let item of carouselItemList">
-      <div style="text-align: center;">
-        <img src="{{item.image}}" class="img-responsive">
-      </div>
+<nz-carousel class="ray-nz-carousel" nzAutoPlay>
+  <div nz-carousel-content *ngFor="let item of carouselItemList">
+    <div style="text-align: center;">
+      <img src="{{item.image}}" class="img-responsive">
     </div>
-  </nz-carousel>
+  </div>
+</nz-carousel>
 
-  <div nz-row [nzGutter]="8" class="ray-row">
+<div nz-row [nzGutter]="8" class="ray-row" *ngIf="commodityList && commodityList.length > 0">
 
-    <nz-divider [nzText]="commodityTxt" nzOrientation="left">
-      <ng-template #commodityTxt>甄选</ng-template>
+  <nz-divider [nzText]="commodityTxt" nzOrientation="left">
+    <ng-template #commodityTxt>知人甄选 ·  <nz-tag [nzColor]="'volcano'"><a routerLink="/commodity/list">更多</a></nz-tag></ng-template>
+  </nz-divider>
+
+  <div nz-col [nzSpan]="6" *ngFor="let commodity of commodityList">
+    <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting]" (click)="gotoCommodityPage(commodity.id)">
+      <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>
+      <p>{{commodity.desc}}</p>
+    </nz-card>
+    <ng-template #coverTemplate>
+      <img alt="{{commodity.title}}" src="{{commodity.image}}" class="img-responsive" />
+    </ng-template>
+    <ng-template #actionSetting>
+      <i class="anticon anticon-shopping-cart buy-color"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row *ngIf="nodifyList && nodifyList.length > 0">
+  <div nz-col nzSpan="24">
+    <nz-divider [nzText]="textNodity" nzOrientation="left">
+      <ng-template #textNodity>重要通知</ng-template>
     </nz-divider>
 
-    <div nz-col [nzSpan]="6" *ngFor="let commodity of commodityList">
-      <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting]" (click)="gotoCommodityPage(commodity.id)">
-        <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>
-        <p>{{commodity.desc}}</p>
-      </nz-card>
-      <ng-template #coverTemplate>
-        <img alt="{{commodity.title}}" src="{{commodity.image}}" class="img-responsive" />
-      </ng-template>
-      <ng-template #actionSetting>
-        <i class="anticon anticon-shopping-cart buy-color"></i>
-      </ng-template>
-    </div>
-  </div>
-
-  <div nz-row>
-    <div nz-col nzSpan="24">
-
-      <nz-divider [nzText]="text" nzOrientation="left">
-        <ng-template #text>资讯</ng-template>
-      </nz-divider>
-
-      <nz-list [nzDataSource]="artileList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
-        <ng-template #item let-item>
-          <nz-list-item [nzContent]="item.summary" [nzActions]="[starAction,likeAction,msgAction]" [nzExtra]="extra">
-            <ng-template #starAction>
-              <i class="anticon anticon-eye-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
-            <ng-template #likeAction>
-              <i class="anticon anticon-like-o" style="margin-right: 8px;"></i> {{item.agreeCount}}</ng-template>
-            <ng-template #msgAction>
-              <i class="anticon anticon-message" style="margin-right: 8px;"></i> 2</ng-template>
-            <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzTitle" [nzDescription]="item.description">
-              <ng-template #nzTitle>
-                <a (click)="gotoArticle(item)">{{item.title}}</a>
-              </ng-template>
-            </nz-list-item-meta>
-            <ng-template #extra>
-              <img width="272" alt="logo" src="{{item.image}}">
+    <!-- region nz-list -->
+    <nz-list [nzDataSource]="nodifyList" [nzItemLayout]="'vertical'" [nzRenderItem]="item">
+      <ng-template #item let-item>
+        <nz-list-item [nzContent]="item.summary" [nzActions]="[starNotifyAction,likeNotifyAction,msgNotifyAction]" [nzExtra]="extraNotify">
+          <ng-template #starNotifyAction>
+            <i class="anticon anticon-eye-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
+          <ng-template #likeNotifyAction>
+            <i class="anticon anticon-like-o" style="margin-right: 8px;"></i> {{item.agreeCount}}</ng-template>
+          <ng-template #msgNotifyAction>
+            <i class="anticon anticon-message" style="margin-right: 8px;"></i> 2</ng-template>
+          <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzNotifyTitle" [nzDescription]="item.description">
+            <ng-template #nzNotifyTitle>
+              <nz-tag [nzColor]="'#f50'">重要通知</nz-tag> {{item.publishAt}} <a (click)="gotoArticle(item)">{{item.title}}</a>
             </ng-template>
-          </nz-list-item>
-        </ng-template>
-        <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="articleIndex" [nzTotal]="articleTotal"></nz-pagination>
-        </ng-template>
-      </nz-list>
-    </div>
+          </nz-list-item-meta>
+          <ng-template #extraNotify>
+            <img width="272" alt="logo" src="{{item.image}}">
+          </ng-template>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+    <!-- endregion nz-list -->
+
   </div>
+</div>
+
+<div nz-row *ngIf="artileList && artileList.length > 0">
+  <div nz-col nzSpan="24">
+
+    <nz-divider [nzText]="text" nzOrientation="left">
+      <ng-template #text>最新资讯</ng-template>
+    </nz-divider>
+
+    <nz-list [nzDataSource]="artileList" [nzItemLayout]="'vertical'" [nzRenderItem]="item" [nzPagination]="pagination">
+      <ng-template #item let-item>
+        <nz-list-item [nzContent]="item.summary" [nzActions]="[starAction,likeAction,msgAction]" [nzExtra]="extra">
+          <ng-template #starAction>
+            <i class="anticon anticon-eye-o" style="margin-right: 8px;"></i> {{item.viewCount}}</ng-template>
+          <ng-template #likeAction>
+            <i class="anticon anticon-like-o" style="margin-right: 8px;"></i> {{item.agreeCount}}</ng-template>
+          <ng-template #msgAction>
+            <i class="anticon anticon-message" style="margin-right: 8px;"></i> 2</ng-template>
+          <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzTitle" [nzDescription]="item.description">
+            <ng-template #nzTitle>
+              <a (click)="gotoArticle(item)">{{item.title}}</a>
+            </ng-template>
+          </nz-list-item-meta>
+          <ng-template #extra>
+            <img width="272" alt="logo" src="{{item.image}}">
+          </ng-template>
+        </nz-list-item>
+      </ng-template>
+      <ng-template #pagination>
+        <nz-pagination [nzPageIndex]="articleIndex" [nzTotal]="articleTotal"></nz-pagination>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

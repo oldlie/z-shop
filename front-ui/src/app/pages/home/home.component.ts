@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   carouselItemList: Array<CarouselVI>;
   commodityList: Array<CommodityVI>;
   artileList: Array<ArticleVI>;
+  nodifyList = [] as Array<ArticleVI>;
 
   articleIndex = 0;
   articleSize = 10;
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.initCarousel();
     this.initCommodity();
+    this.initNofity();
     this.initArticle();
   }
 
@@ -61,10 +63,12 @@ export class HomeComponent implements OnInit {
             id: item.commodity.id,
             title: item.commodity.title,
             desc: item.commodity.summary,
+            publishAt: item.commodity.createAt,
             image: `${this.coreService.Config.resourceURI}/${image}`,
             info: item
           });
         }
+
         this.commodityList = temp;
       } else {
         console.log(x);
@@ -81,7 +85,7 @@ export class HomeComponent implements OnInit {
         for (const item of x.list) {
           const image = item.imageUrl ?
             item.imageUrl.replace(/\\/g, '/') : '';
-            console.log(image);
+          console.log(image);
           temp.push({
             id: item.id,
             title: item.title,
@@ -99,10 +103,41 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  gotoCommodityPage(id: number) {
-    this.router.navigate(['commodity', id]).catch(err => {
-      console.log(err);
+  initNofity() {
+    this.homeService.initNotify().then(x => {
+      console.log('notify', x);
+      if (x.status === 0) {
+        const temp = [] as Array<ArticleVI>;
+        for (const item of x.list) {
+          const image = item.imageUrl ?
+            item.imageUrl.replace(/\\/g, '/') : '';
+          temp.push({
+            id: item.id,
+            title: item.title,
+            summary: item.summary,
+            viewCount: item.viewCount,
+            agreeCount: item.agreeCount,
+            image: `${this.coreService.Config.resourceURI}/${image}`,
+            commentCount: 0
+          });
+        }
+        this.nodifyList = temp;
+      } else {
+        console.log(x);
+      }
     });
+  }
+
+  gotoCommodityPage(id: number) {
+    if (id === 0) {
+      this.router.navigate(['/commodity/list']).catch(err => {
+        console.log(err);
+      });
+    } else {
+      this.router.navigate(['/commodity/detail', id]).catch(err => {
+        console.log(err);
+      });
+    }
   }
 
   gotoArticle(article: ArticleVI) {

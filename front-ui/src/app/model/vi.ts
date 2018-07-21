@@ -23,6 +23,7 @@ export interface CommodityVI {
     title: string;
     desc: string;
     image: string;
+    publishAt?: string | Date;
     info: CommodityInfo;
 }
 

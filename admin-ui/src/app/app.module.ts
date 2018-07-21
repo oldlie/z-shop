@@ -33,6 +33,7 @@ import { CarouselComponent } from './pages/home/carousel/carousel.component';
 import { CommodityComponent as HomeCommodityComponent } from './pages/home/commodity/commodity.component';
 import { ColorSquareDirective } from './directive/color-square.directive';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { HomeArticleComponent } from './pages/home/home-article/home-article.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
     CarouselComponent,
     HomeCommodityComponent,
     ColorSquareDirective,
+    HomeArticleComponent
   ],
   imports: [
     BrowserModule,

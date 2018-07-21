@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreService } from './service/core.service';
 import { CommodityComponent } from './pages/commodity/commodity.component';
 import { ArticleComponent } from './pages/article/article.component';
+import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
 
 registerLocaleData(zh);
 
@@ -23,7 +24,8 @@ registerLocaleData(zh);
     HomeComponent,
     PageNoteFoundComponent,
     CommodityComponent,
-    ArticleComponent
+    ArticleComponent,
+    CommodityListComponent
   ],
   imports: [
     AppRoutingModule,
