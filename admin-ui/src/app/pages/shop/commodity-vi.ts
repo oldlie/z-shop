@@ -7,6 +7,7 @@ export interface CommodityVI {
   title: string;
   summary: string;
   comment?: string;
+  image?: string;
   description: string;
   status: number;
   ranking: number;

@@ -74,13 +74,12 @@ export class ArticleComponent implements OnInit {
       if (x.status === 0) {
         const temp = [] as Array<CommodityVI>;
         for (const item of x.list) {
-          const image = item.images[0].imagePath.replace(/\\/g, '/');
+          const image = item.image;
           temp.push({
-            id: item.commodity.id,
-            title: item.commodity.title,
-            desc: item.commodity.summary,
-            image: `${this.coreService.Config.resourceURI}/${image}`,
-            info: item
+            id: item.id,
+            title: item.title,
+            desc: item.summary,
+            image: `${this.coreService.Config.resourceURI}/${image}`
           });
         }
         this.commodityList = temp;

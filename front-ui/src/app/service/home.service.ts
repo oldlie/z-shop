@@ -53,6 +53,12 @@ export class HomeService {
     return this.coreService.get(url, { id: id }).toPromise().then(x => x as CommodityInfoResponse);
   }
 
+  commodityList(page, size, orderBy, order): Promise<CommodityInfoListResponse> {
+    const url = `${this.coreService.Config.apiURI}/commodity/list`;
+    return this.coreService.get(url, { page: page, size: size, orderBy: orderBy, order: order })
+      .toPromise().then(x => x as CommodityInfoListResponse);
+  }
+
   tagAll(): Promise<TagPageResponse> {
     const url = `${this.coreService.Config.apiURI}/front/tag/list`;
     return this.coreService.get(url, { page: 0, size: 10, orderBy: 'id', order: 0 }).toPromise()

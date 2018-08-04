@@ -34,6 +34,8 @@ export class AddCommodityComponent implements OnInit {
   showMenuDialog = false;
   menuLoading = false;
   showTagDialog = false;
+  imagePath = '';
+  imageFileList = [];
 
   activeImageFile: UploadFile;
   uploadUrl = '';
@@ -106,6 +108,20 @@ export class AddCommodityComponent implements OnInit {
         this.fileList[length - 1]['id'] = response.list[0].id;
       }
       console.log('uploaded list', this.fileList);
+    }
+  }
+
+  uploadImageChange(change: any) {
+    if (change['type'] === 'success') {
+      const response = change['file']['response'] as FileResponse;
+      console.log('response:', response);
+      if (response.status === 0 && response.list.length > 0) {
+        this.imagePath = response.list[0].path;
+        if (this.imagePath !== undefined) {
+          this.imagePath = this.imagePath.replace(/\\/g, '/');
+        }
+      }
+      console.log('uploaded image list', this.imagePath);
     }
   }
 
@@ -286,6 +302,9 @@ export class AddCommodityComponent implements OnInit {
     for (const file of this.fileList) {
       imageList.push(file['id']);
     }
+
+
+  this.commodityVI.image = this.imagePath;
 
     this.commodity.save(this.commodityVI,
       imageList,

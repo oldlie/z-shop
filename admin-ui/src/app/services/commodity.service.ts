@@ -90,6 +90,7 @@ export class CommodityService {
       title: model.title,
       summary: model.summary,
       comment: model.comment,
+      image: model.image,
       description: model.description,
       status: model.status,
       menus: menus.join(','),

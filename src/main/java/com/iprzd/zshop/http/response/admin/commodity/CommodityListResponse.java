@@ -6,6 +6,9 @@ import com.iprzd.zshop.http.response.PageResponse;
 import java.util.List;
 
 public class CommodityListResponse extends PageResponse {
+
+    private final static long serialVersionUID = 2L;
+
     private List<Commodity> list;
 
     public List<Commodity> getList() {

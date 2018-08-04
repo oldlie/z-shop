@@ -36,6 +36,7 @@ export interface Commodity {
     id: number;
     title: string;
     summary: string;
+    image?: string;
     comment?: string;
     description: string;
     status: number;

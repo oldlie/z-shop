@@ -98,6 +98,7 @@ export interface Commodity {
     id: number;
     title: string;
     summary: string;
+    image?: string;
     comment?: string;
     description: string;
     status: number;
@@ -128,7 +129,7 @@ export interface CommodityInfoResponse extends BaseResponse {
 }
 
 export interface CommodityInfoListResponse extends BaseResponse {
-    list: Array<CommodityInfo>;
+    list: Array<Commodity>;
 }
 
 export interface CountResponse extends BaseResponse {

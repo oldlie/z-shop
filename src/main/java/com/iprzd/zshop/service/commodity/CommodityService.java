@@ -84,6 +84,7 @@ public class CommodityService {
 
         commodity.setTitle(request.getTitle());
         commodity.setSummary(request.getSummary());
+        commodity.setImage(request.getImage());
         commodity.setComment(request.getComment());
         commodity.setDescription(request.getDescription());
         commodity.setStatus(request.getStatus());

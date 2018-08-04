@@ -25,6 +25,25 @@
 
 <div nz-row class="ray-row">
   <div nz-col nzSm="24">
+    <label>题图/缩略图：</label>
+    <nz-form-control nzValidateStatus="default" nzHasFeedback>
+      <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="imageFileList" [nzShowButton]="imageFileList.length < 1"
+        [nzPreview]="handlePreview" (nzChange)="uploadImageChange($event)">
+        <i class="anticon anticon-plus"></i>
+        <div class="ant-upload-text">上传</div>
+      </nz-upload>
+      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+        <ng-template #modalContent>
+          <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+        </ng-template>
+      </nz-modal>
+    </nz-form-control>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+      <label>展示图（最多5幅）：</label>
       <nz-form-control nzValidateStatus="default" nzHasFeedback>
         <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 5"
           [nzPreview]="handlePreview" (nzChange)="uploadChange($event)">

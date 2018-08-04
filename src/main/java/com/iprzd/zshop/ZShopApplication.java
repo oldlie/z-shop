@@ -1,8 +1,10 @@
 package com.iprzd.zshop;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +15,8 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.MultipartConfigElement;
 
 /**
  * 在VSCODE里运行需要先设置VSCODE项目，否则会提示在project中在不到mainClass
@@ -58,5 +62,17 @@ public class ZShopApplication {
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
+    }
+
+
+    @Value("${zs.fileTemp}")
+    private String location;
+
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        System.out.println(location);
+        factory.setLocation(location);
+        return factory.createMultipartConfig();
     }
 }

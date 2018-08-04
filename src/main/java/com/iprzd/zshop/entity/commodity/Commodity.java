@@ -2,7 +2,9 @@ package com.iprzd.zshop.entity.commodity;
 
 import com.iprzd.zshop.entity.Tag;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -20,6 +22,8 @@ public class Commodity {
     private long id;
     private String title;
     private String summary;
+    @Getter @Setter
+    private String image;
     private String comment;
     @Column(columnDefinition="text")
     private String description;

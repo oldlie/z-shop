@@ -24,7 +24,6 @@ export interface CommodityVI {
     desc: string;
     image: string;
     publishAt?: string | Date;
-    info: CommodityInfo;
 }
 
 export interface ArticleVI {

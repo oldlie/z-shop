@@ -82,17 +82,8 @@ public class HomePageService {
     // region commodity
     public HomeCommodityListResponse listCommodity() {
         HomeCommodityListResponse response = new HomeCommodityListResponse();
-        List<CommodityInfo> list = new ArrayList<>();
         List<Commodity> commodities = this.commodityRepository.findAllHomePageCommodities();
-        for (Commodity commodity : commodities) {
-            List<CommodityImage> images =
-                    this.commodityImageRepository.findAllByCommodityIdOrderById(commodity.getId());
-            CommodityInfo info = new CommodityInfo();
-            info.setCommodity(commodity);
-            info.setImages(images);
-            list.add(info);
-        }
-        response.setList(list);
+        response.setList(commodities);
         return response;
     }
 

@@ -15,6 +15,7 @@ public class CommodityRequest implements Serializable {
     private long id;
     private String title;
     private String summary;
+    private String image;
     private String comment;
     private String description;
     private int status;
@@ -22,4 +23,6 @@ public class CommodityRequest implements Serializable {
     private String tags;
     private String specifications;
     private String images;
+
+    private static final long serialVersionUID = 1L;
 }
