@@ -39,10 +39,8 @@ public class IndexController {
     @Value("${zs.uploadUrl}")
     private String uploadURL;
 
-    public IndexController(AuthorityRepository authorityRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           UploadFileRepository uploadFileRepository,
-                           UserRepository userRepository) {
+    public IndexController(AuthorityRepository authorityRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
+            UploadFileRepository uploadFileRepository, UserRepository userRepository) {
         this.authorityRepository = authorityRepository;
         this.uploadFileRepository = uploadFileRepository;
         this.userRepository = userRepository;
@@ -58,21 +56,40 @@ public class IndexController {
     public BaseResponse init() {
         BaseResponse response = new BaseResponse();
 
-        Authority authority = new Authority();
-        authority.setRole("ADMIN");
-        this.authorityRepository.save(authority);
+        Authority authority = this.authorityRepository.findOneByRole("ADMIN");
+        if (authority == null) {
+            authority = new Authority();
+            authority.setRole("ADMIN");
+            this.authorityRepository.save(authority);
+        }
 
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);
+        Authority userAuthority = this.authorityRepository.findOneByRole("USER");
+        if (userAuthority == null) {
+            userAuthority = new Authority();
+            userAuthority.setRole("USER");
+            this.authorityRepository.save(userAuthority);
+        }
 
-        User admin = new User();
-        admin.setUsername("admin@zshop.com");
-        admin.setPassword(this.bCryptPasswordEncoder.encode("123456"));
-        admin.setAuthorities(authorities);
-        this.userRepository.save(admin);
+        Authority proAuthority = this.authorityRepository.findOneByRole("PRO");
+        if (proAuthority == null) {
+            proAuthority = new Authority();
+            proAuthority.setRole("PRO");
+            this.authorityRepository.save(proAuthority);
+        }
+
+        User admin = this.userRepository.findByUsername("admin@zshop.com");
+        if (admin == null) {
+            List<Authority> authorities = new ArrayList<>();
+            authorities.add(authority);
+            admin = new User();
+            admin.setUsername("admin@zshop.com");
+            admin.setPassword(this.bCryptPasswordEncoder.encode("123456"));
+            admin.setAuthorities(authorities);
+            this.userRepository.save(admin);
+        }
 
         response.setStatus(0);
-        response.setMessage("success");
+        response.setMessage(appVersion);
         return response;
     }
 
@@ -153,8 +170,7 @@ public class IndexController {
             fileName = fileName.substring(length - 10, length);
         }
         StringBuilder fileNameBuilder = new StringBuilder(64);
-        fileNameBuilder.append(calendar.getTime().getTime()).append("_")
-                .append(fileName);
+        fileNameBuilder.append(calendar.getTime().getTime()).append("_").append(fileName);
 
         StringBuilder path = new StringBuilder(128);
         path.append(calendar.get(Calendar.YEAR)).append(File.separator) // 上传年
@@ -204,7 +220,7 @@ public class IndexController {
 
         StringBuilder path = new StringBuilder(128);
         path.append(request.getCategory()).append(File.separator) // 上传文件类型
-                .append(request.getCreator()).append(File.separator)    // 上传账号
+                .append(request.getCreator()).append(File.separator) // 上传账号
                 .append(calendar.get(Calendar.YEAR)).append(File.separator) // 上传年
                 .append(calendar.get(Calendar.MONTH)).append(File.separator) // 上传月
                 .append(fileNameBuilder.toString());

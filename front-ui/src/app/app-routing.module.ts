@@ -6,6 +6,7 @@ import { CommodityComponent } from './pages/commodity/commodity.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const appRoutes = [
     {path: '', component: HomeComponent},
@@ -14,6 +15,7 @@ const appRoutes = [
     {path: 'commodity/list', component: CommodityListComponent},
     {path: 'commodity/detail/:id', component: CommodityComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
     {path: '**', component: PageNoteFoundComponent}
 ];
 

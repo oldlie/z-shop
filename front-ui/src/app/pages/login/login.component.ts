@@ -33,6 +33,9 @@ export class LoginComponent implements OnInit {
       }
     }
 
+    if (!this.validateForm.valid) {
+      return;
+    }
     console.log(this.validateForm.value.userName);
     this.coreService.login(this.validateForm.value.userName,
       this.validateForm.value.password).then(x => {

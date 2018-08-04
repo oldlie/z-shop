@@ -17,6 +17,10 @@ public class User {
     private String username;
     private String password;
     private String userNickname;
+    @Getter @Setter
+    private String cellphone;
+    @Getter @Setter
+    private String image;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
