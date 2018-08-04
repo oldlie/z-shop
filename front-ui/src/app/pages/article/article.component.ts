@@ -90,7 +90,7 @@ export class ArticleComponent implements OnInit {
   }
 
   gotoCommodityPage(id: number) {
-    this.router.navigate(['commodity', id]).catch(err => {
+    this.router.navigate(['commodity/detail', id]).catch(err => {
       console.log(err);
     });
   }

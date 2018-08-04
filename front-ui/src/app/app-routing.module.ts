@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CommodityComponent } from './pages/commodity/commodity.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const appRoutes = [
     {path: '', component: HomeComponent},
@@ -12,6 +13,7 @@ const appRoutes = [
     {path: 'article/:id', component: ArticleComponent},
     {path: 'commodity/list', component: CommodityListComponent},
     {path: 'commodity/detail/:id', component: CommodityComponent},
+    {path: 'login', component: LoginComponent},
     {path: '**', component: PageNoteFoundComponent}
 ];
 

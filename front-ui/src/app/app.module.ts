@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
@@ -15,6 +15,7 @@ import { CoreService } from './service/core.service';
 import { CommodityComponent } from './pages/commodity/commodity.component';
 import { ArticleComponent } from './pages/article/article.component';
 import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
+import { LoginComponent } from './pages/login/login.component';
 
 registerLocaleData(zh);
 
@@ -25,13 +26,15 @@ registerLocaleData(zh);
     PageNoteFoundComponent,
     CommodityComponent,
     ArticleComponent,
-    CommodityListComponent
+    CommodityListComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     NgZorroAntdModule
   ],

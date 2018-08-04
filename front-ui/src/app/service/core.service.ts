@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginVI, ConfigVI } from '../model/vi';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { LoginResponse } from '../model/login.response';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,23 @@ export class CoreService {
 
   post(url: string, body: any): Observable<Object> {
     return this.http.post(url, body, { headers: this.Header });
+  }
+
+  login(username: string, password: string): Promise<LoginResponse> {
+    const url = `${this.config.apiURI}/login`;
+    const formData = {
+      username: username,
+      password: password
+    };
+    return this.post(url, JSON.stringify(formData)).toPromise()
+      .then(x => {
+        const response = x as LoginResponse;
+        if (response.status === 0) {
+          this.loginInfo.account = username;
+          this.loginInfo.token = response.token;
+          this.loginInfo.isLogin = true;
+        }
+        return response;
+      });
   }
 }

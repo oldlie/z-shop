@@ -64,7 +64,8 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.getWriter().print("{\"status\":1,\"message\":\""+ failed.getLocalizedMessage() +"\"}");
+        System.out.println(failed.getLocalizedMessage());
+        response.getWriter().print("{\"status\":1,\"message\":\"用户名或者密码不正确\"}");
         response.getWriter().flush();
     }
 }
