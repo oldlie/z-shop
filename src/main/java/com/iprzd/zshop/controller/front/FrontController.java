@@ -1,11 +1,14 @@
 package com.iprzd.zshop.controller.front;
 
+import javax.annotation.security.RolesAllowed;
+
 import com.iprzd.zshop.http.request.ProfileRequest;
 import com.iprzd.zshop.http.request.RegisterRequest;
 import com.iprzd.zshop.http.request.VerifyCodeRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.service.FrontService;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +35,18 @@ public class FrontController {
         return response;
     }
 
+    @PostMapping("/signup")
+    public BaseResponse signUp(@RequestBody ProfileRequest request) {
+        return this.frontService.saveFrontUser(request.getUsername(), request.getPassword(), request.getUserNickname(),
+                request.getCellphone(), request.getImage());
+    }
+
     @PostMapping("/code")
     public BaseResponse code(@RequestBody VerifyCodeRequest request) {
         return this.frontService.sendCode(request.getCellphone());
     }
 
+    @RolesAllowed({"USER"})
     @PostMapping("/profile")
     public BaseResponse profile(@RequestBody ProfileRequest request) {
         return this.frontService.saveFrontUser(request.getUsername(), request.getPassword(), request.getUserNickname(),

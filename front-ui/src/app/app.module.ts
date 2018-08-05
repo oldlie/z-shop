@@ -17,6 +17,8 @@ import { ArticleComponent } from './pages/article/article.component';
 import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 registerLocaleData(zh);
 
@@ -29,7 +31,9 @@ registerLocaleData(zh);
     ArticleComponent,
     CommodityListComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    SignupComponent
   ],
   imports: [
     AppRoutingModule,

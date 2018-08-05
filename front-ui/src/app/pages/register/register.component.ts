@@ -4,14 +4,12 @@ import { CoreService } from '../../service/core.service';
 import { Router } from '@angular/router';
 import { FrontService } from '../../service/front.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { RegisterService } from '../../register.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [
-    FrontService
-  ]
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
 
@@ -19,9 +17,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(private cs: CoreService,
     private fb: FormBuilder,
-    private fs: FrontService,
     private msg: NzMessageService,
-    private r: Router
+    private r: Router,
+    private rs: RegisterService
   ) { }
 
   ngOnInit() {
@@ -43,9 +41,14 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.fs.register(this.form.value.cellphone, this.form.value.code).then(x => {
+    const cellphone = this.form.value.cellphone;
+    const code = this.form.value.code;
+
+    this.rs.register(cellphone, code).then(x => {
       if (x.status === 0) {
-        this.msg.success('注册成功，明天改成跳转到完善个人信息页');
+        this.rs.cellphone = cellphone;
+        this.rs.isVerified = true;
+        this.r.navigate(['/signup']).catch(e => console.log(e));
       } else {
         this.msg.error(x.message);
       }
@@ -61,7 +64,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.fs.sendCode(this.form.value.cellphone).then(x => {
+    this.rs.sendCode(this.form.value.cellphone).then(x => {
       if (x.status === 0) {
         this.msg.success('验证码已经发送，请查收');
       } else {

@@ -7,16 +7,20 @@ import { ArticleComponent } from './pages/article/article.component';
 import { CommodityListComponent } from './pages/commodity-list/commodity-list.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 const appRoutes = [
-    {path: '', component: HomeComponent},
-    {path: 'home', component: HomeComponent},
-    {path: 'article/:id', component: ArticleComponent},
-    {path: 'commodity/list', component: CommodityListComponent},
-    {path: 'commodity/detail/:id', component: CommodityComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: '**', component: PageNoteFoundComponent}
+    { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
+    { path: 'article/:id', component: ArticleComponent },
+    { path: 'commodity/list', component: CommodityListComponent },
+    { path: 'commodity/detail/:id', component: CommodityComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'profile', component: ProfileComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'signup', component: SignupComponent},
+    { path: '**', component: PageNoteFoundComponent }
 ];
 
 @NgModule({
@@ -27,4 +31,4 @@ const appRoutes = [
         RouterModule
     ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

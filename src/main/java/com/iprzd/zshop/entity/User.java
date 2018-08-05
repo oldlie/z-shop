@@ -21,6 +21,9 @@ public class User {
     private String cellphone;
     @Getter @Setter
     private String image;
+    @Getter @Setter
+    @Column(columnDefinition = "tinyint default 0")
+    private Integer isInit;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
