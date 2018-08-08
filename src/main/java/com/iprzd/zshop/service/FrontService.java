@@ -28,19 +28,32 @@ public class FrontService {
 
     public BaseResponse sendCode(String cellphone) {
         BaseResponse response = new BaseResponse();
-        User user = this.userRepository.findOneByCellphone(cellphone);
-        if (user != null) {
+        try {
+            User user = this.userRepository.findOneByCellphone(cellphone);
+            if (user != null) {
+                response.setStatus(1);
+                response.setMessage("这个号码已经注册过了");
+                return response;
+            }
+        } catch (Exception e) {
             response.setStatus(1);
-            response.setMessage("这个号码已经注册过了");
-            return response;
+            response.setMessage(e.getLocalizedMessage());
         }
+        
         // TODO: 这里哦，短信验证的具体代码了
         return response;
     }
 
     public BaseResponse saveFrontUser(String username, String passowrd, String nickname, String cellphone,
-            String image) {
+            String cellphone2, String resume, String image) {
         BaseResponse response = new BaseResponse();
+
+        User user = this.userRepository.findByUsername(username);
+        if (user != null) {
+            response.setStatus(1);
+            response.setMessage("这个账号已经注册了");
+            return response;
+        }
 
         Authority authority = this.authorityRepository.findOneByRole("USER");
         if (authority == null) {
@@ -50,9 +63,9 @@ public class FrontService {
         }
 
         List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);        
+        authorities.add(authority);
 
-        User user = new User();
+        user = new User();
         user.setUsername(username);
         user.setPassword(this.bCryptPasswordEncoder.encode(passowrd));
         user.setUserNickname(nickname);

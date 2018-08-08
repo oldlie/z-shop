@@ -1,5 +1,5 @@
 <div style="width: 100%; padding: 5px auto;">
-  <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm()" style="margin: 5px auto;">
+  <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm($event)" style="margin: 5px auto;">
 
     <nz-form-item>
       <nz-form-control>
@@ -7,7 +7,7 @@
           <input type="text" nz-input formControlName="cellphone" placeholder="手机号">
         </nz-input-group>
         <ng-template #suffixButton>
-          <button nz-button nzType="primary" (click)="sendCode()">获取验证码</button>
+          <button nz-button nzType="primary" (click)="sendCode($event)">获取验证码</button>
         </ng-template>
         <nz-form-explain *ngIf="form.get('cellphone').dirty && form.get('cellphone').errors">请输入手机号!</nz-form-explain>
       </nz-form-control>

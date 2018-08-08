@@ -8,7 +8,6 @@ import com.iprzd.zshop.http.request.VerifyCodeRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.service.FrontService;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class FrontController {
     @PostMapping("/signup")
     public BaseResponse signUp(@RequestBody ProfileRequest request) {
         return this.frontService.saveFrontUser(request.getUsername(), request.getPassword(), request.getUserNickname(),
-                request.getCellphone(), request.getImage());
+                request.getCellphone(), request.getCellphone2(), request.getResume(), request.getImage());
     }
 
     @PostMapping("/code")
@@ -50,6 +49,6 @@ public class FrontController {
     @PostMapping("/profile")
     public BaseResponse profile(@RequestBody ProfileRequest request) {
         return this.frontService.saveFrontUser(request.getUsername(), request.getPassword(), request.getUserNickname(),
-                request.getCellphone(), request.getImage());
+                request.getCellphone(), request.getCellphone2(), request.getResume(), request.getImage());
     }
 }

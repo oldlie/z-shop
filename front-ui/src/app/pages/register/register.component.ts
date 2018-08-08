@@ -4,7 +4,7 @@ import { CoreService } from '../../service/core.service';
 import { Router } from '@angular/router';
 import { FrontService } from '../../service/front.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { RegisterService } from '../../register.service';
+import { RegisterService } from '../../service/register.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +14,7 @@ import { RegisterService } from '../../register.service';
 export class RegisterComponent implements OnInit {
 
   form: FormGroup;
+  isVerified = false;
 
   constructor(private cs: CoreService,
     private fb: FormBuilder,
@@ -29,7 +30,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  submitForm(e: Event): void {
+    e.preventDefault();
+
     for (const key in this.form.controls) {
       if (this.form.controls.hasOwnProperty(key)) {
         this.form.controls[key].markAsDirty();
@@ -48,14 +51,15 @@ export class RegisterComponent implements OnInit {
       if (x.status === 0) {
         this.rs.cellphone = cellphone;
         this.rs.isVerified = true;
-        this.r.navigate(['/signup']).catch(e => console.log(e));
+        this.r.navigate(['/signup']).catch(err => { console.log('message:', err); });
       } else {
         this.msg.error(x.message);
       }
     });
   }
 
-  sendCode(e: Event): void {
+  sendCode(event: Event): void {
+    event.preventDefault();
 
     this.form.controls['cellphone'].markAsDirty();
     this.form.controls['cellphone'].updateValueAndValidity();
@@ -67,8 +71,10 @@ export class RegisterComponent implements OnInit {
     this.rs.sendCode(this.form.value.cellphone).then(x => {
       if (x.status === 0) {
         this.msg.success('验证码已经发送，请查收');
+        this.isVerified = true;
       } else {
-        this.msg.error(x.message);
+        this.msg.error('这个号码已经注册了');
+        console.log(x.message);
       }
     });
   }

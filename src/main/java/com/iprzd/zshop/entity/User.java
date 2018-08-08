@@ -20,6 +20,10 @@ public class User {
     @Getter @Setter
     private String cellphone;
     @Getter @Setter
+    private String cellphone2;
+    @Getter @Setter
+    private String resume;
+    @Getter @Setter
     private String image;
     @Getter @Setter
     @Column(columnDefinition = "tinyint default 0")
