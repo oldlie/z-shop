@@ -11,6 +11,8 @@
           <ng-container *ngIf="coreService.loginInfo.isLogin">
             {{coreService.loginInfo.account}}
             <nz-divider nzType="vertical"></nz-divider>
+            <a style=" color: #ff6700;" [routerLink]="['/login']"><i class="anticon anticon-shopping-cart"></i></a>
+            <nz-divider nzType="vertical"></nz-divider>
             <a style=" color: rgba(0,0,0,.65);" (click)="logout()">退出</a>
           </ng-container>
           <ng-container *ngIf="!coreService.loginInfo.isLogin">
