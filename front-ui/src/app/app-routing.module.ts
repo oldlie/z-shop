@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 
 const appRoutes = [
     { path: '', component: HomeComponent },
@@ -19,7 +20,8 @@ const appRoutes = [
     { path: 'login', component: LoginComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'signup', component: SignupComponent},
+    { path: 'signup', component: SignupComponent },
+    { path: 'shopping/cart', component: ShoppingCartComponent },
     { path: '**', component: PageNoteFoundComponent }
 ];
 

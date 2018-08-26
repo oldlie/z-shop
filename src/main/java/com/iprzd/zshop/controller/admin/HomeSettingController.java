@@ -5,7 +5,7 @@ import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
-import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponseBase;
 import com.iprzd.zshop.service.HomePageService;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,7 +51,7 @@ public class HomeSettingController {
     // endregion
 
     @GetMapping("/article/list")
-    public ArticleListResponse listArticle() {
+    public ArticleListResponseBase listArticle() {
         return this.homePageService.listArticle();
     }
 

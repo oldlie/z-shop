@@ -1,11 +1,11 @@
 package com.iprzd.zshop.http.response.admin.commodity;
 
 import com.iprzd.zshop.entity.commodity.Commodity;
-import com.iprzd.zshop.http.response.PageResponse;
+import com.iprzd.zshop.http.response.BasePageResponse;
 
 import java.util.List;
 
-public class CommodityListResponse extends PageResponse {
+public class CommodityListResponseBase extends BasePageResponse {
 
     private final static long serialVersionUID = 2L;
 

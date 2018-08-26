@@ -1,11 +1,11 @@
 package com.iprzd.zshop.http.response.admin;
 
-import com.iprzd.zshop.http.response.PageResponse;
+import com.iprzd.zshop.http.response.BasePageResponse;
 import com.iprzd.zshop.entity.commodity.Specification;
 
 import java.util.List;
 
-public class SpecPageResponse extends PageResponse {
+public class SpecBasePageResponse extends BasePageResponse {
 
     private List<Specification> list;
 

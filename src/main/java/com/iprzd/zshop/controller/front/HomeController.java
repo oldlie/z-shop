@@ -3,7 +3,7 @@ package com.iprzd.zshop.controller.front;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.CarouselListResponse;
 import com.iprzd.zshop.http.response.HomeCommodityListResponse;
-import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponseBase;
 import com.iprzd.zshop.service.HomePageService;
 import com.iprzd.zshop.service.article.ArticleService;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +32,13 @@ public class HomeController {
     }
 
     @GetMapping("/article")
-    public ArticleListResponse listArticle(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
-                                           @RequestParam int order) {
+    public ArticleListResponseBase listArticle(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
+                                               @RequestParam int order) {
         return this.articleService.findAll(new ListRequest(page, size, orderBy, order));
     }
 
     @GetMapping("/notify")
-    public ArticleListResponse listHomeArticle() {
+    public ArticleListResponseBase listHomeArticle() {
         return this.homePageService.listArticle();
     }
 }

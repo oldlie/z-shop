@@ -4,7 +4,7 @@ import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
 import com.iprzd.zshop.http.request.admin.commodity.SpecificationRequest;
-import com.iprzd.zshop.http.response.admin.SpecPageResponse;
+import com.iprzd.zshop.http.response.admin.SpecBasePageResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.service.commodity.SpecificationService;
@@ -43,15 +43,15 @@ public class SpecificationController {
     }
 
     @GetMapping("/list")
-    public SpecPageResponse findAll(@RequestParam int page,
-                                @RequestParam int size,
-                                @RequestParam String orderBy,
-                                @RequestParam int order) {
+    public SpecBasePageResponse findAll(@RequestParam int page,
+                                        @RequestParam int size,
+                                        @RequestParam String orderBy,
+                                        @RequestParam int order) {
         return this.specificationService.findAll(new ListRequest(page, size, orderBy, order));
     }
 
     @GetMapping("/search")
-    public SpecPageResponse findAllByTitle(
+    public SpecBasePageResponse findAllByTitle(
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam String orderBy,

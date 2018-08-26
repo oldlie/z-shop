@@ -2,7 +2,7 @@ package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
-import com.iprzd.zshop.http.response.admin.SpecPageResponse;
+import com.iprzd.zshop.http.response.admin.SpecBasePageResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.commodity.Specification;
@@ -60,20 +60,20 @@ public class SpecificationService {
         return StatusCode.successResponse(response);
     }
 
-    public SpecPageResponse findAll(ListRequest request) {
+    public SpecBasePageResponse findAll(ListRequest request) {
         Page<Specification> page = this.repository.findAll(
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort()));
         return this.buildPageResponse(page);
     }
 
-    public SpecPageResponse findAllByTitle(SpecListByTitleRequest request) {
+    public SpecBasePageResponse findAllByTitle(SpecListByTitleRequest request) {
         Page<Specification> page = this.repository.findAllByTitle(request.getTitle(),
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort()));
         return this.buildPageResponse(page);
     }
 
-    private SpecPageResponse buildPageResponse(@NotNull Page<Specification> page) {
-        SpecPageResponse response = new SpecPageResponse();
+    private SpecBasePageResponse buildPageResponse(@NotNull Page<Specification> page) {
+        SpecBasePageResponse response = new SpecBasePageResponse();
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(0));
         response.setList(page.getContent());

@@ -9,7 +9,7 @@
         </div>
         <div style="float:right;">
           <ng-container *ngIf="coreService.loginInfo.isLogin">
-            {{coreService.loginInfo.account}}
+            <a style=" color: rgba(0,0,0,.65);" [routerLink]="['/profile']">{{nickname}}</a>
             <nz-divider nzType="vertical"></nz-divider>
             <a style=" color: #ff6700;" [routerLink]="['/login']"><i class="anticon anticon-shopping-cart"></i></a>
             <nz-divider nzType="vertical"></nz-divider>

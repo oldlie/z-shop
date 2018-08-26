@@ -6,6 +6,7 @@ import java.util.List;
 import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.SimpleResponse;
 import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UserRepository;
 
@@ -44,7 +45,7 @@ public class FrontService {
         return response;
     }
 
-    public BaseResponse saveFrontUser(String username, String passowrd, String nickname, String cellphone,
+    public BaseResponse saveFrontUser(String username, String password, String nickname, String cellphone,
             String cellphone2, String resume, String image) {
         BaseResponse response = new BaseResponse();
 
@@ -67,13 +68,20 @@ public class FrontService {
 
         user = new User();
         user.setUsername(username);
-        user.setPassword(this.bCryptPasswordEncoder.encode(passowrd));
+        user.setPassword(this.bCryptPasswordEncoder.encode(password));
         user.setUserNickname(nickname);
         user.setCellphone(cellphone);
         user.setImage(image);
         user.setAuthorities(authorities);
         this.userRepository.save(user);
 
+        return response;
+    }
+
+    public SimpleResponse<User> findUserByAccount(String account) {
+        SimpleResponse<User> response = new SimpleResponse<>();
+        User user = this.userRepository.findByUsername(account);
+        response.setItem(user);
         return response;
     }
 }

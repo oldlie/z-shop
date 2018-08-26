@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PageResponse<T> extends ListResponse<T> {
+public class BasePageResponse extends BaseResponse {
     private long total;
     private int pages;
 }

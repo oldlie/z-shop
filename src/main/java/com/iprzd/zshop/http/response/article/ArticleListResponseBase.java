@@ -1,11 +1,11 @@
 package com.iprzd.zshop.http.response.article;
 
 import com.iprzd.zshop.entity.article.Article;
-import com.iprzd.zshop.http.response.PageResponse;
+import com.iprzd.zshop.http.response.BasePageResponse;
 
 import java.util.List;
 
-public class ArticleListResponse extends PageResponse {
+public class ArticleListResponseBase extends BasePageResponse {
     private List<Article> list;
 
     public List<Article> getList() {

@@ -12,7 +12,7 @@ import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CommodityImageListResponse;
 import com.iprzd.zshop.http.response.CommodityImageResponse;
 import com.iprzd.zshop.http.response.CommodityInfoResponse;
-import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
+import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponseBase;
 import com.iprzd.zshop.repository.TagRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
 import com.iprzd.zshop.repository.commodity.CommodityImageRepository;
@@ -155,8 +155,8 @@ public class CommodityService {
         return StatusCode.successResponse(response);
     }
 
-    public CommodityListResponse findAll(ListRequest request) {
-        CommodityListResponse response = new CommodityListResponse();
+    public CommodityListResponseBase findAll(ListRequest request) {
+        CommodityListResponseBase response = new CommodityListResponseBase();
         Page<Commodity> page = this.commodityRepository.findAll(
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort())
         );

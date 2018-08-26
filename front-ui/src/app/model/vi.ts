@@ -1,10 +1,18 @@
 import { CommodityInfo } from './response';
 
-export interface LoginVI {
-    id?: number;
-    account?: string;
-    token?: string;
-    isLogin: boolean;
+export interface AuthorityVI {
+    id: number;
+    role: string;
+}
+
+export interface ArticleVI {
+    id: number;
+    title: string;
+    summary: string;
+    viewCount: number;
+    agreeCount: number;
+    commentCount: number;
+    image: string;
 }
 
 export interface ConfigVI {
@@ -26,12 +34,22 @@ export interface CommodityVI {
     publishAt?: string | Date;
 }
 
-export interface ArticleVI {
+export interface LoginVI {
+    id?: number;
+    account?: string;
+    token?: string;
+    isLogin: boolean;
+}
+
+export interface UserVI {
     id: number;
-    title: string;
-    summary: string;
-    viewCount: number;
-    agreeCount: number;
-    commentCount: number;
+    username: string;
+    password?: string;
+    userNickname: string;
+    cellphone: string;
+    cellphone2: string;
+    resume: string;
     image: string;
+    isInit: number;
+    authorities: Array<AuthorityVI>;
 }
