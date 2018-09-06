@@ -7,7 +7,8 @@ import {
   ArtilceResponse,
   CountResponse,
   CommodityInfoResponse,
-  TagPageResponse
+  TagPageResponse,
+  BaseResponse
 } from '../model/response';
 
 @Injectable()
@@ -64,4 +65,5 @@ export class HomeService {
     return this.coreService.get(url, { page: 0, size: 10, orderBy: 'id', order: 0 }).toPromise()
       .then(x => x as TagPageResponse);
   }
+
 }

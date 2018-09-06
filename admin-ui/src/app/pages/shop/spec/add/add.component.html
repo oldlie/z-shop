@@ -11,6 +11,15 @@
 
   <div class="form-group">
     <div class="col-sm-9 col-md-6">
+      <nz-radio-group [(ngModel)]="spec.types">
+        <label nz-radio nzValue="0">实体商品</label>
+        <label nz-radio nzValue="1">虚拟商品</label>
+      </nz-radio-group>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
       <input nz-input placeholder="品种" [(ngModel)]="spec.breed">
     </div>
   </div>

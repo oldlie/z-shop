@@ -22,19 +22,7 @@ public class SpecificationController {
 
     @PostMapping("/store")
     public BaseResponse store(@RequestBody SpecificationRequest request) {
-        Specification specification = new Specification();
-        specification.setId(request.getId());
-        specification.setTitle(request.getTitle());
-        specification.setCommodityId(request.getCommodityId());
-        specification.setBreed(request.getBreed());
-        specification.setOrigin(request.getOrigin());
-        specification.setFeature(request.getFeature());
-        specification.setSpec(request.getSpec());
-        specification.setStore(request.getStore());
-        specification.setProductDatetime(request.getProductDatetime());
-        specification.setPrice(request.getPrice());
-        specification.setInventory(request.getInventory());
-        return this.specificationService.store(specification);
+        return this.specificationService.store(request);
     }
 
     @PostMapping("/delete")

@@ -1,6 +1,7 @@
 package com.iprzd.zshop.controller.front;
 
 import com.iprzd.zshop.entity.ShoppingCart;
+import com.iprzd.zshop.entity.ShoppingCartItem;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ShoppingCartRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
@@ -32,7 +33,7 @@ public class FrontShoppingController {
     }
 
     @GetMapping("/cart")
-    public ListResponse<ShoppingCart> findAllShoppingCart(@RequestParam Long uid) {
+    public ListResponse<ShoppingCartItem> findAllShoppingCart(@RequestParam Long uid) {
         return this.shoppingService.findShoppingCartByUid(uid);
     }
 }

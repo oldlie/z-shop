@@ -34,7 +34,8 @@ export class AddComponent implements OnInit {
   }
 
   save() {
-    console.log(this.spec.title);
+    console.log('save', this.spec.types);
+
     if (this.spec.title === '') {
       this.message.create('warning', '请填写规格名称。');
       return;

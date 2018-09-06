@@ -4,13 +4,21 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginResponse } from '../model/login.response';
 import { SimpleResponse } from '../model/simple.response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoreService {
 
-  profileInfo: UserVI;
+  private profileInfo: UserVI;
+  get ProfileInfo() {
+    if (this.profileInfo === undefined) {
+      this.profileInfo = JSON.parse(window.localStorage.getItem('profile'));
+    }
+    return this.profileInfo;
+  }
+
   private loginInfo: LoginVI = {
     token: '',
     isLogin: false
@@ -35,7 +43,7 @@ export class CoreService {
     };
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private r: Router) { }
 
   get(url: string, params: any): Observable<Object> {
     return this.http.get(url, {
@@ -68,7 +76,9 @@ export class CoreService {
           this.loginInfo.account = username;
           this.loginInfo.token = response.token;
           this.loginInfo.isLogin = true;
+          const now = new Date();
           window.localStorage.setItem('loginInfo', JSON.stringify(this.loginInfo));
+          window.localStorage.setItem('ts', now.getTime().toString());
         }
         return response;
       });
