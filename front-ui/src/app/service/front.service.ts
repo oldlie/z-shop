@@ -22,6 +22,7 @@ export class FrontService {
 
     findMyShoppingCartItemList(): Promise<ListResponse<ShoppingCartItem>> {
         const url = `${this.cs.Config.apiURI}/front/shopping/cart`;
-        return this.cs.get(url, {uid: this.cs.LoginInfo.id}).toPromise().then(x => x as ListResponse<ShoppingCartItem>);
+        console.log('findMyShoppingCartItemList', this.cs.ProfileInfo.id);
+        return this.cs.get(url, {uid: this.cs.ProfileInfo.id}).toPromise().then(x => x as ListResponse<ShoppingCartItem>);
     }
 }
