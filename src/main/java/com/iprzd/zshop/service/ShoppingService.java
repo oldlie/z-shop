@@ -1,15 +1,15 @@
 package com.iprzd.zshop.service;
 
-import com.iprzd.zshop.entity.ShoppingCart;
-import com.iprzd.zshop.entity.ShoppingCartItem;
-import com.iprzd.zshop.entity.User;
+import com.iprzd.zshop.entity.*;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.http.request.ShoppingCartRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.ListResponse;
 import com.iprzd.zshop.http.response.SimpleResponse;
+import com.iprzd.zshop.repository.AddressRepository;
 import com.iprzd.zshop.repository.ShoppingCartRepository;
+import com.iprzd.zshop.repository.ShoppingOrderRepository;
 import com.iprzd.zshop.repository.UserRepository;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import org.springframework.stereotype.Service;
@@ -22,14 +22,20 @@ import java.util.Optional;
 @Service
 public class ShoppingService {
 
+    private AddressRepository addressRepository;
     private CommodityRepository commodityRepository;
     private ShoppingCartRepository shoppingCartRepository;
+    private ShoppingOrderRepository shoppingOrderRepository;
     private UserRepository userRepository;
 
-    public ShoppingService(CommodityRepository commodityRepository,
+    public ShoppingService(AddressRepository addressRepository,
+                           CommodityRepository commodityRepository,
+                           ShoppingOrderRepository shoppingOrderRepository,
                            ShoppingCartRepository shoppingCartRepository,
                            UserRepository userRepository) {
+        this.addressRepository = addressRepository;
         this.commodityRepository = commodityRepository;
+        this.shoppingOrderRepository = shoppingOrderRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.userRepository = userRepository;
     }
@@ -120,6 +126,56 @@ public class ShoppingService {
 
         }
         response.setList(result);
+        return response;
+    }
+
+    public SimpleResponse<ShoppingOrder> findShoppingOrderByUid(Long uid) {
+        SimpleResponse<ShoppingOrder> response = new SimpleResponse<>();
+        ShoppingOrder order = this.shoppingOrderRepository.findFirstByUserId(uid);
+        response.setItem(order);
+        return response;
+    }
+
+    public BaseResponse cancelShoppingOrder(Long id) {
+        BaseResponse response = new BaseResponse();
+        Optional<ShoppingOrder> optionalShoppingOrder = this.shoppingOrderRepository.findById(id);
+        if (optionalShoppingOrder.isPresent()) {
+            ShoppingOrder order = optionalShoppingOrder.get();
+            order.setStatus(2);
+            this.shoppingOrderRepository.save(order);
+        } else {
+            response.setStatus(1);
+            response.setMessage("订单不存在。");
+        }
+        return response;
+    }
+
+    public SimpleResponse<Address> findAddressByUid(Long uid) {
+        SimpleResponse<Address> response = new SimpleResponse<>();
+        Address address = this.addressRepository.findTopByUserIdAndIsDefault(uid, 1);
+        response.setItem(address);
+        return response;
+    }
+
+    public SimpleResponse<Long> storeAddress(Address address) {
+        SimpleResponse<Long> response = new SimpleResponse<>();
+        Optional<Address> optionalAddress = this.addressRepository.findById(address.getId());
+        Address entity;
+        if (optionalAddress.isPresent()) {
+            entity = address;
+        } else {
+            entity = new Address();
+        }
+        entity.setUserId(address.getUserId());
+        entity.setIsDefault(address.getIsDefault());
+        entity.setProvince(address.getProvince());
+        entity.setCity(address.getCity());
+        entity.setCounty(address.getCounty());
+        entity.setDetail(address.getDetail());
+        entity.setContactName(address.getContactName());
+        entity.setPhone(address.getPhone());
+        entity = this.addressRepository.save(entity);
+        response.setItem(entity.getId());
         return response;
     }
 }

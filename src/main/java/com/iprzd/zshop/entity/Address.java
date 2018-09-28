@@ -20,6 +20,7 @@ public class Address implements Serializable {
     @GeneratedValue
     private long id;
     private long userId;
+    private int isDefault;
     private String province;
     private String city;
     private String county;

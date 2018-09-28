@@ -24,6 +24,8 @@ public class ShoppingOrder implements Serializable {
     private int expressFee;
     private int reductionFee;
     private int actualPrice;
+    @Column(columnDefinition = "int default 0 comment '0:创建；1：结算；2：取消'")
+    private int status;
 
     @OneToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
