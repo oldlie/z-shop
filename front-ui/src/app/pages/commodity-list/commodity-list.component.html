@@ -11,7 +11,7 @@
     </div>
 </div>
 <br>
-<div nz-row>
+<div nz-row [nzGutter]="8">
     <div nz-col nzSpan="24">
         <span *ngFor="let tag of allTags" style="margin: 0 4px;line-height: 32px;">
             <nz-tag>
@@ -21,7 +21,7 @@
     </div>
 </div>
 <br>
-<div nz-row>
+<div nz-row [nzGutter]="8">
     <div nz-col [nzSpan]="6" *ngFor="let commodity of commodityList">
         <nz-card nzHoverable [nzCover]="coverTemplate" [nzActions]="[actionSetting]" (click)="gotoCommodityPage(commodity.id)">
             <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>

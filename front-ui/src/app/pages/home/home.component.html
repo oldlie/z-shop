@@ -30,7 +30,7 @@
   <div nz-col nzSpan="24">
     
     <nz-divider [nzText]="textNodity" nzOrientation="left">
-      <ng-template #textNodity>重要通知</ng-template>
+      <ng-template #textNodity>置顶文章</ng-template>
     </nz-divider>
 
     <!-- region nz-list -->
@@ -45,7 +45,7 @@
             <i class="anticon anticon-message" style="margin-right: 8px;"></i> 2</ng-template>
           <nz-list-item-meta [nzAvatar]="item.avatar" [nzTitle]="nzNotifyTitle" [nzDescription]="item.description">
             <ng-template #nzNotifyTitle>
-              <nz-tag [nzColor]="'#f50'">重要通知</nz-tag> {{item.publishAt}} <a (click)="gotoArticle(item)">{{item.title}}</a>
+              <nz-tag [nzColor]="'#f50'">置顶</nz-tag> {{item.publishAt}} <a (click)="gotoArticle(item)">{{item.title}}</a>
             </ng-template>
           </nz-list-item-meta>
           <ng-template #extraNotify>

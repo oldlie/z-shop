@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
@@ -24,6 +26,8 @@ public class ShoppingCart implements Serializable {
 
     private final static long serialVersionUID = 20180809234445L;
 
+    @Id
+    @GeneratedValue
     private long id;
     private long uid;
     private long commodityId;
