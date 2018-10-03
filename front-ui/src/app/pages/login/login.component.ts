@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit {
           this.msg.error('用户名或者密码不正确');
           console.log(x.message);
         }
+        return this.validateForm.value.userName;
+      }).then((userName) => {
+        this.coreService.initProfile(userName);
       });
   }
 }

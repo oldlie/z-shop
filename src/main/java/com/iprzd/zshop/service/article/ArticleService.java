@@ -11,7 +11,7 @@ import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.CountResponse;
-import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponseBase;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.request.admin.ArticleRequest;
 import com.iprzd.zshop.http.response.article.ArticleResponse;
@@ -111,8 +111,8 @@ public class ArticleService {
         return response;
     }
 
-    public ArticleListResponse findAll(ListRequest request) {
-        ArticleListResponse response = new ArticleListResponse();
+    public ArticleListResponseBase findAll(ListRequest request) {
+        ArticleListResponseBase response = new ArticleListResponseBase();
         Page<Article> page = this.articleRepository.findAll(
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort())
         );

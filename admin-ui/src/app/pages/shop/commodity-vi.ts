@@ -36,4 +36,5 @@ export interface CommoditySpecVI {
   productDatetime?: string;
   price: number;
   inventory: number;
+  types?: number;
 }

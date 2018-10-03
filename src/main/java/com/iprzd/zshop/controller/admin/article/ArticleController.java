@@ -1,7 +1,7 @@
 package com.iprzd.zshop.controller.admin.article;
 
 import com.iprzd.zshop.http.response.BaseResponse;
-import com.iprzd.zshop.http.response.article.ArticleListResponse;
+import com.iprzd.zshop.http.response.article.ArticleListResponseBase;
 import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.ArticleRequest;
@@ -35,8 +35,8 @@ public class ArticleController {
     }
 
     @GetMapping("/list")
-    public ArticleListResponse list(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
-            @RequestParam int order) {
+    public ArticleListResponseBase list(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
+                                        @RequestParam int order) {
         return this.articleService.findAll(new ListRequest(page, size, orderBy, order));
     }
 

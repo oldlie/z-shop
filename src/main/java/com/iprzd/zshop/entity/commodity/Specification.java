@@ -1,18 +1,20 @@
 package com.iprzd.zshop.entity.commodity;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "t_commodity_spec")
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Specification {
+public class Specification implements Serializable {
+
     @Id @GeneratedValue
     private long id;
     private String title;
@@ -25,93 +27,7 @@ public class Specification {
     private String productDatetime;
     private BigDecimal price;
     private int inventory;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public long getCommodityId() {
-        return commodityId;
-    }
-
-    public void setCommodityId(long commodityId) {
-        this.commodityId = commodityId;
-    }
-
-    public String getBreed() {
-        return breed;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public String getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public String getFeature() {
-        return feature;
-    }
-
-    public void setFeature(String feature) {
-        this.feature = feature;
-    }
-
-    public String getSpec() {
-        return spec;
-    }
-
-    public void setSpec(String spec) {
-        this.spec = spec;
-    }
-
-    public String getStore() {
-        return store;
-    }
-
-    public void setStore(String store) {
-        this.store = store;
-    }
-
-    public String getProductDatetime() {
-        return productDatetime;
-    }
-
-    public void setProductDatetime(String productDatetime) {
-        this.productDatetime = productDatetime;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
-    }
+    @Column(columnDefinition = "tinyint default 0 comment '0：实体商品；1：虚拟商品'")
+    private int types;
 
 }

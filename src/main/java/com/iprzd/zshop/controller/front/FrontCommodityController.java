@@ -2,7 +2,7 @@ package com.iprzd.zshop.controller.front;
 
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.response.CommodityInfoResponse;
-import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
+import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponseBase;
 import com.iprzd.zshop.service.commodity.CommodityService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +25,8 @@ public class FrontCommodityController {
     }
 
     @GetMapping("/list")
-    public CommodityListResponse list(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
-            @RequestParam int order) {
+    public CommodityListResponseBase list(@RequestParam int page, @RequestParam int size, @RequestParam String orderBy,
+                                          @RequestParam int order) {
         return this.commodityService.findAll(new ListRequest(page, size, orderBy, order));
     }
 

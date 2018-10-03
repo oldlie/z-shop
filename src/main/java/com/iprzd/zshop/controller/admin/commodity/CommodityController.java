@@ -6,7 +6,7 @@ import com.iprzd.zshop.http.request.admin.commodity.CommodityRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.CommodityImageListResponse;
 import com.iprzd.zshop.http.response.CommodityImageResponse;
-import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponse;
+import com.iprzd.zshop.http.response.admin.commodity.CommodityListResponseBase;
 import com.iprzd.zshop.service.commodity.CommodityService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +27,10 @@ public class CommodityController {
     }
 
     @GetMapping("/list")
-    public CommodityListResponse list(@RequestParam int page,
-                                      @RequestParam int size,
-                                      @RequestParam String orderBy,
-                                      @RequestParam int order) {
+    public CommodityListResponseBase list(@RequestParam int page,
+                                          @RequestParam int size,
+                                          @RequestParam String orderBy,
+                                          @RequestParam int order) {
         return this.commodityService.findAll(new ListRequest(page, size, orderBy, order));
     }
 

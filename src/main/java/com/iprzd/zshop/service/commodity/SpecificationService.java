@@ -2,7 +2,8 @@ package com.iprzd.zshop.service.commodity;
 
 import com.iprzd.zshop.http.request.ListRequest;
 import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
-import com.iprzd.zshop.http.response.admin.SpecPageResponse;
+import com.iprzd.zshop.http.request.admin.commodity.SpecificationRequest;
+import com.iprzd.zshop.http.response.admin.SpecBasePageResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.entity.commodity.Specification;
@@ -23,25 +24,35 @@ public class SpecificationService {
         this.repository = specificationRepository;
     }
 
-    public BaseResponse store(Specification specification) {
+    public BaseResponse store(SpecificationRequest request) {
         BaseResponse response = new BaseResponse();
-        Specification tag;
-        if (specification.getId() > 0) {
-            tag = this.repository.findById(specification.getId()).get();
+
+        Specification specification;
+        if (request.getId() > 0) {
+            Optional<Specification> optional = this.repository.findById(request.getId());
+            if (optional.isPresent()) {
+                specification = optional.get();
+            } else {
+                specification = new Specification();
+            }
         } else {
-            tag = new Specification();
+            specification = new Specification();
         }
-        tag.setTitle(specification.getTitle());
-        tag.setCommodityId(specification.getCommodityId());
-        tag.setBreed(specification.getBreed());
-        tag.setOrigin(specification.getOrigin());
-        tag.setFeature(specification.getFeature());
-        tag.setSpec(specification.getSpec());
-        tag.setStore(specification.getStore());
-        tag.setProductDatetime(specification.getProductDatetime());
-        tag.setPrice(specification.getPrice());
-        tag.setInventory(specification.getInventory());
-        this.repository.save(tag);
+
+        specification.setId(request.getId());
+        specification.setTitle(request.getTitle());
+        specification.setCommodityId(request.getCommodityId());
+        specification.setBreed(request.getBreed());
+        specification.setOrigin(request.getOrigin());
+        specification.setFeature(request.getFeature());
+        specification.setSpec(request.getSpec());
+        specification.setStore(request.getStore());
+        specification.setProductDatetime(request.getProductDatetime());
+        specification.setPrice(request.getPrice());
+        specification.setInventory(request.getInventory());
+        specification.setTypes(request.getTypes());
+
+        this.repository.save(specification);
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(StatusCode.SUCCESS));
         return response;
@@ -60,20 +71,20 @@ public class SpecificationService {
         return StatusCode.successResponse(response);
     }
 
-    public SpecPageResponse findAll(ListRequest request) {
+    public SpecBasePageResponse findAll(ListRequest request) {
         Page<Specification> page = this.repository.findAll(
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort()));
         return this.buildPageResponse(page);
     }
 
-    public SpecPageResponse findAllByTitle(SpecListByTitleRequest request) {
+    public SpecBasePageResponse findAllByTitle(SpecListByTitleRequest request) {
         Page<Specification> page = this.repository.findAllByTitle(request.getTitle(),
                 PageRequest.of(request.getPage(), request.getSize(), request.getSort()));
         return this.buildPageResponse(page);
     }
 
-    private SpecPageResponse buildPageResponse(@NotNull Page<Specification> page) {
-        SpecPageResponse response = new SpecPageResponse();
+    private SpecBasePageResponse buildPageResponse(@NotNull Page<Specification> page) {
+        SpecBasePageResponse response = new SpecBasePageResponse();
         response.setStatus(StatusCode.SUCCESS);
         response.setMessage(StatusCode.getMessage(0));
         response.setList(page.getContent());
