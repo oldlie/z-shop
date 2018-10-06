@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import javassist.SerialVersionUID;
+
 import java.io.Serializable;
 
 @Entity
@@ -16,6 +19,9 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class Address implements Serializable {
+
+    private final static long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     private long id;

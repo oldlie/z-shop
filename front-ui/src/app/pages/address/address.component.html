@@ -1,0 +1,46 @@
+
+<div ngIf="viewModel === 0">
+  <div nz-row >
+    <div nz-col nzSpan="24">
+      <nz-table #basicTable [nzData]="addressList">
+        <thead>
+          <tr>
+            <th>联系人</th>
+            <th>联系电话</th>
+            <th>地址</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{data.contactName}}</td>
+            <td>{{data.phone}}</td>
+            <td>{{data.province}} {{data.city}} {{data.county}} {{data.detail}}</td>
+            <td>
+              <a><i class="anticon anticon-edit"></i></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a><i class="anticon anticon-delete"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+
+<div ngIf="viewModel === 1">
+
+  <div nz-row class="ray-row">
+    <div nz-col nzSm="24" nzMd="16">
+      <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+        <input type="text" nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.title == ''"></i>
+        <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.title !== ''"></i>
+      </ng-template>
+    </div>
+  </div>
+
+</div>

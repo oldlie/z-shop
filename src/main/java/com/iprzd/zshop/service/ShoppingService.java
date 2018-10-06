@@ -178,4 +178,13 @@ public class ShoppingService {
         response.setItem(entity.getId());
         return response;
     }
+
+    public BaseResponse deleteAddress(Long id) {
+        BaseResponse response = new BaseResponse();
+        Optional<Address> optional = this.addressRepository.findById(id);
+        if (optional.isPresent()) {
+            this.addressRepository.delete(optional.get());
+        }
+        return response;
+    }
 }

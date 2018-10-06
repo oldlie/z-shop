@@ -21,6 +21,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { SettlementComponent } from './pages/settlement/settlement.component';
+import { AddressComponent } from './pages/address/address.component';
 
 registerLocaleData(zh);
 
@@ -37,7 +38,8 @@ registerLocaleData(zh);
     ProfileComponent,
     SignupComponent,
     ShoppingCartComponent,
-    SettlementComponent
+    SettlementComponent,
+    AddressComponent
   ],
   imports: [
     AppRoutingModule,
