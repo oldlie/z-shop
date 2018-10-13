@@ -16,3 +16,15 @@
       color: #111111;
       overflow: hidden;
   }
+
+  .container {
+    padding: 10px;
+}
+
+.logo {
+    color: #ffffff;
+}
+
+.ray-warning {
+    color: #eb9316;
+}
