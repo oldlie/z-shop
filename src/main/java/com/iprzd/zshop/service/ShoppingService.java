@@ -7,11 +7,9 @@ import com.iprzd.zshop.http.request.ShoppingCartRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.ListResponse;
 import com.iprzd.zshop.http.response.SimpleResponse;
-import com.iprzd.zshop.repository.AddressRepository;
-import com.iprzd.zshop.repository.ShoppingCartRepository;
-import com.iprzd.zshop.repository.ShoppingOrderRepository;
-import com.iprzd.zshop.repository.UserRepository;
+import com.iprzd.zshop.repository.*;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,17 +22,23 @@ public class ShoppingService {
 
     private AddressRepository addressRepository;
     private CommodityRepository commodityRepository;
+    private SettlementRepository settlementRepository;
     private ShoppingCartRepository shoppingCartRepository;
     private ShoppingOrderRepository shoppingOrderRepository;
     private UserRepository userRepository;
 
+    @Value("${zs.settlementLimit}")
+    private int settlementLimit;
+
     public ShoppingService(AddressRepository addressRepository,
                            CommodityRepository commodityRepository,
+                           SettlementRepository settlementRepository,
                            ShoppingOrderRepository shoppingOrderRepository,
                            ShoppingCartRepository shoppingCartRepository,
                            UserRepository userRepository) {
         this.addressRepository = addressRepository;
         this.commodityRepository = commodityRepository;
+        this.settlementRepository = settlementRepository;
         this.shoppingOrderRepository = shoppingOrderRepository;
         this.shoppingCartRepository = shoppingCartRepository;
         this.userRepository = userRepository;
@@ -184,6 +188,37 @@ public class ShoppingService {
         Optional<Address> optional = this.addressRepository.findById(id);
         if (optional.isPresent()) {
             this.addressRepository.delete(optional.get());
+        }
+        return response;
+    }
+
+    public SimpleResponse<Settlement> createOrder(Long uid, List<Long> shoppingCartItemIdList) {
+        SimpleResponse<Settlement> response = new SimpleResponse<>();
+        Settlement settlement = new Settlement();
+        settlement.setStartDate(new Date());
+        settlement.setLimitMinute(this.settlementLimit);
+        Address address = this.addressRepository.findTopByUserIdAndIsDefault(uid, 1);
+        settlement.setConsignee(address.getContactName());
+        settlement.setCellphone(address.getPhone());
+        settlement.setProvince(address.getProvince());
+        settlement.setCity(address.getCity());
+        settlement.setCounty(address.getCounty());
+        settlement.setAddress(address.getDetail());
+        List<ShoppingCart> list = this.shoppingCartRepository.findAllById(shoppingCartItemIdList);
+        settlement.setItems(list);
+        settlement = this.settlementRepository.save(settlement);
+        response.setItem(settlement);
+        return response;
+    }
+
+    public BaseResponse settlement(Long id) {
+        BaseResponse response = new BaseResponse();
+        Optional<Settlement> optional = this.settlementRepository.findById(id);
+        if (optional.isPresent()) {
+            Settlement settlement = optional.get();
+        } else {
+            response.setStatus(1);
+            response.setMessage("订单已取消");
         }
         return response;
     }
