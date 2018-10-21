@@ -1,0 +1,40 @@
+<div *ngIf="viewModel === 0">
+
+  <div style="padding:15px 10px;">
+    <a (click)="gotoCreateView()"><i nz-icon type="plus" theme="outline"></i> 添加地址</a>
+  </div>
+
+  <nz-table #basicTable [nzData]="addressList">
+    <thead>
+      <tr>
+        <th>联系人</th>
+        <th>联系电话</th>
+        <th>地址</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.contactName}} <nz-tag *ngIf="data.isDefault === 1" [nzColor]="'#f50'">默认</nz-tag>
+        </td>
+        <td>{{data.phone}}</td>
+        <td>{{data.province}} {{data.city}} {{data.county}} {{data.detail}}</td>
+        <td>
+          <a (click)="gotoEditView(data)"><i nz-icon type="edit" theme="outline"></i> 编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="delete(data)">
+              <a nz-popconfirm class="text-danger"><i class="anticon anticon-delete"></i></a>
+            </nz-popconfirm>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+<div *ngIf="viewModel === 1">
+
+  <div style="padding:15px 10px;">
+    <a (click)="gotoListView()"><i nz-icon type="rollback" theme="outline"></i> 返回</a>
+  </div>
+
+  <app-address-add [address]="currentAddress"></app-address-add>
+</div>

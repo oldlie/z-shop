@@ -154,10 +154,17 @@ public class ShoppingService {
         return response;
     }
 
-    public SimpleResponse<Address> findAddressByUid(Long uid) {
+    public SimpleResponse<Address> findDefaultAddressByUid(Long uid) {
         SimpleResponse<Address> response = new SimpleResponse<>();
         Address address = this.addressRepository.findTopByUserIdAndIsDefault(uid, 1);
         response.setItem(address);
+        return response;
+    }
+
+    public ListResponse<Address> findAddress(Long uid) {
+        ListResponse<Address> response = new ListResponse<>();
+        List<Address> addressList = this.addressRepository.findAllByUserIdOrderByIdDesc(uid);
+        response.setList(addressList);
         return response;
     }
 
@@ -170,6 +177,15 @@ public class ShoppingService {
         } else {
             entity = new Address();
         }
+
+        if (address.getIsDefault() == 1) {
+            Address defaultAddress = this.addressRepository.findTopByUserIdAndIsDefault(address.getUserId(), 1);
+            if (defaultAddress != null) {
+                defaultAddress.setIsDefault(0);
+                this.addressRepository.save(defaultAddress);
+            }
+        }
+
         entity.setUserId(address.getUserId());
         entity.setIsDefault(address.getIsDefault());
         entity.setProvince(address.getProvince());
@@ -187,12 +203,20 @@ public class ShoppingService {
         BaseResponse response = new BaseResponse();
         Optional<Address> optional = this.addressRepository.findById(id);
         if (optional.isPresent()) {
+            Address address = optional.get();
             this.addressRepository.delete(optional.get());
+            if (address.getIsDefault() == 1) {
+                Address defaultAddress = this.addressRepository.findTopByUserIdOrderByIdDesc(address.getUserId());
+                if (defaultAddress != null) {
+                    defaultAddress.setIsDefault(1);
+                    this.addressRepository.save(defaultAddress);
+                }
+            }
         }
         return response;
     }
 
-    public SimpleResponse<Settlement> createOrder(Long uid, List<Long> shoppingCartItemIdList) {
+    public SimpleResponse<Settlement> settlement(Long uid, List<Long> shoppingCartItemIdList) {
         SimpleResponse<Settlement> response = new SimpleResponse<>();
         Settlement settlement = new Settlement();
         settlement.setStartDate(new Date());
@@ -211,7 +235,7 @@ public class ShoppingService {
         return response;
     }
 
-    public BaseResponse settlement(Long id) {
+    public BaseResponse createOrder(Long id) {
         BaseResponse response = new BaseResponse();
         Optional<Settlement> optional = this.settlementRepository.findById(id);
         if (optional.isPresent()) {
