@@ -1,0 +1,79 @@
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="联系人" [(ngModel)]="address.contactName">
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.contactName === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.contactName !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="phoneSuffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="联系电话" [(ngModel)]="address.phone">
+    </nz-input-group>
+    <ng-template #phoneSuffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.phone === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.phone !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="8" nzMd="4">
+    <nz-input-group [nzSuffix]="provinceSuffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="省" [(ngModel)]="address.province">
+    </nz-input-group>
+    <ng-template #provinceSuffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.province === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.province !== ''"></i>
+    </ng-template>
+  </div>
+
+  <div nz-col nzSm="8" nzMd="4">
+    <nz-input-group [nzSuffix]="citySuffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="市" [(ngModel)]="address.city">
+    </nz-input-group>
+    <ng-template #citySuffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.city === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.city !== ''"></i>
+    </ng-template>
+  </div>
+
+  <div nz-col nzSm="8" nzMd="4">
+    <nz-input-group [nzSuffix]="countySuffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="县" [(ngModel)]="address.county">
+    </nz-input-group>
+    <ng-template #countySuffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.county === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.county !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="detailSuffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="详细地址" [(ngModel)]="address.detail">
+    </nz-input-group>
+    <ng-template #detailSuffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="address.detail === ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="address.detail !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <label nz-checkbox [(ngModel)]="address.isDefault">是否设置为默认地址</label>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <button nz-button nzType="primary" (click)="save()"><i nz-icon type="save" theme="outline"></i> 保存</button>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { BaseResponse } from '../model/response';
 import { ShoppingCartRequest, ShoppingCartItem } from '../model/shopping-cart';
 import { SimpleResponse } from '../model/simple.response';
 import { ListResponse } from '../model/list.response';
-import { AddressRequet } from '../model/address';
+import { AddressRequet, AddressResponse } from '../model/address';
 
 @Injectable()
 export class FrontService {
@@ -28,14 +28,19 @@ export class FrontService {
     }
 
     // region address
-    addAddress(request: AddressRequet): Promise<SimpleResponse<Number>> {
+    addAddress(request: AddressRequet): Promise<SimpleResponse<number>> {
         const url = `${this.cs.Config.apiURI}/front/shopping/address`;
-        return this.cs.post(url, request).toPromise().then(x => x as SimpleResponse<Number>);
+        return this.cs.post(url, request).toPromise().then(x => x as SimpleResponse<number>);
     }
 
-    delete(id: number) {
+    deleteAddress(id: number) {
         const url = `${this.cs.Config.apiURI}/front/shopping/address`;
-        return this.cs.delete(url, {id: id}).toPromise().then(x => x as SimpleResponse<Number>);
+        return this.cs.delete(url, {id: id}).toPromise().then(x => x as SimpleResponse<number>);
+    }
+
+    myAddressList(id: number): Promise<ListResponse<AddressResponse>> {
+        const url = `${this.cs.Config.apiURI}/front/shopping/addresses`;
+        return this.cs.get(url, {uid: id}).toPromise().then(x => x as ListResponse<AddressResponse>);
     }
     // endregion
 }

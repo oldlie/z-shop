@@ -59,7 +59,12 @@ public class FrontShoppingController {
 
     @GetMapping("/address")
     public SimpleResponse<Address> findTopByAddress(@RequestParam Long uid) {
-        return this.shoppingService.findAddressByUid(uid);
+        return this.shoppingService.findDefaultAddressByUid(uid);
+    }
+
+    @GetMapping("/addresses")
+    public ListResponse<Address> findAllAddresses(@RequestParam Long uid) {
+        return this.shoppingService.findAddress(uid);
     }
 
     @DeleteMapping("/address")
@@ -74,6 +79,6 @@ public class FrontShoppingController {
         for (int i = 0; i < ids.length; i++) {
             idList.add(Long.parseLong(ids[i]));
         }
-        return this.shoppingService.createOrder(uid, idList);
+        return this.shoppingService.settlement(uid, idList);
     }
 }

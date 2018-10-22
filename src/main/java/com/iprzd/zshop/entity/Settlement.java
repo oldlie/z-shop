@@ -23,6 +23,8 @@ public class Settlement implements Serializable {
     private long id;
     private Date startDate;
     private int limitMinute;
+    @Column(columnDefinition = "tinyint comment '0:没有默认地址；1:有默认地址'")
+    private int hasAddress;
     private String consignee;
     private String cellphone;
     private String province;
