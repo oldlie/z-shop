@@ -15,6 +15,8 @@ import java.util.Set;
 @ToString
 public class ShoppingOrder implements Serializable {
 
+    private static final long serialVersionUID = 1540187254407L;
+
     @Id
     @GeneratedValue
     private long id;

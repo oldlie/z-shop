@@ -14,6 +14,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class CommodityImage implements Serializable {
 
+    private static final long serialVersionUID = 1540188301152L;
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long commodityId;

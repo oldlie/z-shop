@@ -14,6 +14,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class ShoppingRecord implements Serializable {
 
+    private static final long serialVersionUID = 1540187254408L;
+
     @Id @GeneratedValue
     private long id;
     private long commodityId;

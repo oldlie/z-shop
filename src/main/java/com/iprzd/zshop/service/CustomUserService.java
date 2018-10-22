@@ -2,10 +2,9 @@ package com.iprzd.zshop.service;
 
 import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
-import com.iprzd.zshop.repository.AuthorityRepository;
+// import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,11 +23,13 @@ public class CustomUserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
     private AuthorityRepository authorityRepository;
     @Autowired
     public void setAuthorityRepository(AuthorityRepository repository) {
         this.authorityRepository = repository;
     }
+    */    
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -239,7 +239,8 @@ public class ShoppingService {
         BaseResponse response = new BaseResponse();
         Optional<Settlement> optional = this.settlementRepository.findById(id);
         if (optional.isPresent()) {
-            Settlement settlement = optional.get();
+            // TODO:
+            // Settlement settlement = optional.get();
         } else {
             response.setStatus(1);
             response.setMessage("订单已取消");
