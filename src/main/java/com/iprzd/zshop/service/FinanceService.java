@@ -4,14 +4,24 @@ import com.iprzd.zshop.entity.OrderCount;
 import com.iprzd.zshop.entity.PayCardEntity;
 import com.iprzd.zshop.entity.PayCardLogEntity;
 import com.iprzd.zshop.entity.User;
+import com.iprzd.zshop.http.request.PageableRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.http.response.PageResponse;
 import com.iprzd.zshop.http.response.SimpleResponse;
 import com.iprzd.zshop.repository.OrderCountRepository;
 import com.iprzd.zshop.repository.PayCardLogRepository;
 import com.iprzd.zshop.repository.PayCardRepository;
 import com.iprzd.zshop.repository.UserRepository;
+
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -31,6 +41,7 @@ public class FinanceService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public SimpleResponse<List<PayCardEntity>> createPayCards(Long uid, int count, String node, int denomination,
             int expiryMonth, int amount, String customer, String customerPhone) {
         SimpleResponse<List<PayCardEntity>> response = new SimpleResponse<>();
@@ -97,6 +108,7 @@ public class FinanceService {
         return response;
     }
 
+    @Transactional
     public BaseResponse editPayCard(Long uid, Long id, String note, int expiryMonth, int amount, String customer,
             String customerPhone) {
         BaseResponse response = new BaseResponse();
@@ -117,10 +129,15 @@ public class FinanceService {
         }
 
         PayCardLogEntity logEntity = new PayCardLogEntity();
+        StringBuilder operationBuilder = new StringBuilder();
+        operationBuilder.append("Edit:").append(id).append(",nt:").append(note).append(",em:,").append(expiryMonth)
+                .append(",am").append(amount).append(",cu").append(customer).append(",cp").append(customerPhone);
+        logEntity.setOperation(operationBuilder.toString());
 
         return response;
     }
 
+    @Transactional
     public BaseResponse invalidPayCard(Long id) {
         BaseResponse response = new BaseResponse();
         Optional<PayCardEntity> optional = this.payCardRepository.findById(id);
@@ -137,6 +154,81 @@ public class FinanceService {
         }
         payCardEntity.setIsValid(0);
         this.payCardRepository.save(payCardEntity);
+        return response;
+    }
+
+    @Transactional
+    public BaseResponse usePayCard(Long uid, String serialNumber, String verifyCode) {
+        BaseResponse response = new BaseResponse();
+        Optional<User> actualUserOpt = this.userRepository.findById(uid);
+        if (!actualUserOpt.isPresent()) {
+            response.setStatus(1);
+            response.setMessage("use pay card: user does not exist.");
+            return response;
+        }
+        User user = actualUserOpt.get();
+
+        PayCardEntity query = new PayCardEntity();
+        query.setNumber(serialNumber);
+        query.setVerifyCode(verifyCode);
+        Example<PayCardEntity> example = Example.of(query);
+
+        List<PayCardEntity> optional = this.payCardRepository.findAll(example);
+        if (optional.size() <= 0) {
+            response.setStatus(1);
+            response.setMessage("use pay card: card does not exist.");
+            return response;
+        } else if (optional.size() > 1) {
+            response.setStatus(1);
+            response.setMessage("use pay card: card duplication.");
+            return response;
+        }
+        Calendar calendar = Calendar.getInstance();
+        PayCardEntity entity = optional.get(0);
+        entity.setIsUsed(1);
+        entity.setUserId(user.getId());
+        entity.setUser(user.getUserNickname());
+        entity.setUseDate(calendar.getTime());
+
+        long money = user.getMoney();
+        long denomination = entity.getDenomination();
+        if (denomination <= 0) {
+            response.setStatus(1);
+            response.setMessage("use pay card: denomination is negative.");
+            return response;
+        }
+
+        user.setMoney(money + denomination);
+        this.userRepository.save(user);
+
+        PayCardLogEntity log = new PayCardLogEntity();
+        StringBuilder sb = new StringBuilder();
+        sb.append("used:").append(uid);
+        log.setOperation("use");
+
+        return response;
+    }
+
+    public PageResponse<PayCardEntity> myPayCards(Long uid, int page, int size, String orderBy, String order) {
+        PayCardEntity entity = new PayCardEntity();
+        entity.setUserId(uid);
+        PageableRequest<PayCardEntity> request = new PageableRequest<>(entity, page, size, orderBy, order);
+        return this.payCards(request);
+    }
+
+    public PageResponse<PayCardEntity> payCards(PageableRequest<PayCardEntity> request) {
+        PageResponse<PayCardEntity> response = new PageResponse<>();
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+            .withMatcher("account", match -> match.contains())
+            .withMatcher("note", match -> match.contains())
+            .withMatcher("customer", match -> match.contains())
+            .withMatcher("customerPhone", match -> match.contains());
+
+        Example<PayCardEntity> example = Example.of(request.getEntity(), matcher);
+        Page<PayCardEntity> payCardPage = this.payCardRepository.findAll(example, request.pageable());
+        response.setList(payCardPage.getContent());
+        response.setTotal(payCardPage.getTotalElements());
         return response;
     }
 }

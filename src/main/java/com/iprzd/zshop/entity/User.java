@@ -26,6 +26,9 @@ public class User {
     @Getter @Setter
     private String image;
     @Getter @Setter
+    @Column(columnDefinition = "bigint comment '1厘'")
+    private long money;
+    @Getter @Setter
     @Column(columnDefinition = "tinyint default 0")
     private Integer isInit;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

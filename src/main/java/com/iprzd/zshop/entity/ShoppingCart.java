@@ -32,6 +32,6 @@ public class ShoppingCart implements Serializable {
     private long commodityId;
     private long specId;
     private int count;
-    private int price;
+    private long price;
     private Date createAt;
 }

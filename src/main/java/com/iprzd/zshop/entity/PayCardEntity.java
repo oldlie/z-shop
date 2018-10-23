@@ -31,15 +31,15 @@ public class PayCardEntity implements Serializable {
     private String number;
     private String verifyCode;
     @Column(columnDefinition = "bigint comment '面额厘作为基准单位'")
-    private int denomination;
+    private long denomination;
     @Column(columnDefinition = "bigint comment '实际金额厘作为基准单位'")
-    private int amount;
+    private long amount;
     private int isSoldOut;
     @Column(columnDefinition = "varchar(255) comment '购卡人'")
     private String customer;
     private String customerPhone;
     private int isUsed;
     private String user;
-    private String userId;
+    private long userId;
     private Date useDate;
 }
