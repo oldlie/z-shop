@@ -5,6 +5,7 @@ import com.iprzd.zshop.entity.PayCardEntity;
 import com.iprzd.zshop.entity.PayCardLogEntity;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.http.request.PageableRequest;
+import com.iprzd.zshop.http.request.PayCardRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.PageResponse;
 import com.iprzd.zshop.http.response.SimpleResponse;
@@ -16,10 +17,7 @@ import com.iprzd.zshop.repository.UserRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +40,7 @@ public class FinanceService {
     }
 
     @Transactional
-    public SimpleResponse<List<PayCardEntity>> createPayCards(Long uid, int count, String node, int denomination,
-            int expiryMonth, int amount, String customer, String customerPhone) {
+    public SimpleResponse<List<PayCardEntity>> createPayCards(PayCardRequest request) {
         SimpleResponse<List<PayCardEntity>> response = new SimpleResponse<>();
         List<OrderCount> orderCounts = this.orderCountRepository.findAll(Sort.by(Sort.Order.desc("id")));
         Calendar calendar = Calendar.getInstance();
@@ -57,7 +54,7 @@ public class FinanceService {
             }
         }
 
-        Optional<User> optional = this.userRepository.findById(uid);
+        Optional<User> optional = this.userRepository.findById(request.getUid());
         if (!optional.isPresent()) {
             response.setStatus(1);
             response.setMessage("Create pay card: user is not exist.");
@@ -69,21 +66,21 @@ public class FinanceService {
         List<PayCardEntity> _list = new ArrayList<>();
         List<PayCardLogEntity> _logs = new ArrayList<>();
 
-        for (int i = 0; i < count; i++, _start++) {
+        for (int i = 0; i < request.getCount(); i++, _start++) {
             String _serial = String.valueOf(year) + String.valueOf(month) + String.format("%06d", _start);
             String uuid = UUID.randomUUID().toString().replaceAll("\\-", "");
             PayCardEntity payCardEntity = new PayCardEntity();
             payCardEntity.setAccountId(user.getId());
             payCardEntity.setAccount(user.getUsername());
-            payCardEntity.setNote(node);
+            payCardEntity.setNote(request.getNote());
             payCardEntity.setCreateDate(calendar.getTime());
-            payCardEntity.setExpiryMonth(expiryMonth);
+            payCardEntity.setExpiryMonth(request.getExprityMonth());
             payCardEntity.setNumber(_serial);
             payCardEntity.setVerifyCode(uuid.substring(0, 12));
-            payCardEntity.setDenomination(denomination);
-            payCardEntity.setAmount(amount);
-            payCardEntity.setCustomer(customer);
-            payCardEntity.setCustomerPhone(customerPhone);
+            payCardEntity.setDenomination(request.getDenomination());
+            payCardEntity.setAmount(request.getAmount());
+            payCardEntity.setCustomer(request.getCustomer());
+            payCardEntity.setCustomerPhone(request.getCustomerPhone());
             _list.add(payCardEntity);
 
             PayCardLogEntity logEntity = new PayCardLogEntity();
@@ -109,19 +106,18 @@ public class FinanceService {
     }
 
     @Transactional
-    public BaseResponse editPayCard(Long uid, Long id, String note, int expiryMonth, int amount, String customer,
-            String customerPhone) {
+    public BaseResponse editPayCard(PayCardRequest request) {
         BaseResponse response = new BaseResponse();
-        Optional<PayCardEntity> optional = this.payCardRepository.findById(id);
+        Optional<PayCardEntity> optional = this.payCardRepository.findById(request.getId());
         if (!optional.isPresent()) {
             response.setStatus(1);
             response.setMessage("Edit pay card: card does not exist.");
             return response;
         }
         PayCardEntity entity = optional.get();
-        entity.setNote(note);
+        entity.setNote(request.getNote());
 
-        Optional<User> optional2 = this.userRepository.findById(uid);
+        Optional<User> optional2 = this.userRepository.findById(request.getUid());
         if (!optional2.isPresent()) {
             response.setStatus(1);
             response.setMessage("Create pay card: user is not exist.");
@@ -129,10 +125,7 @@ public class FinanceService {
         }
 
         PayCardLogEntity logEntity = new PayCardLogEntity();
-        StringBuilder operationBuilder = new StringBuilder();
-        operationBuilder.append("Edit:").append(id).append(",nt:").append(note).append(",em:,").append(expiryMonth)
-                .append(",am").append(amount).append(",cu").append(customer).append(",cp").append(customerPhone);
-        logEntity.setOperation(operationBuilder.toString());
+        logEntity.setOperation(request.toString());
 
         return response;
     }

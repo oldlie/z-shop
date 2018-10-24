@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class HomePageService {
 
     private ArticleRepository articleRepository;
-    private CommodityImageRepository commodityImageRepository;
     private CommodityRepository commodityRepository;
     private HomeArticleRepository homeArticleRepository;
     private HomeCarouselRepository homeCarouselRepository;
@@ -39,7 +38,6 @@ public class HomePageService {
                            HomeCarouselRepository homeCarouselRepository,
                            HomeCommodityRepository homeCommodityRepository) {
         this.articleRepository = articleRepository;
-        this.commodityImageRepository = commodityImageRepository;
         this.commodityRepository = commodityRepository;
         this.homeArticleRepository = homeArticleRepository;
         this.homeCarouselRepository = homeCarouselRepository;
