@@ -4,6 +4,7 @@ import com.iprzd.zshop.entity.UploadFile;
 import com.iprzd.zshop.http.StatusCode;
 import com.iprzd.zshop.http.request.FileRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
+import com.iprzd.zshop.config.api.ApiVersion;
 import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.http.response.FileResponse;
@@ -50,6 +51,14 @@ public class IndexController {
     @GetMapping("/")
     public String index() {
         return "当前版本：v" + appVersion;
+    }
+
+
+    @GetMapping("/{version}/test")
+    @ApiVersion("zs@1.0.1")
+    public BaseResponse versionTest() {
+        BaseResponse response = new BaseResponse();
+        return response;
     }
 
     @GetMapping("/init")
