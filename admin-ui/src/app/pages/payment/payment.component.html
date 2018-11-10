@@ -1,0 +1,23 @@
+<nz-tabset>
+  <nz-tab nzTitle="充值卡">
+
+    <div nz-row>
+      <div nz-col nzSpan="24" style="text-align: right;">
+        <button nz-button nzType="primary" (click)="newPayCardsEvent"><i class="anticon anticon-plus"></i> New</button>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="viewModel === 0" class="ray-row">
+      <div nz-col nzSpan="24">
+        <app-pay-card-table></app-pay-card-table>
+      </div>
+    </div>
+
+    <div nz-row *ngIf="viewModel === 1" class="ray-row">
+      <div nz-col nzSpan="24">
+        <app-pay-card-add></app-pay-card-add>
+      </div>
+    </div>
+
+  </nz-tab>
+</nz-tabset>

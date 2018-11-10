@@ -1,0 +1,38 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+
+    <nz-table #table [nzShowPagination]="false" [nzData]="dataSet">
+      <thead>
+        <tr>
+          <th nzWidth="280px" nzLeft="0px">#ID</th>
+          <th>序列号</th>
+          <th>验证码</th>
+          <th>简要说明</th>
+          <th>面额/售价</th>
+          <th>已出售/使用</th>
+          <th>购买人</th>
+          <th>充值账户</th>
+          <th nzWidth="90px" nzRight="0px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of table.data">
+          <td>{{item.number}}</td>
+          <td>{{item.verifyCode}}</td>
+          <td>{{item.note}}</td>
+          <td>{{item.denomination}}/{{item.amount}}</td>
+          <td>{{item.isSoldOut}}/{{item.isUsed}}</td>
+          <td>{{item.customer}}</td>
+          <td>{{item.user}}</td>
+          <td>
+            <a (click)="edit(item)"><i class="anticon anticon-edit"></i></a>
+            <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="delete(item)">
+              <a nz-popconfirm class="text-danger"><i class="anticon anticon-delete"></i></a>
+            </nz-popconfirm>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>

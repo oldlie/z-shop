@@ -1,5 +1,6 @@
 package com.iprzd.zshop.entity.commodity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.iprzd.zshop.entity.Tag;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,7 +42,8 @@ public class Commodity {
     private Date createAt;
     private Date updateAt;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinTable(name = "t_commodity_tag",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))

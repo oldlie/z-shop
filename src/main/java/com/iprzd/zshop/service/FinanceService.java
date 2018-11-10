@@ -40,7 +40,7 @@ public class FinanceService {
     }
 
     @Transactional
-    public SimpleResponse<List<PayCardEntity>> createPayCards(PayCardRequest request) {
+    public SimpleResponse<List<PayCardEntity>> createPayCards(Long uid, PayCardRequest request) {
         SimpleResponse<List<PayCardEntity>> response = new SimpleResponse<>();
         List<OrderCount> orderCounts = this.orderCountRepository.findAll(Sort.by(Sort.Order.desc("id")));
         Calendar calendar = Calendar.getInstance();
@@ -54,7 +54,7 @@ public class FinanceService {
             }
         }
 
-        Optional<User> optional = this.userRepository.findById(request.getUid());
+        Optional<User> optional = this.userRepository.findById(uid);
         if (!optional.isPresent()) {
             response.setStatus(1);
             response.setMessage("Create pay card: user is not exist.");
@@ -74,7 +74,7 @@ public class FinanceService {
             payCardEntity.setAccount(user.getUsername());
             payCardEntity.setNote(request.getNote());
             payCardEntity.setCreateDate(calendar.getTime());
-            payCardEntity.setExpiryMonth(request.getExprityMonth());
+            payCardEntity.setExpiryMonth(request.getExpiryMonth());
             payCardEntity.setNumber(_serial);
             payCardEntity.setVerifyCode(uuid.substring(0, 12));
             payCardEntity.setDenomination(request.getDenomination());
@@ -106,7 +106,7 @@ public class FinanceService {
     }
 
     @Transactional
-    public BaseResponse editPayCard(PayCardRequest request) {
+    public BaseResponse editPayCard(Long uid, PayCardRequest request) {
         BaseResponse response = new BaseResponse();
         Optional<PayCardEntity> optional = this.payCardRepository.findById(request.getId());
         if (!optional.isPresent()) {
@@ -117,7 +117,7 @@ public class FinanceService {
         PayCardEntity entity = optional.get();
         entity.setNote(request.getNote());
 
-        Optional<User> optional2 = this.userRepository.findById(request.getUid());
+        Optional<User> optional2 = this.userRepository.findById(uid);
         if (!optional2.isPresent()) {
             response.setStatus(1);
             response.setMessage("Create pay card: user is not exist.");

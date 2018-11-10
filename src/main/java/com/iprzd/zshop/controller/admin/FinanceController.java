@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller("/admin/finance")
 @RestController
 public class FinanceController {
@@ -30,7 +33,7 @@ public class FinanceController {
         this.financeService = financeService;
     }
 
-    @GetMapping("/paycards")
+    @GetMapping("/pay-cards")
     public PageResponse<PayCardEntity> listPayCards(@RequestParam int page, @RequestParam int size,
             @RequestParam String orderBy, @RequestParam String order) {
         PayCardEntity entity = new PayCardEntity();
@@ -38,13 +41,22 @@ public class FinanceController {
         return this.financeService.payCards(request);
     }
 
-    @PostMapping("/paycards")
-    public SimpleResponse<List<PayCardEntity>> createPayCards(@RequestBody PayCardRequest request) {
-        return this.financeService.createPayCards(request);
+    @PostMapping("/pay-cards")
+    public SimpleResponse<List<PayCardEntity>> createPayCards(@RequestBody PayCardRequest request,
+                                                              HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        String userName = session.getAttribute("user").toString();
+        Object userId = session.getAttribute("userId");
+        long uid = Long.parseLong(userId.toString());
+        return this.financeService.createPayCards(uid, request);
     }
 
-    @PutMapping("/paycard")
-    public BaseResponse editPayCard(@RequestBody PayCardRequest request) {
-        return this.financeService.editPayCard(request);
+    @PutMapping("/pay-card")
+    public BaseResponse editPayCard(@RequestBody PayCardRequest request,
+                                    HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        Object userId = session.getAttribute("userId");
+        long uid = Long.parseLong(userId.toString());
+        return this.financeService.editPayCard(uid, request);
     }
 }

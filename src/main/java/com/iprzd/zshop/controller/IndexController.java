@@ -9,6 +9,7 @@ import com.iprzd.zshop.entity.Authority;
 import com.iprzd.zshop.entity.User;
 import com.iprzd.zshop.http.response.FileResponse;
 import com.iprzd.zshop.http.response.ImageResponse;
+import com.iprzd.zshop.http.response.SimpleResponse;
 import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
 import com.iprzd.zshop.repository.UserRepository;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -256,4 +259,5 @@ public class IndexController {
         }
         return response;
     }
+
 }

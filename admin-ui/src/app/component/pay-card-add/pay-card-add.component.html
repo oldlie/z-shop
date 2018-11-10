@@ -1,0 +1,64 @@
+<form nz-form>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">数量：</nz-form-label>
+        <nz-form-control [nzValidateStatus]="countError" [nzSpan]="12">
+            <nz-input-number [(ngModel)]="count" [nzMin]="1" [nzMax]="9999" [nzStep]="1"></nz-input-number>
+            <nz-form-explain>批量</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">简要说明：</nz-form-label>
+        <nz-form-control [nzValidateStatus]="summaryError" [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="summary">
+            <nz-form-explain>创建充值卡事由</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">有效期</nz-form-label>
+        <nz-form-control [nzValidateStatus]="expiryError" [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="expiry">
+            <nz-form-explain>填写有效月数，例：24月</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">面值：</nz-form-label>
+        <nz-form-control [nzValidateStatus]="denominationError" [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="denomination">
+            <nz-form-explain>面值，例如：￥100.00</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">售价：</nz-form-label>
+        <nz-form-control [nzValidateStatus]="amountError" [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="amount">
+            <nz-form-explain>售价，例如：￥100.00</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">客户：</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="customer">
+            <nz-form-explain>将要购买本批次卡片的客户，例：李三</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="5">客户手机号：</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+            <input type="text" nz-input placeholder="标题" [(ngModel)]="customer">
+            <nz-form-explain>将要购买本批次卡片的客户手机号，例：13112345678</nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-control [nzSpan]="12" [nzOffset]="5">
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+

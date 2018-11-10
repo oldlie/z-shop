@@ -12,6 +12,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
@@ -52,6 +53,11 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
             if (username != null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("user", username);
+                session.setAttribute("userId", session.getId());
+
                 return new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                         null,
                         userDetails.getAuthorities());

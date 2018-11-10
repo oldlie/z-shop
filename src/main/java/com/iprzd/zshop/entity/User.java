@@ -26,12 +26,12 @@ public class User {
     @Getter @Setter
     private String image;
     @Getter @Setter
-    @Column(columnDefinition = "bigint comment '1厘'")
+    @Column(columnDefinition = "bigint default 0 comment '1厘'") // 厘 分 角 元
     private long money;
     @Getter @Setter
     @Column(columnDefinition = "tinyint default 0")
     private Integer isInit;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "t_user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
