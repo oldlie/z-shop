@@ -13,10 +13,10 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class PayCardEntity implements Serializable {
+public class PayCard implements Serializable {
     private static final long serialVersionUID = 1540124491325L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(columnDefinition = "tinyint comment '当前卡是否有效'")
     private int isValid;

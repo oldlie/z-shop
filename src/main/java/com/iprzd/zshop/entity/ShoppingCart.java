@@ -3,10 +3,7 @@ package com.iprzd.zshop.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,7 +23,7 @@ public class ShoppingCart implements Serializable {
     private final static long serialVersionUID = 20180809234445L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long uid;
     private long commodityId;

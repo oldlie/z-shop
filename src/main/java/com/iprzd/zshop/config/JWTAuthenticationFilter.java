@@ -55,8 +55,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
                 HttpSession session = request.getSession();
-                session.setAttribute("user", username);
-                session.setAttribute("userId", session.getId());
+                session.setAttribute("username", username);
 
                 return new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                         null,

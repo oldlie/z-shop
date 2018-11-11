@@ -42,11 +42,25 @@ export class CoreService {
     });
   }
 
+  put(url: string, params: any): Observable<Object> {
+    return this.http.put(url, {
+      header: this.header,
+      params: params
+    });
+  }
+
+  delete(url: string, params: any): Observable<Object> {
+    return this.http.delete(url, {
+      headers: this.header,
+      params: params
+    });
+  }
+
   post(url: string, body: any):  Observable<Object> {
     return this.http.post(url, body, {headers: this.Header});
   }
 
-  fomartMoney(origin: number): String {
+  fomartMoney(origin: number): string {
     const yuan = window['parseInt'](origin / 1000);
     let yu = origin % 1000;
     const jiao = window['parseInt'](yu / 100);

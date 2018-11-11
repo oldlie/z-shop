@@ -21,5 +21,5 @@ public class PayCardRequest implements Serializable {
     private long amount;
     private String customer;
     private String customerPhone;
-
+    private int isSold;
 }

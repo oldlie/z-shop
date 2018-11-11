@@ -6,10 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "t_authority")
@@ -18,8 +16,11 @@ import javax.persistence.Table;
 @EqualsAndHashCode
 @Getter
 @Setter
-public class Authority {
-    @Id @GeneratedValue
+public class Authority implements Serializable {
+
+    private final static long serialVersionUID = 1541846733776L;
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String role;
 }

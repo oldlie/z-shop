@@ -18,7 +18,7 @@ public class ShoppingOrder implements Serializable {
     private static final long serialVersionUID = 1540187254407L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
     private long deliveryInfoId;

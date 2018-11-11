@@ -19,7 +19,7 @@ public class Settlement implements Serializable {
 
     private final static long serialVersionUID = 1539866193061L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date startDate;
     private int limitMinute;

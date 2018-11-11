@@ -18,7 +18,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
   }
 
-  newPayCardsEvent() {
-    this.viewModel = 1;
+  changeViewModel(vm: number) {
+    this.viewModel = vm;
   }
 }

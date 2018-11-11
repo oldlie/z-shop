@@ -23,10 +23,10 @@ export interface PayCard {
 export interface PayCardCreateModel {
     id?: number;
     count: number;
-    note: String;
+    note: string;
     denomination: number;
     expiryMonth: number;
     amount: number;
-    customer: String;
-    customerPhone: String;
+    customer: string;
+    customerPhone: string;
 }
