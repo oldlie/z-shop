@@ -15,6 +15,7 @@ import { ArticleMenuComponent } from '../pages/article/menu/menu.component';
 import { CarouselComponent } from '../pages/home/carousel/carousel.component';
 import { CommodityComponent as HomeCommodityComponent } from '../pages/home/commodity/commodity.component';
 import { HomeArticleComponent } from '../pages/home/home-article/home-article.component';
+import { PaymentComponent } from '../pages/payment/payment.component';
 
 const appRoutes = [
   {path: 'login', component: LoginComponent},
@@ -30,6 +31,7 @@ const appRoutes = [
   {path: 'commodity/spec', component: SpecComponent},
   {path: 'commodity/edit', component: AddCommodityComponent},
   {path: 'navigation/:t', component: NavigationComponent},
+  {path: 'payment', component: PaymentComponent},
   {path: 'tag', component: TagComponent},
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   {path: '**', component: PageNotFoundComponent}

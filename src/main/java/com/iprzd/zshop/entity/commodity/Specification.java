@@ -15,7 +15,9 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 public class Specification implements Serializable {
 
-    @Id @GeneratedValue
+    private static final long serialVersionUID = 1540188301154L;
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private long commodityId;

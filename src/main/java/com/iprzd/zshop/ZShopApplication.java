@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -23,6 +24,7 @@ import javax.servlet.MultipartConfigElement;
  */
 
 @SpringBootApplication
+@EnableTransactionManagement
 public class ZShopApplication {
 
     public static void main(String[] args) {

@@ -16,6 +16,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class HomeCommodity implements Serializable {
+
+    private static final long serialVersionUID = 1540188082848L;
+
     @Id @GeneratedValue
     private long id;
     private long commodityId;

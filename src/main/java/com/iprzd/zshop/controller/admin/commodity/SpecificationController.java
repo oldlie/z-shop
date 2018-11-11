@@ -6,7 +6,6 @@ import com.iprzd.zshop.http.request.admin.commodity.SpecListByTitleRequest;
 import com.iprzd.zshop.http.request.admin.commodity.SpecificationRequest;
 import com.iprzd.zshop.http.response.admin.SpecBasePageResponse;
 import com.iprzd.zshop.http.response.BaseResponse;
-import com.iprzd.zshop.entity.commodity.Specification;
 import com.iprzd.zshop.service.commodity.SpecificationService;
 import org.springframework.web.bind.annotation.*;
 

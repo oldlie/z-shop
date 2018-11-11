@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @ToString
 public class ShoppingCartItem implements Serializable {
+
+    private static final long serialVersionUID = 1540187279589L;
+
     private long shoppingCartId;
     private long uid;
     private String username;

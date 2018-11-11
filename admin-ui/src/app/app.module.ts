@@ -34,6 +34,9 @@ import { CommodityComponent as HomeCommodityComponent } from './pages/home/commo
 import { ColorSquareDirective } from './directive/color-square.directive';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { HomeArticleComponent } from './pages/home/home-article/home-article.component';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { PayCardAddComponent } from './component/pay-card-add/pay-card-add.component';
+import { PayCardTableComponent } from './component/pay-card-table/pay-card-table.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,10 @@ import { HomeArticleComponent } from './pages/home/home-article/home-article.com
     CarouselComponent,
     HomeCommodityComponent,
     ColorSquareDirective,
-    HomeArticleComponent
+    HomeArticleComponent,
+    PaymentComponent,
+    PayCardAddComponent,
+    PayCardTableComponent
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,7 @@ package com.iprzd.zshop.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import javassist.SerialVersionUID;
+import javax.persistence.*;
 
 import java.io.Serializable;
 
@@ -20,10 +15,10 @@ import java.io.Serializable;
 @ToString
 public class Address implements Serializable {
 
-    private final static long serialVersionUID = 1L;
+    private final static long serialVersionUID = 1540188041777L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
     private int isDefault;
