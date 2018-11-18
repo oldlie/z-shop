@@ -3,6 +3,7 @@ package com.iprzd.zshop.controller.admin;
 import java.util.List;
 
 import com.iprzd.zshop.entity.PayCard;
+import com.iprzd.zshop.http.request.IdRequest;
 import com.iprzd.zshop.http.request.PageableRequest;
 import com.iprzd.zshop.http.request.PayCardRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
@@ -61,5 +62,10 @@ public class FinanceController {
             response.setMessage(e.getMessage());
             return response;
         }
+    }
+
+    @DeleteMapping("/pay-card")
+    public BaseResponse invalidPayCard(@RequestParam long id) {
+        return this.financeService.invalidPayCard(id);
     }
 }

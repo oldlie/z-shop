@@ -31,11 +31,13 @@ public class Settlement implements Serializable {
     private String city;
     private String county;
     private String address;
+
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "t_settlement_cart",
             joinColumns = @JoinColumn(name = "settlement_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id"))
     private List<ShoppingCart> items;
+
     private BigDecimal totalPrice;
 
 }

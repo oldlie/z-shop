@@ -37,6 +37,7 @@ import { HomeArticleComponent } from './pages/home/home-article/home-article.com
 import { PaymentComponent } from './pages/payment/payment.component';
 import { PayCardAddComponent } from './component/pay-card-add/pay-card-add.component';
 import { PayCardTableComponent } from './component/pay-card-table/pay-card-table.component';
+import { PayCardSoldComponent } from './component/pay-card/pay-card-sold/pay-card-sold.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { PayCardTableComponent } from './component/pay-card-table/pay-card-table
     HomeArticleComponent,
     PaymentComponent,
     PayCardAddComponent,
-    PayCardTableComponent
+    PayCardTableComponent,
+    PayCardSoldComponent
   ],
   imports: [
     BrowserModule,

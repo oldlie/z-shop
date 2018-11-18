@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PayCard } from '../../response/pay-card';
 
 @Component({
   selector: 'app-payment',
