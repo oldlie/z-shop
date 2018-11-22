@@ -22,6 +22,8 @@ public class ShoppingRecord implements Serializable {
     private String commodityTitle;
     private String commodityImage;
     private String commoditySummary;
+    private long specId;
+    private String specification;
     private long actualPrice;
     private int commodityCount;
     @Column(columnDefinition = "tinyint comment '0:初始状态；1：未支付状态；2：待收货状态；3：取消状态；4：完成状态；5：售后状态；6：取消并退款'")
