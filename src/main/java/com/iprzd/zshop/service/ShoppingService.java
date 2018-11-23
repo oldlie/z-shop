@@ -3,21 +3,22 @@ package com.iprzd.zshop.service;
 import com.iprzd.zshop.entity.*;
 import com.iprzd.zshop.entity.commodity.Commodity;
 import com.iprzd.zshop.entity.commodity.Specification;
+import com.iprzd.zshop.http.request.PageableRequest;
 import com.iprzd.zshop.http.request.ShoppingCartRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.ListResponse;
+import com.iprzd.zshop.http.response.PageResponse;
 import com.iprzd.zshop.http.response.SimpleResponse;
 import com.iprzd.zshop.model.SettlementModel;
 import com.iprzd.zshop.repository.*;
 import com.iprzd.zshop.repository.commodity.CommodityRepository;
 import com.iprzd.zshop.repository.commodity.SpecificationRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -26,10 +27,11 @@ public class ShoppingService {
 
     private AddressRepository addressRepository;
     private CommodityRepository commodityRepository;
-    private SettlementRepository settlementRepository;
-    private SettlementCartMapRepository settlementCartMapRepository;
+    private PayCardRepository payCardRepository;
+    private PayCardLogRepository payCardLogRepository;
     private ShoppingCartRepository shoppingCartRepository;
     private ShoppingOrderRepository shoppingOrderRepository;
+    private ShoppingRecordRepository shoppingRecordRepository;
     private SpecificationRepository specificationRepository;
     private UserRepository userRepository;
 
@@ -37,16 +39,18 @@ public class ShoppingService {
     private int settlementLimit;
 
     public ShoppingService(AddressRepository addressRepository, CommodityRepository commodityRepository,
-            SettlementRepository settlementRepository, SettlementCartMapRepository settlementCartMapRepository,
+                           PayCardRepository payCardRepository, PayCardLogRepository payCardLogRepository,
                            ShoppingOrderRepository shoppingOrderRepository,
-            ShoppingCartRepository shoppingCartRepository, SpecificationRepository specificationRepository,
+            ShoppingCartRepository shoppingCartRepository, ShoppingRecordRepository shoppingRecordRepository,
+                           SpecificationRepository specificationRepository,
                            UserRepository userRepository) {
         this.addressRepository = addressRepository;
         this.commodityRepository = commodityRepository;
-        this.settlementRepository = settlementRepository;
-        this.settlementCartMapRepository = settlementCartMapRepository;
+        this.payCardRepository = payCardRepository;
+        this.payCardLogRepository = payCardLogRepository;
         this.shoppingOrderRepository = shoppingOrderRepository;
         this.shoppingCartRepository = shoppingCartRepository;
+        this.shoppingRecordRepository = shoppingRecordRepository;
         this.specificationRepository = specificationRepository;
         this.userRepository = userRepository;
     }
@@ -64,18 +68,13 @@ public class ShoppingService {
         }
         if (request.getId() > 0) {
             Optional<ShoppingCart> optionalShoppingCart = this.shoppingCartRepository.findById(request.getId());
-            if (optionalShoppingCart.isPresent()) {
-                shoppingCart = optionalShoppingCart.get();
-            } else {
-                shoppingCart = new ShoppingCart();
-            }
+            shoppingCart = optionalShoppingCart.isPresent() ? optionalShoppingCart.get() : new ShoppingCart();
         } else {
             shoppingCart = new ShoppingCart();
         }
         shoppingCart.setUid(request.getUid());
         shoppingCart.setCommodityId(request.getCommodityId());
         shoppingCart.setSpecId(request.getSpecId());
-        shoppingCart.setSpecification(request.getSpecification());
         shoppingCart.setCount(request.getCount());
         shoppingCart.setPrice(request.getPrice());
         shoppingCart.setCreateAt(new Date());
@@ -221,8 +220,15 @@ public class ShoppingService {
         return response;
     }
 
-    public SimpleResponse<SettlementModel> createOrder(String username, List<Long> shoppingCartIdList) {
-        SimpleResponse<SettlementModel> response = new SimpleResponse<>();
+    /**
+     * 创建订单
+     * @param username
+     * @param shoppingCartIdList
+     * @return
+     */
+    @Transactional
+    public SimpleResponse<ShoppingOrder> createOrder(String username, List<Long> shoppingCartIdList) {
+        SimpleResponse<ShoppingOrder> response = new SimpleResponse<>();
 
         User user = this.userRepository.findByUsername(username);
         Long uid = user.getId();
@@ -230,6 +236,7 @@ public class ShoppingService {
         Address address = this.addressRepository.findTopByUserIdAndIsDefault(uid, 1);
 
         ShoppingOrder shoppingOrder = new ShoppingOrder();
+        shoppingOrder.setIsValid(1);
         shoppingOrder.setUserId(uid);
         if (address != null) {
             StringBuilder sb = new StringBuilder(128);
@@ -242,13 +249,15 @@ public class ShoppingService {
         }
 
         long totalPrice = 0;
-        List<ShoppingRecord> shoppingRecords = new ArrayList<>();
+        Set<ShoppingRecord> shoppingRecordSet = new HashSet<>();
         List<ShoppingCart> shoppingCarts = this.shoppingCartRepository.findAllById(shoppingCartIdList);
         for (ShoppingCart cart: shoppingCarts) {
             Optional<Commodity> optionalCommodity = this.commodityRepository.findById(cart.getCommodityId());
-            if (optionalCommodity.isPresent()) {
+            Optional<Specification> optionalSpecification = this.specificationRepository.findById(cart.getSpecId());
+            if (optionalCommodity.isPresent() && optionalSpecification.isPresent()) {
                 totalPrice = totalPrice + cart.getCount() * cart.getPrice();
                 Commodity commodity = optionalCommodity.get();
+                Specification specification = optionalSpecification.get();
                 ShoppingRecord record = new ShoppingRecord();
                 record.setCommodityId(commodity.getId());
                 record.setCommodityImage(commodity.getImage());
@@ -257,138 +266,213 @@ public class ShoppingService {
                 record.setActualPrice(cart.getCount() * cart.getPrice());
                 record.setCommodityTitle(commodity.getTitle());
                 record.setSpecId(cart.getSpecId());
-                record.setSpecification(cart.getSpecification());
+                record.setSpecification(specification.getTitle());
+                record.setStatus(0);
+                shoppingRecordSet.add(record);
             }
         }
-
-        return response;
-    }
-
-    @Transactional
-    public SimpleResponse<SettlementModel> createSettlement(String username, List<Long> shoppingCartItemIdList) {
-        SimpleResponse<SettlementModel> response = new SimpleResponse<>();
-
-        Settlement settlement = new Settlement();
-        Address address;
-        long totalPrice = 0;
-        List<ShoppingCart> list;
-        try {
-            User user = this.userRepository.findByUsername(username);
-            Long uid = user.getId();
-
-            settlement.setStartDate(new Date());
-            settlement.setLimitMinute(this.settlementLimit);
-            address = this.addressRepository.findTopByUserIdAndIsDefault(uid, 1);
-            if (address != null) {
-                settlement.setConsignee(address.getContactName());
-                settlement.setCellphone(address.getPhone());
-                settlement.setProvince(address.getProvince());
-                settlement.setCity(address.getCity());
-                settlement.setCounty(address.getCounty());
-                settlement.setAddress(address.getDetail());
-            }
-
-            list = this.shoppingCartRepository.findAllById(shoppingCartItemIdList);
-            List<SettlementCartMap> _list  = new ArrayList<>();
-            for (ShoppingCart item : list) {
-                totalPrice = totalPrice + item.getPrice();
-            }
-            settlement.setTotalPrice(totalPrice);
-            settlement = this.settlementRepository.save(settlement);
-
-            for (ShoppingCart item : list) {
-                SettlementCartMap _item = new SettlementCartMap();
-                _item.setSettlementId(settlement.getId());
-                _item.setCartId(item.getId());
-                _list.add(_item);
-            }
-            this.settlementCartMapRepository.saveAll(_list);
-        } catch (Exception e) {
-            response.setStatus(1);
-            response.setMessage(e.getMessage());
-            return response;
-        }
-
-        SettlementModel model = new SettlementModel();
-        model.setStartDate(settlement.getStartDate());
-        model.setSettlementId(settlement.getId());
-        model.setLimitMinute(settlement.getLimitMinute());
-        if (address != null) {
-            StringBuilder sb = new StringBuilder(128);
-            sb.append(address.getProvince()).append(address.getCity()).append(address.getCounty())
-                    .append(address.getDetail());
-            model.setHasAddress(1);
-            model.setAddress(sb.toString());
-        } else {
-            model.setHasAddress(0);
-        }
-        model.setConsignee(address.getContactName());
-        model.setCellphone(address.getPhone());
-        model.setItems(list);
-        model.setTotalPrice(totalPrice);
-
-        response.setItem(model);
+        shoppingOrder.setCreateDate(new Date());
+        shoppingOrder.setTotalPrice(totalPrice);
+        shoppingOrder.setStatus(0);
+        shoppingOrder.setRecords(shoppingRecordSet);
+        shoppingOrder = this.shoppingOrderRepository.save(shoppingOrder);
+        response.setItem(shoppingOrder);
         return response;
     }
 
     /**
+     * 开始结算，提供展示结算界面的信息
      *
-     * 1. Any Exception
-     * 2. Order does not exist.
-     * 3. Specification does not exist.
+     * 1. Order does not exist.
      *
-     * @param username
-     * @param id
-     * @return response
+     * @return
      */
-    @Transactional
-    public BaseResponse settlement(String username, Long id) {
-        BaseResponse response = new BaseResponse();
-        try {
-            User user = this.userRepository.findByUsername(username);
-            long balance = user.getMoney();
-            Optional<Settlement> optional = this.settlementRepository.findById(id);
-            if (!optional.isPresent()) {
-                Settlement settlement = optional.get();
-                List<SettlementCartMap> maps = this.settlementCartMapRepository.findAllBySettlementId(id);
-                List<Long> _idList = new ArrayList<>();
-                for (SettlementCartMap _item : maps) {
-                    _idList.add(_item.getId());
-                }
-                List<ShoppingCart> _itemList = this.shoppingCartRepository.findAllById(_idList);
-
-                for (ShoppingCart cart : _itemList) {
-                    Optional<Specification> optional1 = this.specificationRepository.findById(cart.getSpecId());
-                    if (optional1.isPresent()) {
-                        Specification specification = optional1.get();
-                        int inventory = specification.getInventory() - cart.getCount();
-                        if (inventory > 0) {
-                            specification.setInventory(inventory);
-                            this.specificationRepository.save(specification);
-                        } else {
-                            response.setStatus(3);
-                            response.setMessage("Inventory is not enough.");
-                            return response;
-                        }
-                    } else {
-                        response.setStatus(3);
-                        response.setMessage("Specification does not exist.");
-                        return response;
-                    }
-                }
-
-
-
+    public SimpleResponse<SettlementModel> startSettlement(long orderId) {
+        SimpleResponse<SettlementModel> response = new SimpleResponse<>();
+        Optional<ShoppingOrder> optionalOrder = this.shoppingOrderRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            ShoppingOrder shoppingOrder = optionalOrder.get();
+            SettlementModel model = new SettlementModel();
+            model.setStartDate(shoppingOrder.getCreateDate());
+            model.setLimitMinute(this.settlementLimit);
+            if (shoppingOrder.getDeliveryInfoId() > 0) {
+                model.setHasAddress(1);
+                model.setConsignee(shoppingOrder.getConsignee());
+                model.setCellphone(shoppingOrder.getPhone());
+                model.setAddress(shoppingOrder.getAddress());
             } else {
-                response.setStatus(2);
-                response.setMessage("Order does not exist.");
-                return response;
+                model.setHasAddress(0);
             }
-        } catch (Exception e) {
+            model.setTotalPrice(shoppingOrder.getTotalPrice());
+            model.setRecords(shoppingOrder.getRecords());
+            response.setItem(model);
+        } else {
             response.setStatus(1);
-            response.setMessage(e.getMessage());
+            response.setMessage("Order does not exist.");
+        }
+        return response;
+    }
+
+    /**
+     * 1. Order does not exist.
+     * 2. User does not exist.
+     * 3. Money is not enough.
+     *
+     * @param orderId
+     * @return
+     */
+    public BaseResponse settlement(String username, long orderId) {
+        BaseResponse response = new BaseResponse();
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            response.setStatus(2);
+            response.setMessage("User does not exist.");
             return response;
         }
+
+        Optional<ShoppingOrder> optionalOrder = this.shoppingOrderRepository.findById(orderId);
+        if (!optionalOrder.isPresent()) {
+            response.setStatus(1);
+            response.setMessage("Order does not exist.");
+            return response;
+        }
+
+        ShoppingOrder shoppingOrder = optionalOrder.get();
+
+        long balance = user.getMoney() - shoppingOrder.getTotalPrice();
+        if (balance <= 0) {
+            response.setStatus(3);
+            response.setMessage("Money is not enough.");
+            return response;
+        }
+
+        Set<ShoppingRecord> records = shoppingOrder.getRecords();
+        for (ShoppingRecord record : records) {
+            record.setStatus(2);
+        }
+
+        shoppingOrder.setStatus(1);
+
+        this.shoppingOrderRepository.save(shoppingOrder);
+
+        return response;
+    }
+
+    /**
+     * 1. User does not exist.
+     *
+     * @param username
+     * @return
+     */
+    public PageResponse<ShoppingOrder> listMyShoppingOrder(String username, int page, int size, String OrderBy,
+                                                           String order) {
+        PageResponse<ShoppingOrder> response = new PageResponse<>();
+
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            response.setStatus(1);
+            response.setMessage("User does not exist.");
+            return response;
+        }
+
+        PageableRequest request = new PageableRequest(null, page, size, OrderBy, order);
+        Page<ShoppingOrder> shoppingOrderPage = this.shoppingOrderRepository.findAllByUserId(request.pageable());
+
+        response.setList(shoppingOrderPage.getContent());
+        response.setTotal(shoppingOrderPage.getTotalElements());
+
+        return response;
+    }
+
+    public PageResponse<ShoppingOrder> listShoppingOrder(int page, int size, String orderBy, String order) {
+        PageResponse<ShoppingOrder> response = new PageResponse<>();
+
+        PageableRequest<ShoppingOrder> request = new PageableRequest<>(null, page, size, orderBy, order);
+        Page<ShoppingOrder> shoppingOrderPage = this.shoppingOrderRepository.findAll(request.pageable());
+
+        response.setTotal(shoppingOrderPage.getTotalElements());
+        response.setList(shoppingOrderPage.getContent());
+
+        return response;
+    }
+
+    /**
+     * 1. shopping record does not exist.
+     * @param id
+     * @return
+     */
+    public BaseResponse updateShoppingRecord(Long id, int status) {
+        BaseResponse response = new BaseResponse();
+        Optional<ShoppingRecord> optionalShoppingRecord = this.shoppingRecordRepository.findById(id);
+        if (!optionalShoppingRecord.isPresent()) {
+            response.setStatus(1);
+            response.setMessage("shopping record does not exist.");
+            return response;
+        }
+
+        ShoppingRecord record = optionalShoppingRecord.get();
+        record.setStatus(status);
+        this.shoppingRecordRepository.save(record);
+
+        return response;
+    }
+
+    /**
+     * 1. User does not e6xist.
+     * 2. Pay card does not exist.
+     *
+     * @param username
+     * @param number
+     * @param code
+     * @return
+     */
+    @Transactional
+    public BaseResponse recharge(String username, String number, String code) {
+        BaseResponse response = new BaseResponse();
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            response.setStatus(1);
+            response.setMessage("User does not exist.");
+            return response;
+        }
+        PayCard payCard = this.payCardRepository.findFirstByNumberAndVerifyCode(number, code);
+        if (payCard == null) {
+            response.setStatus(2);
+            response.setMessage("Pay card does not exist.");
+            return response;
+        }
+
+        if (payCard.getIsValid() == 0) {
+            response.setStatus(3);
+            response.setMessage("Pay card invalid.");
+            return response;
+        }
+
+        if (payCard.getDenomination() <= 0) {
+            response.setStatus(3);
+            response.setMessage("Pay card has negative denomination.");
+            return response;
+        }
+
+        Date useDate = new Date();
+
+        payCard.setIsValid(0);
+        payCard.setUserId(user.getId());
+        payCard.setUseDate(useDate);
+        payCard.setIsUsed(1);
+        payCard.setUser(username);
+        this.payCardRepository.save(payCard);
+
+        long balance = user.getMoney() + payCard.getDenomination();
+        user.setMoney(balance);
+        this.userRepository.save(user);
+
+        PayCardLogEntity logEntity = new PayCardLogEntity();
+        logEntity.setCreateAt(useDate);
+        logEntity.setOperation("recharge");
+        logEntity.setOperationUid(user.getId());
+        logEntity.setOperationAccount(username);
+        this.payCardLogRepository.save(logEntity);
 
         return response;
     }

@@ -4,4 +4,6 @@ import com.iprzd.zshop.entity.PayCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PayCardRepository extends JpaRepository<PayCard, Long> {
+
+    PayCard findFirstByNumberAndVerifyCode(String number, String code);
 }

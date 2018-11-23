@@ -1,10 +1,9 @@
 package com.iprzd.zshop.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import com.iprzd.zshop.entity.ShoppingCart;
-
+import com.iprzd.zshop.entity.ShoppingRecord;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,6 @@ public class SettlementModel {
     private String consignee;
     private String cellphone;
     private String address;
-    private List<ShoppingCart> items;
+    private Set<ShoppingRecord> records;
     private long totalPrice;
 }

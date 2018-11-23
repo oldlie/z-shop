@@ -28,7 +28,6 @@ public class ShoppingCart implements Serializable {
     private long uid;
     private long commodityId;
     private long specId;
-    private String specification;
     private int count;
     private long price;
     private Date createAt;
