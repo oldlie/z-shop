@@ -93,4 +93,13 @@ export class CoreService {
       window.localStorage.setItem('profile', JSON.stringify(this.profileInfo));
     });
   }
+
+  fomartMoney(origin: number): string {
+    const yuan = window['parseInt'](origin / 1000);
+    let yu = origin % 1000;
+    const jiao = window['parseInt'](yu / 100);
+    yu = yu % 100;
+    const fen =  window['parseInt'](yu / 10);
+    return `${yuan}.${jiao}${fen}`;
+  }
 }

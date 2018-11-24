@@ -38,6 +38,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { PayCardAddComponent } from './component/pay-card-add/pay-card-add.component';
 import { PayCardTableComponent } from './component/pay-card-table/pay-card-table.component';
 import { PayCardSoldComponent } from './component/pay-card/pay-card-sold/pay-card-sold.component';
+import { RechargeComponent } from './component/recharge/recharge.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { PayCardSoldComponent } from './component/pay-card/pay-card-sold/pay-car
     PaymentComponent,
     PayCardAddComponent,
     PayCardTableComponent,
-    PayCardSoldComponent
+    PayCardSoldComponent,
+    RechargeComponent
   ],
   imports: [
     BrowserModule,

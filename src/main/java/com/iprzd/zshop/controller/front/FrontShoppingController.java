@@ -4,6 +4,8 @@ import com.iprzd.zshop.entity.Address;
 import com.iprzd.zshop.entity.ShoppingCartItem;
 import com.iprzd.zshop.entity.ShoppingOrder;
 import com.iprzd.zshop.http.request.AddressRequest;
+import com.iprzd.zshop.http.request.IdRequest;
+import com.iprzd.zshop.http.request.RechargeRequest;
 import com.iprzd.zshop.http.request.ShoppingCartRequest;
 import com.iprzd.zshop.http.response.BaseResponse;
 import com.iprzd.zshop.http.response.ListResponse;
@@ -77,8 +79,8 @@ public class FrontShoppingController {
         return this.shoppingService.deleteAddress(id);
     }
 
-    @GetMapping("/settlement")
-    public SimpleResponse<SettlementModel> createOrder(@RequestParam Long uid, @RequestParam String shoppingCartItemIds,
+    @GetMapping("/create-order")
+    public SimpleResponse<ShoppingOrder> createOrder(@RequestParam Long uid, @RequestParam String shoppingCartItemIds,
                                                        HttpServletRequest request) {
         String[] ids = shoppingCartItemIds.split(",");
         List<Long> idList = new ArrayList<>();
@@ -87,6 +89,25 @@ public class FrontShoppingController {
         }
         HttpSession session = request.getSession();
         String userName = session.getAttribute("username").toString();
-        return this.shoppingService.createSettlement(userName, idList);
+        return this.shoppingService.createOrder(userName, idList);
+    }
+
+    @GetMapping("/settlement")
+    public SimpleResponse<SettlementModel> settlementModel(@RequestParam Long orderId) {
+        return this.shoppingService.startSettlement(orderId);
+    }
+
+    @PostMapping("/settlement")
+    public BaseResponse settlement(@RequestBody IdRequest idRequest, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String userName = session.getAttribute("username").toString();
+        return this.shoppingService.settlement(userName, idRequest.getId());
+    }
+
+    @PostMapping("/recharge")
+    public SimpleResponse<Long> recharge(@RequestBody RechargeRequest rechargeRequest, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String userName = session.getAttribute("username").toString();
+        return this.shoppingService.recharge(userName, rechargeRequest.getNumber(), rechargeRequest.getCode());
     }
 }

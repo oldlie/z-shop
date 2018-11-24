@@ -42,7 +42,7 @@ export interface LoginVI {
 }
 
 export interface UserVI {
-    id: number;
+    id?: number;
     username: string;
     password?: string;
     userNickname: string;
@@ -51,5 +51,6 @@ export interface UserVI {
     resume: string;
     image: string;
     isInit: number;
-    authorities: Array<AuthorityVI>;
+    money?: number;
+    authorities?: Array<AuthorityVI>;
 }

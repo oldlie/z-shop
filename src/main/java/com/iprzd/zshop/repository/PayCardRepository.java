@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PayCardRepository extends JpaRepository<PayCard, Long> {
 
     Page<PayCard> findAllByIsValid(int isValid, Pageable pageable);
+
+    PayCard findFirstByNumberAndVerifyCode(String number, String code);
 }
