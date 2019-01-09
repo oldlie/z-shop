@@ -1,9 +1,6 @@
 package com.iprzd.zshop.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +16,7 @@ public class AssetsChange implements Serializable {
 
     private final static long serialVersionUID = 1540128117909L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long uid;
     private long total;

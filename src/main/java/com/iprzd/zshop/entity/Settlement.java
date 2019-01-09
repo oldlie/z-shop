@@ -19,7 +19,7 @@ public class Settlement implements Serializable {
 
     private final static long serialVersionUID = 1539866193061L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date startDate;
     private int limitMinute;
@@ -31,11 +31,5 @@ public class Settlement implements Serializable {
     private String city;
     private String county;
     private String address;
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name = "t_settlement_cart",
-            joinColumns = @JoinColumn(name = "settlement_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id"))
-    private List<ShoppingCart> items;
-    private BigDecimal totalPrice;
-
+    private long totalPrice;
 }

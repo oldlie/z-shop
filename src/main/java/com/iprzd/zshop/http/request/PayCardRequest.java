@@ -2,33 +2,26 @@ package com.iprzd.zshop.http.request;
 
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
+@ToString
 public class PayCardRequest implements Serializable {
 
     private final static long serialVersionUID = 1540362525999L;
 
     private long id;
-    private long uid;
     private int count;
     private String note;
     private long denomination;
-    private int exprityMonth;
+    private int expiryMonth;
     private long amount;
+    private String prefix;
     private String customer;
     private String customerPhone;
+    private int isSoldOut;
 
-    @Override
-    public String toString() {
-        return "id:" + id + ";uid:" + uid + ";count:" + count + ";note:" + note + ";denomination:" + denomination
-                + ";exprityMonth:" + exprityMonth + ";amount:" + amount + ";customer:" + customer + ";customerPhone:"
-                + customerPhone;
-    }
 }

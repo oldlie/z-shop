@@ -54,9 +54,14 @@ public class PageableRequest<T> implements Serializable {
     private String order;
 
     public Pageable pageable() {
+        if (page <= 1) {
+            page = 0;
+        } else {
+            page = page - 1;
+        }
         if (order != null && order != "") {
-            return PageRequest.of(page, size, order.toLowerCase() == "desc" ? Direction.DESC : Direction.ASC,
-            orderBy);
+            Direction direction = order.toLowerCase().equals("desc") ? Direction.DESC : Direction.ASC;
+            return PageRequest.of(page, size, direction, orderBy);
         } else {
             return PageRequest.of(page, size);
         }

@@ -1,47 +1,24 @@
 package com.iprzd.zshop.entity.article;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "t_article_attachment")
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Attachment {
+public class Attachment implements Serializable {
 
-    @Id @GeneratedValue
+    private final static long serialVersionUID = 1541846733776L;
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long articleId;
     private String url;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

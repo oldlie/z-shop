@@ -1,0 +1,41 @@
+<nz-tabset>
+  <nz-tab nzTitle="充值卡">
+
+    <ng-container *ngIf="viewModel === 0">
+
+      <div nz-row>
+        <div nz-col nzSpan="24" >
+          <button nz-button nzType="primary" (click)="changeViewModel(1)"><i class="anticon anticon-plus"></i> New</button>
+        </div>
+      </div>
+
+      <div nz-row class="ray-row">
+        <div nz-col nzSpan="24">
+          <app-pay-card-table></app-pay-card-table>
+        </div>
+      </div>
+
+
+    </ng-container>
+
+
+    <ng-container *ngIf="viewModel === 1">
+
+      <div nz-row>
+        <div nz-col nzSpan="24">
+          <button nz-button nzType="primary" (click)="changeViewModel(0)"><i class="anticon anticon-rollback"></i> Back</button>
+        </div>
+      </div>
+
+      <div nz-row class="ray-row">
+        <div nz-col nzSpan="24">
+          <app-pay-card-add></app-pay-card-add>
+        </div>
+      </div>
+
+    </ng-container>
+
+
+  </nz-tab>
+</nz-tabset>
+

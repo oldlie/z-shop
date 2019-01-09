@@ -1,46 +1,23 @@
 package com.iprzd.zshop.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "t_tag")
+@Getter
+@Setter
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class Tag {
-    @Id @GeneratedValue
+public class Tag implements Serializable {
+
+    private final static long serialVersionUID = 1541829212272L;
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private long parentId;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
-    }
 }

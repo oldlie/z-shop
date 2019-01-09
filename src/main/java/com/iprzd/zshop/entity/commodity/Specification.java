@@ -17,7 +17,7 @@ public class Specification implements Serializable {
 
     private static final long serialVersionUID = 1540188301154L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private long commodityId;

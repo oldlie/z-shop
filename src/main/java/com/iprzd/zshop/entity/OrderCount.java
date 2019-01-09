@@ -2,10 +2,7 @@ package com.iprzd.zshop.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -18,7 +15,7 @@ import java.io.Serializable;
 public class OrderCount implements Serializable {
     private static final long serialVersionUID = 1540133553063L;
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int year;
     private int month;

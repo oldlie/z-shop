@@ -6,6 +6,19 @@ export interface Base {
     timestamp?: string;
 }
 
+export interface SimpleResponse<T> extends Base {
+    item: T;
+}
+
+export interface ListResponse<T> extends Base {
+    list: Array<T>;
+}
+
+export interface PageResponse<T> extends ListResponse<T> {
+    total: number;
+    pages: number;
+}
+
 export interface ResponseData {
     status: number;
     message: string;

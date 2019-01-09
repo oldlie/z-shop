@@ -155,6 +155,7 @@ public class CommodityService {
         return StatusCode.successResponse(response);
     }
 
+    @Transactional
     public CommodityListResponseBase findAll(ListRequest request) {
         CommodityListResponseBase response = new CommodityListResponseBase();
         Page<Commodity> page = this.commodityRepository.findAll(

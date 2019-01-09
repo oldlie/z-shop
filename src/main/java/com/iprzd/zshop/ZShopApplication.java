@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,6 +30,25 @@ public class ZShopApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ZShopApplication.class, args);
+    }
+
+    /**
+     * https://blog.csdn.net/wanping321/article/details/79532918
+     *
+     * SpringBoot jpa 使用懒加载时，报异常：session失效
+     * 在方法上加@Transactional 注解，失败
+     * 在application.yml 文件加上jpa.properties.open-in-view: true 失败
+     * 在ResourceServerApplication.java 启动文件中加上下面这个Bean
+     *
+     * 总结：
+     * 要解决no session 问题需要：
+     * 配置文件中加jpa.properties.open-in-view: true同时在启动文件中加@Bean
+     *
+     * @return OpenEntityManagerInViewFilter
+     */
+    @Bean
+    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
+        return new OpenEntityManagerInViewFilter();
     }
 
     /**

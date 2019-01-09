@@ -1,7 +1,7 @@
 <div *ngIf="viewModel === 0">
 
   <div style="padding:15px 10px;">
-    <a (click)="gotoCreateView()"><i nz-icon type="plus" theme="outline"></i> 添加地址</a>
+    <button nz-button nzType="primary" (click)="gotoCreateView()"><i class="anticon anticon-plus"></i> 添加地址</button>
   </div>
 
   <nz-table #basicTable [nzData]="addressList">
@@ -33,7 +33,7 @@
 <div *ngIf="viewModel === 1">
 
   <div style="padding:15px 10px;">
-    <a (click)="gotoListView()"><i nz-icon type="rollback" theme="outline"></i> 返回</a>
+    <button nz-button nzType="primary" (click)="gotoListView()"><i class="anticon anticon-rollback"></i> 返回</button>
   </div>
 
   <app-address-add [address]="currentAddress"></app-address-add>
