@@ -7,7 +7,7 @@ CREATE TABLE `profile` (
   `email` VARCHAR(255) COMMENT '用户邮箱' COLLATE 'utf8_unicode_ci',
   `mobile_phone` VARCHAR(36) COMMENT '用户手机号码' COLLATE 'utf8_unicode_ci',
   `qq` INT COMMENT 'QQ号码',
-  `info` VARCHAR(500) COMMENT '用户自我简介',
+  `info` VARCHAR(500) COMMENT '用户自我简介'
 )
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB

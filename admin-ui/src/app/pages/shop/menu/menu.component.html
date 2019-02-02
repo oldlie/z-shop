@@ -1,0 +1,123 @@
+<div nz-row class="ray-row">
+  <div nzSpan="24">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>商品管理</nz-breadcrumb-item>
+      <nz-breadcrumb-item>商品栏目</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <input type="text" nz-input placeholder="栏目名称" [(ngModel)]="menu">
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+      <input type="text" nz-input placeholder="上级栏目名称" [(ngModel)]="parent" disabled="disabled">
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nzSearch (click)="selectParent()" nz-button nzSearch>选择上级栏目</button>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <input type="text" nz-input placeholder="备注" [(ngModel)]="comment">
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="12">
+    <button nz-button nzType="primary" (click)="save()">保存</button>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <p>预览[点击可以删除节点]：</p>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <nav class="navbar navbar-default">
+          <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-7"
+                aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand">ZShop</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-7">
+              <ul class="nav navbar-nav" (mouseleave)="ml()">
+                <ng-container *ngFor="let item of list">
+                  <li *ngIf="item.children === 0">
+                    <a (click)="delete(item)">{{item.title}}</a>
+                  </li>
+                  <li *ngIf="item.children > 0" class="dropdown">
+                    <a (mouseenter)="childMenu(item)" (click)="delete(item)">{{item.title}}
+                      <span class="caret"></span>
+                    </a>
+                    <ul *ngIf="item.id === mouseOnId" class="dropdown-menu" style="display: block;">
+                      <li *ngFor="let child of childrenList">
+                        <a (click)="delete(child)">{{child.title}}</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+        </nav>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<nz-modal [(nzVisible)]="toggle" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="closeDialog()">
+  <ng-template #modalTitle>
+    选择上级栏目
+  </ng-template>
+
+  <ng-template #modalContent>
+    <nz-table>
+      <thead>
+        <tr>
+          <th>栏目</th>
+          <th>备注</th>
+          <th>子栏目</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of childrenList">
+          <td>
+            <a (click)="cc(data)">{{data.title}}</a>
+          </td>
+          <td>{{data.comment}}</td>
+          <td>
+            <a *ngIf="data.children > 0" (click)="ccc(data.id)">进入子栏目</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="closeDialog()">选择根目录并关闭</button>
+    <button nz-button nzType="primary" (click)="toggle = false">关闭</button>
+  </ng-template>
+</nz-modal>

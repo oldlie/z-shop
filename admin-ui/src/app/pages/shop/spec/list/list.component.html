@@ -1,0 +1,44 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+
+      <nz-table  #ajaxTable
+        [nzShowPagination]="false"
+        [nzData]="tableData"
+        [nzLoading]="loading"
+        >
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>规格</th>
+              <th>价格</th>
+              <th>库存</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of ajaxTable.data">
+              <td>{{data.title}}</td>
+              <td>{{data.spec}}</td>
+              <td>{{data.price}}</td>
+              <td>{{data.inventory}}</td>
+              <td>
+                <a *ngIf="commodityId > 0" (click)="chose(data)">选择</a>
+                <a *ngIf="commodityId === 0" (click)="edit(data)">修改</a>
+                <a *ngIf="commodityId === 0" (click)="delete(data)">删除</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+  </div>
+</div>
+
+<div *ngIf="total > 0" class="container-fluid">
+  <div class="row">
+    <div class="sm-24 text-right">
+      <app-pagination 
+      [page]="page" 
+      [pages]="total" 
+      (pageIndexChangeEvent)="loadData($event)"></app-pagination>
+    </div>
+  </div>
+</div>

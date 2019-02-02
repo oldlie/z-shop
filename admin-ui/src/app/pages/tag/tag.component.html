@@ -1,0 +1,20 @@
+<div nz-row class="ray-row">
+
+  <div nz-col nzSm="24" nzMd="12">
+
+    <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+      <input type="text" nz-input placeholder="请输入标签内容" [(ngModel)]="newTagTitle">
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+      <button nz-button nzType="primary" (click)="save()">保存</button>
+    </ng-template>
+
+  </div>
+
+</div>
+
+<div nz-row class="ray-row">
+    <div nz-col nzSpan="24">
+      <nz-tag *ngFor="let tag of list" (click)="checkTag(tag)" nzMode="closeable" (nzOnClose)="deleteTag(tag)">{{tag.name}}</nz-tag>
+  </div>
+</div>

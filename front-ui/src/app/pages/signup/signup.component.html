@@ -1,0 +1,74 @@
+<div style="width: 100%; padding: 5px auto;">
+  <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submitForm()" style="margin: 5px auto;">
+
+    <nz-form-item>
+      <nz-alert nzType="info" [nzMessage]="welcomeInfo" nzShowIcon></nz-alert>
+    </nz-form-item>
+
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzSearch nzPrefixIcon="anticon anticon-user">
+          <input type="text" nz-input formControlName="nickname" placeholder="昵称，用于网站业务显示">
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('nickname').dirty && form.get('nickname').errors">请输入昵称!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- ./ cellphone -->
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-lock">
+          <input type="password" nz-input formControlName="password" placeholder="输入密码" (ngModelChange)="validateConfirmPassword()">
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('password').dirty && form.get('password').errors">密码需要8-32字符，由字母数字下划线组成!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- ./ code -->
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-lock">
+          <input type="password" nz-input formControlName="password2" placeholder="确认密码">
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('password2').dirty && form.get('password2').errors">请确认密码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- ./ code -->
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-mobile">
+          <input type="text" nz-input formControlName="cellphone" placeholder="手机号码">
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('cellphone').dirty && form.get('cellphone').errors">请输入手机号码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-mobile">
+          <input type="text" nz-input formControlName="cellphone2" placeholder="手机号码">
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('cellphone2').dirty && form.get('cellphone2').errors">备用手机号码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="anticon anticon-form">
+          <textarea formControlName="resume" nz-input rows="2" placeholder="个人简介"></textarea>
+        </nz-input-group>
+        <nz-form-explain *ngIf="form.get('resume').dirty && form.get('resume').errors">备用手机号码!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button class="login-form-button" [nzType]="'primary'">注册</button>
+        <a [routerLink]="['/login']">已有账号!</a>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <!-- ./ form -->
+</div>

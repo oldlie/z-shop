@@ -1,0 +1,18 @@
+<nz-table #basicTable [nzData]="articleList">
+  <thead>
+    <tr>
+      <th>标题</th>
+      <th>摘要</th>
+      <th style="width: 120px;">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.title}}</td>
+      <td>{{data.summary}}</td>
+      <td>
+        <a (click)="cancle(data.id)">取消置顶</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

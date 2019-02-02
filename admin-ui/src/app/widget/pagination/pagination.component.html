@@ -1,0 +1,17 @@
+<nav aria-label="navigation">
+  <ul class="pagination pagination-sm">
+    <li>
+      <a (click)="goPrevious()" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li *ngFor="let item of config.list" [class.active]="item === page">
+      <a (click)="pageIndex(item)">{{item + 1}}</a>
+    </li>
+    <li>
+      <a (click)="goNext()" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,82 @@
+<div class="form-horizontal container-fluid">
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="规格名称" [(ngModel)]="spec.title">
+    </div>
+    <label class="col-sm-1 control-label" style="text-align: left;">
+      <span class="text-danger">*</span>
+    </label>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <nz-radio-group [(ngModel)]="spec.types">
+        <label nz-radio nzValue="0">实体商品</label>
+        <label nz-radio nzValue="1">虚拟商品</label>
+      </nz-radio-group>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="品种" [(ngModel)]="spec.breed">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="原产地" [(ngModel)]="spec.origin">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="特征" [(ngModel)]="spec.feature">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="规格" [(ngModel)]="spec.spec">
+    </div>
+    <label class="col-sm-1 control-label" style="text-align: left;">
+      <span class="text-danger">*</span>
+    </label>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="存储方式" [(ngModel)]="spec.store">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-9 col-md-6">
+      <input nz-input placeholder="生产/捕捞/采摘日期" [(ngModel)]="spec.productDatetime">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12 col-md-9">
+      <label>价格：</label>
+      <nz-input-number [(ngModel)]="spec.price" [nzMin]="1"  [nzStep]="1"></nz-input-number>
+      <span class="text-danger">*</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-12 col-md-9">
+      <label>库存：</label>
+      <nz-input-number [(ngModel)]="spec.inventory" [nzMin]="1" [nzMax]="9999" [nzStep]="1"></nz-input-number>
+      <span class="text-danger">*</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+      <div class="col-sm-12 col-md-9">
+        <button nz-button nzType="primary" (click)="save()">保存</button>
+      </div>
+  </div>
+</div>
+<!--./form-->

@@ -1,0 +1,257 @@
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="标题" [(ngModel)]="commodityVI.title">
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.title == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.title !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="summaryTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="简要描述" [(ngModel)]="commodityVI.summary">
+    </nz-input-group>
+    <ng-template #summaryTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="commodityVI.summary == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="commodityVI.summary !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <label>题图/缩略图：</label>
+    <nz-form-control nzValidateStatus="default" nzHasFeedback>
+      <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="imageFileList" [nzShowButton]="imageFileList.length < 1"
+        [nzPreview]="handlePreview" (nzChange)="uploadImageChange($event)">
+        <i class="anticon anticon-plus"></i>
+        <div class="ant-upload-text">上传</div>
+      </nz-upload>
+      <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+        <ng-template #modalContent>
+          <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+        </ng-template>
+      </nz-modal>
+    </nz-form-control>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+      <label>展示图（最多5幅）：</label>
+      <nz-form-control nzValidateStatus="default" nzHasFeedback>
+        <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 5"
+          [nzPreview]="handlePreview" (nzChange)="uploadChange($event)">
+          <i class="anticon anticon-plus"></i>
+          <div class="ant-upload-text">上传</div>
+        </nz-upload>
+        <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+          <ng-template #modalContent>
+            <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+          </ng-template>
+        </nz-modal>
+      </nz-form-control>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <textarea nz-input placeholder="注意事项，用于提示特殊情况,可以不填写" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="commodityVI.comment"></textarea>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <div [froalaEditor]="options" [(froalaModel)]="commodityVI.description">Hello, Froala!</div>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <button nz-button (click)="addSpec()">添加规格</button>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24">
+    <nz-table #userSpecTable [nzShowPagination]="false" nzSize="small" [nzData]="this.specificationList">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>规格</th>
+          <th>价格</th>
+          <th>库存</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let spec of userSpecTable.data">
+          <td>{{spec.title}}</td>
+          <td>{{spec.spec}}</td>
+          <td>{{spec.price}}</td>
+          <td>{{spec.inventory}}</td>
+          <td>
+            <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="deleteSpec(spec)">
+              <a nz-popconfirm>删除</a>
+            </nz-popconfirm>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addMenu()">添加导航/类别</button>
+  </div>
+</div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-breadcrumb *ngIf="refreshMenu">
+      <nz-breadcrumb-item *ngFor="let menu of menuList;">{{menu.title}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addTag()">添加标签</button>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-tag *ngFor="let tag of tagCheckedList" nzMode="closeable" (click)="checkTag(tag)" (nzOnClose)="deleteTag(tag)">{{tag.title}}</nz-tag>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button nzType="primary" (click)="save()">保存</button>
+  </div>
+</div>
+
+<div *ngIf="showSpecDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showSpecDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加/选择规则</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body">
+        <app-commodity-spec [commodityId]="specifciationFlag" (checkSpecEvent)="checkSpecListener($event)"></app-commodity-spec>
+      </div>
+      <!-- ./body -->
+      <div class="modal-footer">
+        <button nz-button (click)="showSpecDialog = false">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showMenuDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showMenuDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加栏目</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body" >
+
+        <nz-table #basicTable [nzData]="menuSourceList" [nzShowPagination]="false" [nzLoading]="menuLoading">
+          <thead>
+            <tr>
+              <th>栏目</th>
+              <th>备注</th>
+              <th>子栏目</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td>
+                <a (click)="cc(data)">{{data.title}}</a>
+              </td>
+              <td>{{data.comment}}</td>
+              <td>
+                <a *ngIf="data.children > 0" (click)="ccc(data)">进入子栏目</a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+      <!-- ./body -->
+      <div class="modal-footer">
+        <button nz-button (click)="checkMenuRoot()">选择根目录</button>
+        <button nz-button (click)="showMenuDialog = false">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showTagDialog" class="modal" tabindex="-1" role="dialog" style="display: block;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="showTagDialog = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">添加标签</h4>
+      </div>
+      <!-- ./header -->
+      <div class="modal-body">
+
+        <div class="form">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" name="tagTitle" class="form-control" placeholder="查找tag" [(ngModel)]="tagTitle">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+            <!-- /input-group -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <nz-tag *ngFor="let tag of tagList" (click)="checkTag(tag)">{{tag.title}}</nz-tag>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <nav aria-label="...">
+              <ul class="pager">
+                <li *ngIf="tagPage > 1" class="previous" [class.disabled]="tagPage === 0">
+                  <a (click)="prevTagPage()">
+                    <span aria-hidden="true">&larr;</span> 上翻页</a>
+                </li>
+                <li *ngIf="tagPage > tagPages - 1" class="next" [class.disabled]="tagPages === tagPage + 1">
+                  <a (click="nextTagPage()" )>下翻页
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button nz-button (click)="showTagDialog = false">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>

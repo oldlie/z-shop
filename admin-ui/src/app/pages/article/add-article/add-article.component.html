@@ -1,0 +1,138 @@
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="标题" [(ngModel)]="model.title">
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="model.title == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="model.title !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-input-group [nzSuffix]="summaryTemplate" nzPrefixIcon="anticon anticon-profile">
+      <input type="text" nz-input placeholder="简要描述" [(ngModel)]="model.summary">
+    </nz-input-group>
+    <ng-template #summaryTemplate>
+      <i class="anticon anticon-info-circle ray-warning" *ngIf="model.summary == ''"></i>
+      <i class="anticon anticon-check-circle text-success" *ngIf="model.summary !== ''"></i>
+    </ng-template>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="16">
+    <nz-upload [nzAction]="uploadUrl" nzListType="picture-card" [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 1"
+      [nzPreview]="handlePreview" (nzChange)="uploadChange($event)">
+      <i class="anticon anticon-plus"></i>
+      <div class="ant-upload-text">上传</div>
+    </nz-upload>
+    <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+      <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+      </ng-template>
+    </nz-modal>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSm="24" nzMd="24">
+    <div [froalaEditor]="options" [(froalaModel)]="model.content">Hello, Froala!</div>
+  </div>
+</div>
+
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addMenu()">添加栏目</button>
+  </div>
+</div>
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-breadcrumb *ngIf="refreshMenu">
+      <nz-breadcrumb-item *ngFor="let menu of menuCheckedList;">{{menu.title}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button (click)="addTag()">添加标签</button>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-tag *ngFor="let tag of tagCheckedList" nzMode="closeable" (click)="checkTag(tag)" (nzOnClose)="deleteTag(tag)">{{tag.title}}</nz-tag>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <nz-switch [(ngModel)]="saveAsDraft"></nz-switch>
+    <label for="">保存为草稿</label>
+  </div>
+</div>
+
+<div nz-row class="ray-row">
+  <div nz-col nzSpan="24">
+    <button nz-button nzType="primary" (click)="store()">保存</button>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="isMenuVisible" nzTitle="选择文章栏目" [nzContent]="modalMenuContent" [nzFooter]="modalMenuFooter" (nzOnCancel)="handleMenuCancel()">
+  <ng-template #modalMenuContent>
+    <nz-table #menuTable [nzData]="menuList" [nzShowPagination]="false" [nzLoading]="menuLoading">
+      <thead>
+        <tr>
+          <th>栏目</th>
+          <th>备注</th>
+          <th>子栏目</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of menuTable.data">
+          <td>
+            <a (click)="cc(data)">{{data.title}}</a>
+          </td>
+          <td>{{data.comment}}</td>
+          <td>
+            <a *ngIf="data.children > 0" (click)="ccc(data)">进入子栏目</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+  <ng-template #modalMenuFooter>
+    <button nz-button (click)="isMenuVisible = false">关闭</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isTagVisible" nzTitle="选择标签" [nzContent]="modalTagContent" [nzFooter]="modalTagFooter" (nzOnCancel)="handleTagCancel()">
+    <ng-template #modalTagContent>
+      <ng-container *ngFor="let tag of tagList">
+        <nz-tag *ngIf="tag.isChecked" nzColor="#2db7f5" (click)="checkTag(tag)">{{tag.tag.title}}</nz-tag>
+        <nz-tag *ngIf="!tag.isChecked" (click)="checkTag(tag)">{{tag.tag.title}}</nz-tag>
+      </ng-container>
+        
+      <nav aria-label="...">
+        <ul class="pager">
+          <li class="previous" [class.disabled]="tagPage === 0">
+            <a (click)="prevTagPage()">
+              <span aria-hidden="true">&larr;</span> 上翻页</a>
+          </li>
+          <li class="next" [class.disabled]="tagPages === tagPage + 1">
+            <a (click)="nextTagPage()">下翻页
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </ng-template>
+    <ng-template #modalTagFooter>
+        <button nz-button (click)="isTagVisible = false">关闭</button>
+        <button nz-button nzType="primary" (click)="checkedTag()">选择</button>
+      </ng-template>
+</nz-modal>

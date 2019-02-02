@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CoreService } from './services/core.service';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  title = 'z-shop';
+  defaultAsideIndex = '6-1';
+  isLogin = false;
 
-  constructor(private router: Router) {}
+  private startPageUrl = '/login';
+
+  constructor(public core: CoreService, private router: Router) {}
 
   ngOnInit() {
-    console.log('ready goto login page!');
-    this.router.navigate(['/login']).catch(err => {
-      console.log('navigate to /login', err);
-    });
+    console.log(this.isLogin);
+    if (this.core.isLogin) {
+      console.log('"wo le go qu"');
+      console.log('ready goto login page!');
+      this.router.navigate([this.startPageUrl]).catch(err => {
+        console.log('navigate to /login', err);
+      });
+    }
+
   }
 }

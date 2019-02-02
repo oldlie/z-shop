@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<div *ngIf="!core.isLogin; else elseBlock">
+    <app-login></app-login>
+</div>
+
+<ng-template #elseBlock>
+
+    <nz-layout class="layout">
+        <nz-header>
+            <div class="logo">Z-Shop</div>
+            <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+                <li nz-menu-item>nav 1</li>
+                <li nz-menu-item>nav 2</li>
+                <li nz-menu-item>nav 3</li>
+            </ul>
+        </nz-header>
+        <nz-layout>
+            <nz-sider [nzWidth]="200" style="background:#fff; box-sizing: border-box;">
+                <app-main-aside [index]="defaultAsideIndex"></app-main-aside>
+            </nz-sider>
+            <nz-layout style="padding:0 24px 24px; background:#fff; box-sizing: border-box;" >
+                <router-outlet></router-outlet>
+            </nz-layout>
+        </nz-layout>
+    </nz-layout>
+
+
+</ng-template>

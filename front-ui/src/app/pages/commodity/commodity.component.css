@@ -1,0 +1,29 @@
+.spec-button {
+    cursor: pointer;
+    margin: 10px;
+    padding: 5px 10px;
+    border: 1px solid #e0e0e0;
+    color: #b0b0b0;
+}
+.spec-button:hover {
+    border: 1px solid #ff6700;
+    color: #ff6700;
+}
+.active {
+    border: 1px solid #ff6700;
+    color: #ff6700;
+}
+.specification {
+    color: #b0b0b0;
+}
+.buy-button {
+    padding: 6px 50px;
+    background: #ff6700;
+    border-color: #ff6700;
+    color: #fff;
+}
+.buy-button:hover {
+    background: #f25807;
+    border-color: #f25807;
+    color: #fff;
+}

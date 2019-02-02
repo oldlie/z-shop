@@ -1,0 +1,24 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+
+    <nz-table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>名称</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of list">
+          <td>{{data.id}}</td>
+          <td>{{data.title}}</td>
+          <td>
+            <a (click)="chose(data)">选择</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>

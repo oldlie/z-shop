@@ -1,0 +1,88 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a routerLink="/home">首页</a> 
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        {{article.title}}
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+</div>
+<br>
+
+<div nz-row class="ray-row" nzGutter="40">
+  <div nz-col nzSpan="16" >
+
+    <div class="ray-row" nz-row>
+      <div nz-col nzSpan="24">
+        <div style="float: left; margin: 22px 10px 0 0;">
+          <button nz-button nzType="default" style="height: 36px;" (click)="agree(article.id)">
+            <i class="anticon anticon-like-o"></i> {{article.agreeCount}}
+          </button>
+        </div>
+        <h1>
+          {{article.title}}</h1>
+      </div>
+    </div>
+
+    <div class="ray-row" nz-row>
+      <div nz-col nzSpan="18">
+        <nz-tag [nzColor]="'#108ee9'" *ngFor="let tag of article.tags">{{tag.title}}</nz-tag>
+      </div>
+      <div nz-col nzSpan="6">
+        <span style="margin-right: 5px;">
+          <i class="anticon anticon-eye-o"></i> {{article.viewCount}}
+        </span>
+        <span>
+          <i class="anticon anticon-user"></i> admin
+        </span>
+      </div>
+    </div>
+
+    <!-- region article -->
+    <div nz-row class="ray-row">
+      <div nz-col nzSpan="24">
+        <blockquote>
+          <p style="font-size: .8em;">{{article.summary}}</p>
+        </blockquote>
+      </div>
+    </div>
+    <div nz-row class="ray-row">
+      <div nz-col nzSpan="24" [innerHTML]="content"  style="font-size: 1.2em;">
+      </div>
+    </div>
+    <!-- endregion article -->
+  </div>
+
+  <div nz-col nzSpan="8" >
+
+    <nz-divider [nzText]="commodityTxt" nzOrientation="left">
+      <ng-template #commodityTxt>甄选</ng-template>
+    </nz-divider>
+
+    <nz-carousel [nzEffect]="effect" nzAutoPlay>
+      <div nz-carousel-content *ngFor="let commodity of commodityList">
+        <nz-card nzHoverable [nzCover]="coverTemplate" (click)="gotoCommodityPage(commodity.id)">
+          <nz-card-meta [nzTitle]="commodity.title" nzDescription=""></nz-card-meta>
+          <p>{{commodity.desc}}</p>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img alt="{{commodity.title}}" src="{{commodity.image}}" class="img-responsive" />
+        </ng-template>
+        
+      </div>
+    </nz-carousel>
+
+    <nz-divider [nzText]="tagTxt" nzOrientation="left">
+      <ng-template #tagTxt>标签</ng-template>
+    </nz-divider>
+
+    <span *ngFor="let tag of allTags" style="margin: 0 4px;line-height: 32px;">
+      <nz-tag>
+        <a>{{tag.title}}</a>
+      </nz-tag>
+    </span>
+  </div>
+</div>

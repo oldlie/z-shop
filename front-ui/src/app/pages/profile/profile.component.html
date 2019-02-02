@@ -1,0 +1,7 @@
+<nz-tabset ([nzSelectedIndex])="defaultIndex">
+    <nz-tab nzTitle="个人信息"></nz-tab>
+    <nz-tab nzTitle="地址信息">
+      <app-address-table *ngIf="defaultIndex === 1"></app-address-table>
+    </nz-tab>
+    <nz-tab nzTitle="安全设置"></nz-tab>
+</nz-tabset>

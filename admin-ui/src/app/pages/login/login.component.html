@@ -1,0 +1,29 @@
+<nz-layout>
+  <nz-layout>
+
+    <nz-content>
+
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submit()">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-user">
+              <input type="text" nz-input formControlName="username" placeholder="账号">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('username').dirty && validateForm.get('userName').errors">请输入账号!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="anticon anticon-lock">
+              <input type="password" nz-input formControlName="password" placeholder="密码">
+            </nz-input-group>
+            <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">请输入密码!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+
+    </nz-content>
+
+  </nz-layout>
+</nz-layout>

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import {ResponseData, urlPrefix} from '../common/response-data';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { CoreService } from './core.service';
+import { ResponseData } from '../response/response';
 
 @Injectable()
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  private isInit = false;
+
+  constructor(private core: CoreService,
+    private http: HttpClient) { }
 
   /**
    * URL: /login
@@ -16,20 +20,30 @@ export class LoginService {
    * @param {string} password
    * @return {Promise<LoginResponse>} result
    */
-  login(username: string, password: string): Promise<LoginResponse> {
-    const url = `${urlPrefix}/login`;
+  login(username: string, password: string): Promise<ResponseData> {
+    const url = `${this.core.UrlPrefix}/login`;
+
+    /*
     const formData = {
       username: username,
       password: password
     };
-    return Promise.resolve({
-      status: 0,
-      msg: 'success',
-      token: 'hahahahahaa'
-    } as LoginResponse);
+    */
+   const formData = {
+    username: 'admin@zshop.com',
+    password: '123456'
+  };
+
+    return this.http.post(url, JSON.stringify(formData)).toPromise()
+      .then((response: ResponseData) => {
+        this.core.isLogin = response.status === 0;
+        this.core.account = username;
+        this.core.Token = response.token;
+        return response;
+      });
   }
 }
 
-export interface LoginResponse extends ResponseData{
+export interface LoginResponse extends ResponseData {
   token: string;
 }

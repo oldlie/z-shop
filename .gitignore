@@ -25,4 +25,5 @@
 /nbdist/
 /.nb-gradle/
 
-.DS_store
+.DS_Store
+.vscode/**

@@ -1,0 +1,28 @@
+<div nz-row>
+  <div nz-col nzSm="24" nzMd="12">
+    <input nz-input placeholder="名称" [(ngModel)]="model.title">
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSm="24" nzMd="12">
+    <button nz-button nzType="default" (click)="asignParent()">选择上级导航</button>
+    <span>不选择默认为一级导航</span>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSm="24" nzMd="12">
+    <textarea nz-input placeholder="备注" [nzAutosize]="{ minRows: 2, maxRows: 6 }" [(ngModel)]="model.comment"></textarea>
+  </div>
+</div>
+
+<div nz-row>
+  <div nz-col nzSm="24" nzMd="12">
+    <button nz-button nzType="primary" (click)="save($event)">保存</button>
+  </div>
+</div>
+
+<nz-modal [(nzVisible)]="showListDialog" nzTitle="选择上级导航" (nzOnCancel)="showListDialog = false">
+  <app-navigation-list [viewType]="viewType" [modelId]="1" (choseTrigger)="recevieParent($event)"></app-navigation-list>
+</nz-modal>

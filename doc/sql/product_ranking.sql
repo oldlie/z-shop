@@ -1,5 +1,5 @@
 -- 文章评分记录
-CREATE TABLE `product_ranking` (
+CREATE TABLE `commodity_ranking` (
   `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `product_id` BIGINT NOT NULL COMMENT '商品ID',
   `user_id` BIGINT NOT NULL COMMENT '用户ID',

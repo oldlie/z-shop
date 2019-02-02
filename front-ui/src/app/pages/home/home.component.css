@@ -1,0 +1,11 @@
+.ant-card-actions {
+    float: left;
+    text-align: center;
+    margin: 12px 0;
+    background-color: #ff6700;
+    color: #ffffff;
+}
+
+.buy-color {
+    color: #ff6700;
+}

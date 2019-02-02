@@ -1,0 +1,53 @@
+<div nz-row>
+  <div nz-col nzSpan="24">
+    购物车
+  </div>
+</div>
+
+<br>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+
+    <nz-table #basicTable [nzData]="list">
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>简介</th>
+          <th>规格</th>
+          <th>单价</th>
+          <th>数量</th>
+          <th>总价</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{data.commodityTitle}}</td>
+          <td>{{data.commoditySummary}}</td>
+          <td>{{data.specTitle}}</td>
+          <td>{{data.price}}</td>
+          <td>{{data.count}}</td>
+          <td>{{data.price * data.count}}</td>
+          <td>
+            <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="delete(data)">
+              <a nz-popconfirm ><i class="anticon anticon-delete"></i></a>
+            </nz-popconfirm>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+</div>
+
+<br>
+
+<div nz-row>
+  <div nz-col nzSpan="24">
+    <button nz-button style="background: #ff6700;border-color: #ff6700; color: #fff;" (click)="settlement()">
+      立即结算</button>
+  </div>
+</div>
+
+<br>
