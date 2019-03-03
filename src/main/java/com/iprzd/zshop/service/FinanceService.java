@@ -39,6 +39,24 @@ public class FinanceService {
     @Transactional
     public SimpleResponse<List<PayCard>> createPayCards(String username, PayCardRequest request) {
         SimpleResponse<List<PayCard>> response = new SimpleResponse<>();
+
+        if (request.getId() > 0) {
+            Optional<PayCard> optionalPayCard = this.payCardRepository.findById(request.getId());
+            if (optionalPayCard.isPresent()) {
+                PayCard target = optionalPayCard.get();
+                target.setNote(request.getNote());
+                target.setAmount(request.getAmount());
+                target.setIsSoldOut(request.getIsSoldOut());
+                target.setCustomer(request.getCustomer());
+                target.setCustomerPhone(request.getCustomerPhone());
+                this.payCardRepository.save(target);
+            } else {
+                response.setStatus(1);
+                response.setMessage("Pay card does not exist.");
+            }
+            return response;
+        }
+
         List<OrderCount> orderCounts = this.orderCountRepository.findAll(Sort.by(Sort.Order.desc("id")));
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -62,7 +80,12 @@ public class FinanceService {
         List<PayCardLogEntity> _logs = new ArrayList<>();
 
         for (int i = 0; i < request.getCount(); i++, _start++) {
-            String _serial = String.valueOf(year) + String.valueOf(month) + String.format("%06d", _start);
+            String _numberStr = String.format("%06d", _start);
+            if (_numberStr.endsWith("4")) {
+                _start++;
+                _numberStr = String.format("%06d", _start);
+            }
+            String _serial = request.getPrefix() + String.valueOf(year) + String.valueOf(month) + String.format("%06d", _numberStr);
             String uuid = UUID.randomUUID().toString().replaceAll("\\-", "");
             PayCard payCard = new PayCard();
             payCard.setAccountId(user.getId());
@@ -76,7 +99,8 @@ public class FinanceService {
             payCard.setAmount(request.getAmount());
             payCard.setCustomer(request.getCustomer());
             payCard.setCustomerPhone(request.getCustomerPhone());
-            payCard.setIsSoldOut(request.getIsSold());
+            payCard.setIsSoldOut(request.getIsSoldOut());
+            payCard.setIsValid(1);
             _list.add(payCard);
 
             PayCardLogEntity logEntity = new PayCardLogEntity();
@@ -207,7 +231,8 @@ public class FinanceService {
 
     public PageResponse<PayCard> payCards(PageableRequest<PayCard> request) {
         PageResponse<PayCard> response = new PageResponse<>();
-/*
+
+        /*
         ExampleMatcher matcher = ExampleMatcher.matching()
             .withMatcher("account", match -> match.contains())
             .withMatcher("note", match -> match.contains())
@@ -216,8 +241,10 @@ public class FinanceService {
 
         Example<PayCard> example = Example.of(request.getEntity(), matcher);
         */
+
         Pageable pageable = request.pageable();
         Page<PayCard> payCardPage = this.payCardRepository.findAll(pageable);
+        // Page<PayCard> payCardPage = this.payCardRepository.findAllByIsValid(1, pageable);
         response.setList(payCardPage.getContent());
         response.setTotal(payCardPage.getTotalElements());
         return response;

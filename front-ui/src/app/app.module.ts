@@ -24,6 +24,8 @@ import { SettlementComponent } from './pages/settlement/settlement.component';
 import { AddressComponent } from './pages/address/address.component';
 import { AddressAddComponent } from './component/address-add/address-add.component';
 import { AddressTableComponent } from './component/address-table/address-table.component';
+import { RechargeComponent } from './component/recharge/recharge.component';
+import { UserInfoComponent } from './component/user-info/user-info.component';
 
 registerLocaleData(zh);
 
@@ -43,7 +45,9 @@ registerLocaleData(zh);
     SettlementComponent,
     AddressComponent,
     AddressAddComponent,
-    AddressTableComponent
+    AddressTableComponent,
+    RechargeComponent,
+    UserInfoComponent
   ],
   imports: [
     AppRoutingModule,

@@ -21,6 +21,8 @@ export class PayCardAddComponent implements OnInit {
   expiryError = '';
   denominationError: string | boolean = '';
   amountError: string | boolean = '';
+  prefix = '';
+  perfixError = '';
   customer = '';
   customerPhone = '';
   isSold = false;

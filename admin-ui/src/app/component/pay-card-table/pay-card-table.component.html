@@ -6,49 +6,54 @@
       <thead (nzSortChange)="sort($event)">
         <tr>
           <th nzWidth="120px" nzLeft="0px" nzShowSort nzSortKey="id" nzShowCheckbox="true">#ID</th>
+          <th>状态</th>
+          <th>购买人</th>
+          <th>充值账户</th>
           <th>序列号</th>
           <th>验证码</th>
           <th>简要说明</th>
           <th>面额</th>
           <th>售价</th>
-          <th>已出售</th>
-          <th>使用</th>
-          <th>购买人</th>
-          <th>充值账户</th>
-          <th nzWidth="90px" nzRight="0px">操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of table.data" >
-          <td nzShowCheckbox="true" (nzCheckedChange)="checkItem(item)">{{item.id}}</td>
-          <td>{{item.number}}</td>
-          <td>{{item.verifyCode}}</td>
-          <td>{{item.note}}</td>
-          <td>
-            ￥{{formatMoney(item.denomination)}}
-          </td>
-          <td>￥{{formatMoney(item.amount)}}</td>
-          <td>
-            <nz-tag *ngIf="item.isSoldOut === 0" [nzColor]="'#87d068'">待售</nz-tag>
-            <nz-tag *ngIf="item.isSoldOut === 1" [nzColor]="'#f50'">已售</nz-tag>
+        <tr *ngFor="let item of table.data">
+          <td>{{item.id}}
+            <ng-container *ngIf="item.isSoldOut === 0">
+              <a (click)="sold(item)"><i class="anticon anticon-shopping-cart"></i></a>
+              <nz-popconfirm [nzTitle]="'确定要无效这张卡？'" (nzOnConfirm)="delete(item)">
+                <a nz-popconfirm class="text-danger"><i class="anticon anticon-close-circle"></i></a>
+              </nz-popconfirm>
+            </ng-container>
           </td>
           <td>
+            <nz-tag *ngIf="item.isSoldOut === 0" (click)="edit(item)" [nzColor]="'#87d068'">待售</nz-tag>
+            <nz-tag *ngIf="item.isSoldOut === 1" [nzColor]="'#f50'" disabled="disabled">已售</nz-tag>
             <nz-tag *ngIf="item.isUsed === 0" [nzColor]="'#87d068'">未使用</nz-tag>
             <nz-tag *ngIf="item.isUsed === 1" [nzColor]="'#666'">已使用</nz-tag>
           </td>
           <td>{{item.customer}}</td>
           <td>{{item.user}}</td>
           <td>
-            <ng-container *ngIf="item.isSoldOut === 0">
-                <a (click)="edit(item)"><i class="anticon anticon-shopping-cart"></i></a>
-                <nz-popconfirm [nzTitle]="'确定删除？'" (nzOnConfirm)="delete(item)">
-                  <a nz-popconfirm class="text-danger"><i class="anticon anticon-delete"></i></a>
-                </nz-popconfirm>
-            </ng-container>
+            {{item.prefix}}{{item.number}}
           </td>
+          <td>{{item.verifyCode}}</td>
+          <td>{{item.note}}</td>
+          <td>
+            ￥{{formatMoney(item.denomination)}}
+          </td>
+          <td>￥{{formatMoney(item.amount)}}</td>
+          
         </tr>
       </tbody>
     </nz-table>
 
   </div>
 </div>
+
+<nz-modal *ngIf="isVisible" nzVisible="true" nzTitle="出售" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <app-pay-card-sold [item]="payCard"></app-pay-card-sold>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+  </ng-template>
+</nz-modal>

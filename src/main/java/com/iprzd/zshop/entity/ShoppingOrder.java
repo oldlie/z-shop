@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,8 @@ public class ShoppingOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
+    @Column(columnDefinition = "int default 1 comment '0:无效，1：有效'")
+    private int isValid;
     private long deliveryInfoId;
     @Column(columnDefinition = "bigint default 0")
     private long totalPrice;
@@ -35,6 +38,7 @@ public class ShoppingOrder implements Serializable {
     private String consignee;
     private String phone;
     private String address;
+    private Date createDate;
 
     @OneToMany(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")

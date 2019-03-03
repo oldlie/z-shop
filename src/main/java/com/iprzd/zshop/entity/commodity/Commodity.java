@@ -44,21 +44,21 @@ public class Commodity implements Serializable {
     private Date createAt;
     private Date updateAt;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "t_commodity_tag",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private List<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_spec_map",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "spec_id", referencedColumnName = "id"))
     private List<Specification> specifications;
 
     // CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE CascadeType. REMOVE CascadeType. REMOVE
-    @ManyToMany(cascade =  { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  { CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable(name = "t_commodity_menu_map",
             joinColumns = @JoinColumn(name = "commodity_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"))

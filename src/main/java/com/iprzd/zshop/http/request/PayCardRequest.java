@@ -19,7 +19,9 @@ public class PayCardRequest implements Serializable {
     private long denomination;
     private int expiryMonth;
     private long amount;
+    private String prefix;
     private String customer;
     private String customerPhone;
-    private int isSold;
+    private int isSoldOut;
+
 }

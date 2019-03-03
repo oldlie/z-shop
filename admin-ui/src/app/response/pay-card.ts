@@ -12,6 +12,7 @@ export interface PayCard {
     denomination: number;
     amount: number;
     isSoldOut?: number;
+    prefix?: string;
     customer?: string;
     customerPhone?: string;
     isUsed?: number;
