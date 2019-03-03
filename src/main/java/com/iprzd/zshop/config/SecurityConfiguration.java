@@ -2,6 +2,7 @@ package com.iprzd.zshop.config;
 
 import com.iprzd.zshop.repository.UserRepository;
 import com.iprzd.zshop.service.CustomUserService;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,11 +33,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/home/**",
                         "/front/**",
                         "/article/**",
+                        "/actuator/**",
                         "/commodity/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/signup", "/login").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/upload", "/image").permitAll()
-                .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTLoginFilter(authenticationManager()))
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), this.customUserService));

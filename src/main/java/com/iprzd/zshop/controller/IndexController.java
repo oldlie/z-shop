@@ -13,6 +13,7 @@ import com.iprzd.zshop.http.response.SimpleResponse;
 import com.iprzd.zshop.repository.AuthorityRepository;
 import com.iprzd.zshop.repository.UploadFileRepository;
 import com.iprzd.zshop.repository.UserRepository;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -51,9 +52,22 @@ public class IndexController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    // @GetMapping(value = "/", produces = "text/plain;charset=UTF-8")
+    @ApiOperation("获取用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType="header",name="username",dataType="String",required=true,value="用户的姓名",defaultValue="zhaojigang"),
+            @ApiImplicitParam(paramType="query",name="password",dataType="String",required=true,value="用户的密码",defaultValue="wangna")
+    })
+    @ApiResponses({
+            @ApiResponse(code=400,message="请求参数没填好"),
+            @ApiResponse(code=404,message="请求路径没有或页面跳转路径不对")
+    })
+    // @GetMapping(name = "/", produces = "application/json;charset=UTF-8")
     @GetMapping("/")
-    public String index() {
-        return "当前版本：v" + appVersion;
+    public BaseResponse index() {
+        BaseResponse response = new BaseResponse();
+        response.setMessage("当前版本：v" + appVersion);
+        return response;
     }
 
 
